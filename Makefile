@@ -43,7 +43,7 @@ ${LIBFT}:
 	@echo "libft compiled\n"
 
 %.o: %.c
-	@${CC} ${CFLAGS} -I./readline -I./libft -c $< -o $@
+	@${CC} ${CFLAGS} -I./readline -I./libft -I./includes -c $< -o $@
 
 clean:
 	@make clean -C libft
