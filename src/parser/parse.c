@@ -6,11 +6,11 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/10 11:26:49 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/10 11:56:23 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	ft_spec_chr_comb(char **s, size_t *c, char *m1, 
 				bool (*f)(char *, char *, int))
@@ -97,7 +97,7 @@ char	**ft_cmd_split(char *s)
 	char	**buf;
 
 	i = 0;
-	if (!s || !ft_dcalloc((void **)(&buf), ft_wordlen(s) + 1, sizeof(char *)))
+	if (!s || !ft_pcalloc((void **)(&buf), ft_wordlen(s) + 1, sizeof(char *)))
 		return (NULL);
 	while (*s && ft_isspace(*s))
 		++s;

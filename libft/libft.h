@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:19:35 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/08 17:16:28 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/10 11:51:49 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		ft_memcmp(const void *str1, const void *str2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 long	ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
+int		ft_pcalloc(void **ptr, size_t cnt, size_t n);
 char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);

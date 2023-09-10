@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:55:02 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/08 17:27:53 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/10 12:09:08 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	handle_sigint(int signum)
 
 void	exit_minishell(char *input)
 {
-	printf("Exiting\n");
+	printf("Exitingg\n");
 	if (input)
 		free(input);
 	exit(1);

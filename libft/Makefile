@@ -6,7 +6,7 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 18:36:17 by emirzaza          #+#    #+#              #
-#    Updated: 2023/09/07 10:57:44 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/09/10 11:55:46 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SOURCES = 			$(D_CHR)ft_isalpha.c \
 					$(D_MEM)/ft_memchr.c \
 					$(D_MEM)ft_memcmp.c \
 					$(D_MEM)ft_calloc.c \
+					$(D_MEM)ft_pcalloc.c \
 					$(D_STR)ft_strlcpy.c \
 					$(D_STR)ft_strlcat.c \
 					$(D_STR)ft_strchr.c \
@@ -78,7 +79,7 @@ $(NAME): $(OBJECTS)
 # $@ is the NAME, $^ will be all the $(OBJECTS)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -I. -c $< -o $@
 # $< will be only the first prerequisite
 
 clean:
