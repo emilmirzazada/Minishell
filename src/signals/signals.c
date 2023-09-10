@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	handle_sigquit()
+void	handle_sigquit(void)
 {
 	rl_replace_line("", 0);
 	rl_on_new_line();
