@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/08 18:48:06 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/10 11:28:35 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,6 @@ typedef struct s_minishell
 	char			**args;
 }				t_minishell;
 
-
-void	init_signals(struct sigaction *sa);
-void	register_signals(struct sigaction *sa);
-void	exit_minishell(char *input);
-
 typedef struct	s_env
 {
 	char			*key;
@@ -47,8 +42,20 @@ typedef struct	s_env
 	struct s_env	*next;
 }				t_env;
 
+//signals
+void	init_signals(struct sigaction *sa);
+void	register_signals(struct sigaction *sa);
+void	exit_minishell(char *input);
 
+//env
 void	env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
+
+// parser
+bool	ft_isspace(int c);
+bool	ft_mode_equal(char *m1, char *m2, int len);
+bool	ft_mode_diff(char *m1, char *m2, int len);
+void	ft_shift_special_chr(char **s, char *mode);
+char	*ft_check_special_chr(int c1, int c2, int c0);
 
 #endif

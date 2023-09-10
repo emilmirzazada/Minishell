@@ -6,14 +6,16 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/09/08 13:04:44 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/09/10 11:29:33 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 SRC =	src/main.c \
 		src/signals/signals.c \
-		src/builtins/env.c
+		src/builtins/env.c \
+		parser/parse.c \
+		parser/special_chr_check.c 
 
 LIBFT = ./libft
 READLINE_PATH = ${PWD}/readline
