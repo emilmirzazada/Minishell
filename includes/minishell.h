@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/10 11:28:35 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/10 11:58:56 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ bool	ft_mode_equal(char *m1, char *m2, int len);
 bool	ft_mode_diff(char *m1, char *m2, int len);
 void	ft_shift_special_chr(char **s, char *mode);
 char	*ft_check_special_chr(int c1, int c2, int c0);
+char	*ft_removechr(char	*str, char chr);
+void	free_set_null(void **ptr);
 
 #endif

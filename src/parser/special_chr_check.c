@@ -6,11 +6,11 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:04:24 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/10 11:27:05 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/10 11:46:01 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 bool	ft_isspace(int c)
 {
