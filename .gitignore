@@ -3,10 +3,12 @@
 *.dSYM
 .idea
 *.o
+*.a
 *.ko
 *.obj
 *.elf
 minishell
+
 
 *.ilk
 *.map

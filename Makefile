@@ -6,7 +6,7 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/09/10 11:59:21 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/09/10 23:50:50 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRC =	src/main.c \
 		src/builtins/env.c \
 		src/parser/parse.c \
 		src/parser/special_chr_check.c \
-		src/parser/parser_tools.c 
+		src/parser/parser_tools.c \
+		src/tokenizer/tokenizer.c 
 
 LIBFT = ./libft
 READLINE_PATH = ${PWD}/readline

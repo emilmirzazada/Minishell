@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:35:36 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/08 18:50:46 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/10 23:40:31 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ int	ft_env(t_minishell *mini)
 	t_env	*env;
 
 	env = mini->env;
-	// if (mini->args[0])
-	// {
-	// 	printf("env: %s:No such file or directory\n", mini->args[0]);
-	// 	return (1);
-	// }
 	while (env)
 	{
 		if (env->value[0] != '\0')
@@ -46,17 +41,6 @@ int	ft_env(t_minishell *mini)
 		env = env->next;
 	}
 	return (0);
-}
-
-t_env	*ft_envlast(t_env *lst)
-{
-	while (lst)
-	{
-		if (!(lst -> next))
-			return (lst);
-		lst = lst -> next;
-	}
-	return (lst);
 }
 
 void	ft_replace_existing_env(t_env *lst, t_env *new)
