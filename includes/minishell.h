@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/11 00:01:58 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:34:33 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_lex
 {
 	t_token			token;
 	char			*value;
-	int				pos;
 	struct s_lex	*next;
 }				t_lex;
 
@@ -66,6 +65,7 @@ typedef struct s_minishell
 	struct s_env	*env;
 	char			**args;
 	t_cmd			*cmd;
+	t_file			*file;
 	t_lex			*lex;
 }				t_minishell;
 
@@ -82,15 +82,19 @@ void	register_signals(struct sigaction *sa);
 void	exit_minishell(char *input);
 
 //env
-void	env_init(t_minishell *mini, char **env);
+void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
 
 //lexer
 void	ft_lookup_input(t_minishell *mini, char *input);
-void	parse_tokens(t_minishell *mini);
 
-// parser
-char	**ft_cmd_split(char *s);
+//parser
+int		parse_tokens(t_minishell *mini);
+int 	handle_redir_tokens(t_minishell *mini, t_lex **lex);
+int		handle_word_tokens(t_minishell *mini, t_lex **lex);
+
+// splitter
+char	**ft_input_split(char *s);
 bool	ft_isspace(int c);
 bool	ft_mode_equal(char *m1, char *m2, int len);
 bool	ft_mode_diff(char *m1, char *m2, int len);
