@@ -6,25 +6,34 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/09/10 23:50:50 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/09/14 15:28:21 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SRC =	src/main.c \
-		src/signals/signals.c \
-		src/builtins/env.c \
-		src/parser/parse.c \
-		src/parser/special_chr_check.c \
-		src/parser/parser_tools.c \
-		src/tokenizer/tokenizer.c 
+SRC =	main \
+		signals/signals \
+		builtins/env \
+		tokenizer/tokenizer \
+		splitter/split \
+		splitter/split_quotes \
+		splitter/split_tools \
+		parser/parse_tokens \
+		parser/parse_redir_tokens \
+		parser/parse_cmd_tokens 
+
+
+OBJ_DIR = obj/
+SRC_DIR = src/
 
 LIBFT = ./libft
 READLINE_PATH = ${PWD}/readline
 RM = rm -rf
 CC = gcc
 CFLAGS = -g -Wall -Wextra -fsanitize=address
-OBJ = $(SRC:.c=.o)
+
+SRCS = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
+OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
 
 
 UNAME := $(shell uname)
@@ -37,8 +46,8 @@ endif
 
 all: ${LIBFT} ${NAME}
 
-${NAME}: ${OBJ} ${LIBFT}
-	@$(CC) ${CFLAGS} $(OBJ) -o $(NAME) libft.a $(LIBREADLINE_FLAGS)
+${NAME}: ${OBJS} ${LIBFT}
+	@$(CC) ${CFLAGS} $(OBJS) -o $(NAME) libft.a $(LIBREADLINE_FLAGS)
 	@echo "${NAME} compiled"
 
 ${LIBFT}:
@@ -46,13 +55,14 @@ ${LIBFT}:
 	@cp ${LIBFT}/libft.a .
 	@echo "libft compiled\n"
 
-%.o: %.c
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c 
+	@mkdir -p $(@D)
 	@${CC} ${CFLAGS} -I./readline -I./libft -I./includes -c $< -o $@
 
 clean:
 	@make clean -C libft
 	@${RM} libft.a
-	@${RM} ${OBJ}
+	@${RM} ${OBJS}
 	@echo "Cleaned"
 
 fclean: clean

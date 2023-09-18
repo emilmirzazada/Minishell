@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:35:36 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/10 23:40:31 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:23:36 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_envadd_back(t_env **lst, t_env *new)
 	*ptr = new;
 }
 
-void	env_init(t_minishell *mini, char **env)
+void	ft_env_init(t_minishell *mini, char **env)
 {
 	t_env	*tmp;
 	char	*key;

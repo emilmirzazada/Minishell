@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/11 00:00:00 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:19:21 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_spec_chr_comb(char **s, size_t *c, char *m1, 
+void	ft_spec_chr_comb(char **s, size_t *c, char *m1,
 				bool (*f)(char *, char *, int))
 {
 	char	*m2;
@@ -90,7 +90,7 @@ char	**ft_wordout(char *s, char **buf, int i, char *temp)
 	return (buf);
 }
 
-char	**ft_cmd_split(char *s)
+char	**ft_input_split(char *s)
 {
 	int		i;
 	char	*start;
