@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/12 14:20:39 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/26 00:45:46 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_cmd_args_malloc(t_cmd *cmd, t_lex *lex)
 	argc = 0;
 	while (lex && lex->token != TOK_PIPE)
 	{
-		if (lex->token == TOK_WORD)
+		if (lex->token == TOK_ARG)
 			argc++;
 		lex = lex->next;
 	}
@@ -66,10 +66,13 @@ int	handle_word_tokens(t_minishell *mini, t_lex **lex)
 	if (ft_cmd_args_malloc(new_cmd, tmp_lex))
 		return (1);
 	cmd_argc = 0;
-	while (*lex && (*lex)->token != TOK_PIPE && (*lex)->token == TOK_WORD)
+	while (*lex && (*lex)->token != TOK_PIPE && (*lex)->token == TOK_ARG)
 	{
 		new_cmd->args[cmd_argc++] = ft_strdup((*lex)->value);
-		*lex = (*lex)->next;
+		if ((*lex)->next != NULL && (*lex)->next->token == TOK_ARG)
+			*lex = (*lex)->next;
+		else
+			break ;
 	}
 	new_cmd->args[cmd_argc] = 0;
 	return (0);
