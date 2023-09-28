@@ -13,6 +13,7 @@
 NAME = minishell
 SRC =	main \
 		signals/signals \
+		executor/executor \
 		builtins/env \
 		tokenizer/tokenizer \
 		splitter/split \
