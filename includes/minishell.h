@@ -81,6 +81,9 @@ void	init_signals(struct sigaction *sa);
 void	register_signals(struct sigaction *sa);
 void	exit_minishell(char *input);
 
+//executor
+void    *execute_commands(t_minishell *mini);
+
 //env
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);

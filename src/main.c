@@ -44,6 +44,7 @@ void	run_minishell(t_minishell *mini, char *input)
 		ft_strlen(input) == 3)
 		ft_env(mini);
 	ft_lookup_input(mini, input);
+	execute_commands(mini);
 	free(input);
 }
 
