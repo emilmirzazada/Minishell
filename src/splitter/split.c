@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/12 14:19:21 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/26 00:44:02 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	**ft_input_split(char *s)
 	char	*start;
 	char	**buf;
 
+	s = handle_redir_symbols(s);
 	i = 0;
 	if (!s || !ft_pcalloc((void **)(&buf), ft_wordlen(s) + 1, sizeof(char *)))
 		return (NULL);

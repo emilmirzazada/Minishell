@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/12 14:34:33 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/09/26 00:44:50 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 typedef enum s_token
 {
-	TOK_WORD = 'W',
+	TOK_ARG = 'A',
 	TOK_PIPE = '|',
 	TOK_IN = '<',
 	TOK_OUT = '>',
@@ -95,6 +95,7 @@ int		handle_word_tokens(t_minishell *mini, t_lex **lex);
 
 // splitter
 char	**ft_input_split(char *s);
+char	*handle_redir_symbols(char *s);
 bool	ft_isspace(int c);
 bool	ft_mode_equal(char *m1, char *m2, int len);
 bool	ft_mode_diff(char *m1, char *m2, int len);

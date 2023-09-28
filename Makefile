@@ -6,7 +6,7 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/09/14 15:28:21 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/09/25 18:53:11 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC =	main \
 		splitter/split \
 		splitter/split_quotes \
 		splitter/split_tools \
+		splitter/split_redirects \
 		parser/parse_tokens \
 		parser/parse_redir_tokens \
 		parser/parse_cmd_tokens 
