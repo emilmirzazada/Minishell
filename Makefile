@@ -38,7 +38,7 @@ OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
 
 UNAME := $(shell uname)
 ifeq ($(UNAME),Linux)
-    LIBREADLINE_FLAGS = -lreadline -lhistory
+    LIBREADLINE_FLAGS = /lib/x86_64-linux-gnu/libreadline.so.8
 else ifeq ($(UNAME),Darwin)
     LIBREADLINE_FLAGS = -I${READLINE_PATH}/include -L${READLINE_PATH}/lib -lreadline -lhistory -ltermcap
 endif
