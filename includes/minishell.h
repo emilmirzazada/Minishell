@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/12 14:34:33 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/01 14:34:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <sys/wait.h>
 #include "libft.h"
 # include "../readline/include/history.h"
 # include "../readline/include/readline.h"
