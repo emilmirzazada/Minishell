@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/01 14:34:31 by marvin           ###   ########.fr       */
+/*   Updated: 2023/10/02 17:57:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ void	register_signals(struct sigaction *sa);
 void	exit_minishell(char *input);
 
 //executor
-void    *execute_commands(t_minishell *mini);
+int		execute_commands(t_minishell *mini);
+int 	*create_pipes(int pipe_count);
+int 	clean_pipes(int *pipes, int size);
+
 
 //env
 void	ft_env_init(t_minishell *mini, char **env);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/09/14 15:28:21 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/02 17:57:14 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 SRC =	main \
 		signals/signals \
 		executor/executor \
+		executor/pipes \
 		builtins/env \
 		tokenizer/tokenizer \
 		splitter/split \
