@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/26 00:46:46 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:18:17 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	run_minishell(t_minishell *mini, char *input)
 		ft_strlen(input) == 3)
 		ft_env(mini);
 	ft_lookup_input(mini, input);
+	print_commands(mini);
 }
 
 int	main(int ac, char **av, char **env)

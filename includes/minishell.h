@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/26 00:44:50 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:57:04 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define READLINE_LIBRARY
 
 #include <stdbool.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -27,6 +28,8 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+
+int		global_sig_num;
 
 typedef enum s_token
 {
@@ -55,6 +58,7 @@ typedef struct s_file
 typedef struct s_cmd
 {
 	char			*cmd;
+	int				exit_code;
 	char			*path;
 	char			**args;
 	struct s_cmd	*next;
@@ -63,7 +67,7 @@ typedef struct s_cmd
 typedef struct s_minishell
 {
 	struct s_env	*env;
-	char			**args;
+	int				g_exit_code;
 	t_cmd			*cmd;
 	t_file			*file;
 	t_lex			*lex;
@@ -75,6 +79,14 @@ typedef struct	s_env
 	char			*value;
 	struct s_env	*next;
 }				t_env;
+
+//expansion
+char	*expand(t_minishell *mini, char *s);
+int		expansion_end_check(char *s, char *check);
+char	*place_value(char *temp, char *value, char *s);
+void	place_rest_of_string(char *s, char *temp, int *i, int *t);
+char	*get_name(char *s, int i);
+char	*last_command_exit_code(t_minishell *mini, char c, int *i);
 
 //signals
 void	init_signals(struct sigaction *sa);
@@ -103,5 +115,9 @@ void	ft_shift_special_chr(char **s, char *mode);
 char	*ft_check_special_chr(int c1, int c2, int c0);
 char	*ft_removechr(char	*str, char chr);
 void	free_set_null(void **ptr);
+
+// signals
+void	handle_sigint(int signum);
+void	signals(void (*handler)(int));
 
 #endif

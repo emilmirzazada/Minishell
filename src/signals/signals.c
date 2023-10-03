@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:55:02 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/10 12:09:08 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/01 20:58:33 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ void	handle_sigint(int signum)
 	ft_putchar_fd('\n', 1);
 	rl_on_new_line();
 	rl_redisplay();
+}
+
+void	signals(void (*handler)(int))
+{
+	signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	exit_minishell(char *input)
