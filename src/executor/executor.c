@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 18:13:05 by marvin            #+#    #+#             */
-/*   Updated: 2023/10/05 09:49:54 by wrottger         ###   ########.fr       */
+/*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
+/*   Updated: 2023/10/05 14:44:10 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -41,7 +42,15 @@ static int	child_execution(
 			exit(EXIT_FAILURE);
 	if (clean_pipes(pipe_fds, command_count * 2) == -1)
 		exit(EXIT_FAILURE);
-	if (execvp(*mini->cmd->args, mini->cmd->args) < 0)
+	mini->cmd->path = get_executable_path(
+			*mini->cmd,
+			find_env(
+				mini->env,
+				"PWD"),
+			find_env(
+				mini->env,
+				"PATH"));
+	if (execve(mini->cmd->path, mini->cmd->args, mini->cmd->args) < 0)
 	{
 		perror(*mini->cmd->args);
 		exit(EXIT_FAILURE);

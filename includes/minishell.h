@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 10:20:11 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/05 12:42:43 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <sys/wait.h>
+#include <sys/stat.h>
 # include "libft.h"
 # include "../readline/include/history.h"
 # include "../readline/include/readline.h"
@@ -86,6 +87,7 @@ char	*find_env(t_env *lst, char *key);
 int		execute_commands(t_minishell *mini);
 int		*create_pipes(int pipe_count);
 int		clean_pipes(int *pipes, int size);
+char	*get_executable_path(t_cmd cmd, char *pwd, char	*path_env);
 
 // parser
 int		parse_tokens(t_minishell *mini);

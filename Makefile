@@ -6,7 +6,7 @@
 #    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/05 10:21:47 by wrottger         ###   ########.fr        #
+#    Updated: 2023/10/05 11:03:19 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 SRC =	main \
 		signals/signals \
 		executor/executor \
+		executor/find_executable \
 		executor/pipes \
 		builtins/env \
 		builtins/get_env \

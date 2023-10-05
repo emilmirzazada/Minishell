@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd_tokens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/12 14:20:39 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/05 14:24:36 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	handle_word_tokens(t_minishell *mini, t_lex **lex)
 		new_cmd->args[cmd_argc++] = ft_strdup((*lex)->value);
 		*lex = (*lex)->next;
 	}
+	new_cmd->cmd = new_cmd->args[0];
 	new_cmd->args[cmd_argc] = 0;
 	return (0);
 }
