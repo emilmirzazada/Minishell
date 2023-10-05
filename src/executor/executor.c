@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/05 14:44:10 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:17:57 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ static int	child_execution(
 	return (0);
 }
 
+static int	getexitstatus(int waitstatus)
+{
+	int	exitstatus;
+
+	if (WIFEXITED(waitstatus))
+		exitstatus = WEXITSTATUS(waitstatus);
+	else
+		exitstatus = WTERMSIG(waitstatus);
+	return (exitstatus);
+}
+
 int	execute_commands(t_minishell *mini)
 {
 	int		command_count;
@@ -83,5 +94,5 @@ int	execute_commands(t_minishell *mini)
 	j = 0;
 	while (j++ < command_count + 1)
 		wait(&status);
-	return (WEXITSTATUS(status));
+	return (getexitstatus(status));
 }
