@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:29:26 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/26 00:45:06 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/02 22:39:48 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ void	create_lex(t_minishell *mini, char *split)
 
 void	ft_lookup_input(t_minishell *mini, char *input)
 {
+	char	*expanded;
 	char	**split;
 
+	expanded = expand(mini, input);
 	split = ft_input_split(input);
 	while (*split)
 	{
