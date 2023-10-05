@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/02 17:57:59 by marvin           ###   ########.fr       */
+/*   Updated: 2023/10/05 10:16:54 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # define READLINE_LIBRARY
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <sys/wait.h>
-#include "libft.h"
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include "libft.h"
 # include "../readline/include/history.h"
 # include "../readline/include/readline.h"
 # include "../readline/include/rlstdc.h"
@@ -70,35 +70,31 @@ typedef struct s_minishell
 	t_lex			*lex;
 }				t_minishell;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*key;
 	char			*value;
 	struct s_env	*next;
 }				t_env;
 
-//signals
-void	init_signals(struct sigaction *sa);
-void	register_signals(struct sigaction *sa);
-void	exit_minishell(char *input);
-
-//executor
-int		execute_commands(t_minishell *mini);
-int 	*create_pipes(int pipe_count);
-int 	clean_pipes(int *pipes, int size);
-
-
-//env
+// builtins
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
 
-//lexer
-void	ft_lookup_input(t_minishell *mini, char *input);
+// executor
+int		execute_commands(t_minishell *mini);
+int		*create_pipes(int pipe_count);
+int		clean_pipes(int *pipes, int size);
 
-//parser
+// parser
 int		parse_tokens(t_minishell *mini);
-int 	handle_redir_tokens(t_minishell *mini, t_lex **lex);
+int		handle_redir_tokens(t_minishell *mini, t_lex **lex);
 int		handle_word_tokens(t_minishell *mini, t_lex **lex);
+
+// signals
+void	init_signals(struct sigaction *sa);
+void	register_signals(struct sigaction *sa);
+void	exit_minishell(char *input);
 
 // splitter
 char	**ft_input_split(char *s);
@@ -109,5 +105,8 @@ void	ft_shift_special_chr(char **s, char *mode);
 char	*ft_check_special_chr(int c1, int c2, int c0);
 char	*ft_removechr(char	*str, char chr);
 void	free_set_null(void **ptr);
+
+// tokenizer
+void	ft_lookup_input(t_minishell *mini, char *input);
 
 #endif
