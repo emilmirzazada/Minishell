@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 19:41:37 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:54:11 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 #include <stdbool.h>
 #include <errno.h>
+#include <termios.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>

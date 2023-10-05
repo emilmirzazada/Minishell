@@ -6,12 +6,11 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:55:02 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 19:40:30 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:54:01 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-# include <termios.h>
 
 static void	interactive_signal_handler(int sign)
 {
