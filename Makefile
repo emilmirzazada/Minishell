@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/02 17:57:14 by marvin           ###   ########.fr        #
+#    Updated: 2023/10/05 10:21:47 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC =	main \
 		executor/executor \
 		executor/pipes \
 		builtins/env \
+		builtins/get_env \
 		tokenizer/tokenizer \
 		splitter/split \
 		splitter/split_quotes \

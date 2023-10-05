@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 10:16:54 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/05 10:20:11 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_env
 // builtins
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
+char	*find_env(t_env *lst, char *key);
 
 // executor
 int		execute_commands(t_minishell *mini);
