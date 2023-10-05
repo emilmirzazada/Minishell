@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 12:42:43 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/05 17:23:17 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_cmd
 typedef struct s_minishell
 {
 	struct s_env	*env;
+	char			**env_arr;
 	char			**args;
 	t_cmd			*cmd;
 	t_file			*file;
@@ -82,6 +83,7 @@ typedef struct s_env
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
 char	*find_env(t_env *lst, char *key);
+static	void	set_env_array(t_minishell *mini);
 
 // executor
 int		execute_commands(t_minishell *mini);
