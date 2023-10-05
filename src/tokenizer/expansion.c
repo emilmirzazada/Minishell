@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/03 17:09:31 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:41:50 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	search_variable(t_minishell *mini, char *s, char **value)
 	i = 1;
 	name = NULL;
 	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0')
-		*value = last_command_exit_code(mini, s[i], &i);
+		*value = last_command_exit_code(s[i], &i);
 	else
 	{
 		i += expansion_end_check(&s[i], " <>|\"'$[]{}()");

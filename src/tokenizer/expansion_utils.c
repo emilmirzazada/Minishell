@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/03 16:37:01 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:41:25 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,14 @@ char	*get_name(char *s, int i)
 	return (name);
 }
 
-char	*last_command_exit_code(t_minishell *mini, char c, int *i)
+char	*last_command_exit_code(char c, int *i)
 {
 	char	*value;
 
 	value = NULL;
 	if (c == '?')
 	{
-		value = ft_itoa(mini->g_exit_code);
+		value = ft_itoa(g_exit_code);
 		*i = *i + 1;
 	}
 	else if (c == ' ')

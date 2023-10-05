@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/03 16:57:04 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:41:37 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define STDOUT 1
 # define STDERR 2
 
-int		global_sig_num;
+int		g_exit_code;
 
 typedef enum s_token
 {
@@ -67,7 +67,7 @@ typedef struct s_cmd
 typedef struct s_minishell
 {
 	struct s_env	*env;
-	int				g_exit_code;
+	char			**env_arr;
 	t_cmd			*cmd;
 	t_file			*file;
 	t_lex			*lex;
@@ -86,11 +86,12 @@ int		expansion_end_check(char *s, char *check);
 char	*place_value(char *temp, char *value, char *s);
 void	place_rest_of_string(char *s, char *temp, int *i, int *t);
 char	*get_name(char *s, int i);
-char	*last_command_exit_code(t_minishell *mini, char c, int *i);
+char	*last_command_exit_code(char c, int *i);
 
 //signals
-void	init_signals(struct sigaction *sa);
-void	register_signals(struct sigaction *sa);
+void	init_interactive_signals();
+void	init_non_interactive_signals(void);
+void	override_ctrl_echo(void);
 void	exit_minishell(char *input);
 
 //env
@@ -115,9 +116,5 @@ void	ft_shift_special_chr(char **s, char *mode);
 char	*ft_check_special_chr(int c1, int c2, int c0);
 char	*ft_removechr(char	*str, char chr);
 void	free_set_null(void **ptr);
-
-// signals
-void	handle_sigint(int signum);
-void	signals(void (*handler)(int));
 
 #endif

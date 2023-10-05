@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/03 16:18:17 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:30:46 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,27 @@ void	run_minishell(t_minishell *mini, char *input)
 		ft_strlen(input) == 3)
 		ft_env(mini);
 	ft_lookup_input(mini, input);
-	print_commands(mini);
+	//print_commands(mini);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	char				*input;
 	t_minishell			mini;
-	struct sigaction	sa;
 
 	(void)ac;
 	(void)av;
 	ft_memset(&mini, 0, sizeof(mini));
-	init_signals(&sa);
 	ft_env_init(&mini, env);
+	override_ctrl_echo();
 	while (1)
 	{
-		register_signals(&sa);
-		input = readline("minihell: ");
+		init_interactive_signals();
+		input = readline("minishell: ");
+		if (ft_strlen(input) > 0)
+				add_history(input);
 		if (!input)
 			exit_minishell(input);
-		add_history(input);
 		run_minishell(&mini, input);
 	}
 	return (0);
