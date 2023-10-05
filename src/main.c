@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/14 15:29:34 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:01:00 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	run_minishell(t_minishell *mini, char *input)
 		ft_strlen(input) == 3)
 		ft_env(mini);
 	ft_lookup_input(mini, input);
-	execute_commands(mini);
+	printf("EXIT_CODE = %d\n", execute_commands(mini));
 	free(input);
 }
 
@@ -61,7 +61,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		register_signals(&sa);
-		input = readline("minihell: ");
+		input = readline("\e[32m💀💀💀Minishell :\e[0m");
 		if (!input)
 			exit_minishell(input);
 		add_history(input);
