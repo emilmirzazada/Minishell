@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 19:54:11 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/06 12:51:10 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ typedef struct	s_env
 	char			*value;
 	struct s_env	*next;
 }				t_env;
+
+//builtins
+void	echo (t_cmd *cmd);
 
 //expansion
 char	*expand(t_minishell *mini, char *s);

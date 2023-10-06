@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 19:30:46 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/06 16:03:05 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	main(int ac, char **av, char **env)
 		if (!input)
 			exit_minishell(input);
 		run_minishell(&mini, input);
+		free(input);
 	}
 	return (0);
 }
