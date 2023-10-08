@@ -6,7 +6,7 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/05 17:20:43 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/07 21:21:26 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ SRC =	main \
 		executor/pipes \
 		builtins/env \
 		builtins/env_tools \
+		builtins/cd \
+		builtins/pwd \
 		tokenizer/tokenizer \
 		splitter/split \
 		splitter/split_quotes \

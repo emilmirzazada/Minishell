@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 17:23:17 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/07 21:21:56 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ typedef struct s_env
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
 char	*find_env(t_env *lst, char *key);
-static	void	set_env_array(t_minishell *mini);
+void	set_env_array(t_minishell *mini);
+int		ft_cd(t_minishell *mini, t_cmd *cmd);
+int		ft_pwd(void);
 
 // executor
 int		execute_commands(t_minishell *mini);
