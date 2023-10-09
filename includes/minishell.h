@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 11:17:30 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:23:26 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_cmd
 typedef struct s_minishell
 {
 	struct s_env	*env;
+	char			**env_arr;
 	char			**args;
 	t_stdio			std_io;
 	t_cmd			*cmd;
@@ -91,6 +92,7 @@ typedef struct s_env
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
 char	*find_env(t_env *lst, char *key);
+static	void	set_env_array(t_minishell *mini);
 
 // executor
 int		execute_commands(t_minishell *mini);
