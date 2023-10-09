@@ -6,39 +6,75 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 16:20:56 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:46:18 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_token_type(t_minishell *mini, t_lex **lex)
+void	parse_cmd_files(t_cmd *cmd, t_lex	**lex, t_lex **temp)
 {
-	if (handle_word_tokens(mini, lex))
-		return (1);
-	return (0);
+	while ((*temp) && (*temp)->token != TOK_PIPE)
+	{
+		if ((*temp)->token == TOK_IN || (*temp)->token == TOK_OUT)
+		{
+			if (handle_redir_tokens(cmd, temp))
+				return ;
+		}
+		(*temp) = (*temp)->next;
+	}
+	if ((*lex)->token == TOK_FILE)
+		*lex = (*lex)->next;
 }
 
 int	parse_tokens(t_minishell *mini)
 {
-	t_lex	*temp;
-	t_lex	*temp_prev;
+	int		cmd_argc;
+	t_cmd	*new_cmd;
+	t_lex	**temp;
+	t_lex	**lex;
+	t_lex	*temp1;
 
-	temp = mini->lex;
-	temp_prev = mini->lex;
-	// while (temp)
-	// {
-	// 	// if (temp_prev->token == TOK_OUT)
-	// 	// 	break ;
-	// 	if (handle_token_type(mini, &temp))
-	// 		return (1);
-	// 	if (temp)
-	// 	{
-	// 		temp_prev = temp;
-	// 		temp = temp->next;
-	// 	}
-	// }
-	if (handle_token_type(mini, &temp))
-		return (1);
+	lex = &mini->lex;
+	temp1 = mini->lex;
+	temp = &temp1;
+	new_cmd = NULL;
+	while (*lex)
+	{
+		if ((*lex)->token == TOK_PIPE || new_cmd == NULL)
+			new_cmd = init_new_command(mini, *lex, &cmd_argc);
+		parse_cmd_files(new_cmd, lex, temp);
+		while (*lex && (*lex)->token != TOK_PIPE && (*lex)->token == TOK_WORD)
+		{
+			new_cmd->args[cmd_argc++] = ft_strdup((*lex)->value);
+			if ((*lex)->next && (*lex)->next->token != TOK_OUT)
+				*lex = (*lex)->next;
+			else
+				break ;
+		}
+		if (*lex && ((*lex)->token == TOK_PIPE || new_cmd == NULL))
+		{
+			new_cmd->cmd = new_cmd->args[0];
+			new_cmd->args[cmd_argc] = 0;
+			new_cmd = init_new_command(mini, *lex, &cmd_argc);
+			*temp =  (*lex)->next;
+		}
+		if (*lex)
+		{
+			if (!((*lex)->next))
+			{
+				new_cmd->cmd = new_cmd->args[0];
+				new_cmd->args[cmd_argc] = 0;
+				return (0);
+			}
+			else
+				*lex = (*lex)->next;
+		}
+		else
+		{
+			new_cmd->cmd = new_cmd->args[0];
+			new_cmd->args[cmd_argc] = 0;
+		}
+	}
 	return (0);
 }

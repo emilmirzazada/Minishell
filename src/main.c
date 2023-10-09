@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 19:07:12 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:11:25 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	print_commands(t_minishell *mini)
 {
 	t_cmd	*tmp;
-	t_file	*file;
 	char	**tmp_args;
 
 	tmp = mini->cmd;

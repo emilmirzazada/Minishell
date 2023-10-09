@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 15:46:54 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:42:29 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		configure_pipes(t_minishell *mini, int *pipe_fds, int j);
 // parser
 int		parse_tokens(t_minishell *mini);
 int		handle_redir_tokens(t_cmd *cmd, t_lex **lex);
-int		handle_word_tokens(t_minishell *mini, t_lex **lex);
+t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc);
 
 // signals
 void	init_signals(struct sigaction *sa);
