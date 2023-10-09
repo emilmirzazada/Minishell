@@ -5,7 +5,7 @@
 #                                                     +:+ +:+         +:+      #
 #    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
+#    Created: 2023/09/06 23:31:04 by wrottger          #+#    #+#              #
 #    Updated: 2023/10/09 11:25:12 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -21,6 +21,8 @@ SRC =	main \
 		executor/std_io_utils \
 		builtins/env \
 		builtins/env_tools \
+		builtins/cd \
+		builtins/pwd \
 		tokenizer/tokenizer \
 		splitter/split \
 		splitter/split_quotes \
