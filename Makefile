@@ -6,7 +6,7 @@
 #    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/05 11:03:19 by wrottger         ###   ########.fr        #
+#    Updated: 2023/10/09 11:09:40 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,9 @@ SRC =	main \
 		executor/executor \
 		executor/find_executable \
 		executor/pipes \
+		executor/program_executor \
+		executor/builtin_executor \
+		executor/std_io_utils \
 		builtins/env \
 		builtins/get_env \
 		tokenizer/tokenizer \
