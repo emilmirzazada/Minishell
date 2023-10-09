@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 13:52:06 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 15:46:54 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_stdio
 typedef enum s_token
 {
 	TOK_WORD = 'W',
+	TOK_FILE = 'F',
 	TOK_PIPE = '|',
 	TOK_IN = '<',
 	TOK_OUT = '>',

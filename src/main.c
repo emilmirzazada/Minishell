@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 13:54:19 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:53:35 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	print_commands(t_minishell *mini)
 			ft_putstr_fd("\n", 2);
 			tmp_args++;
 		}
+		ft_putstr_fd("\nfiles \n", 2);
 		ft_putstr_fd(tmp->files->name, 2);
-		ft_putstr_fd("New\n", 2);
-		ft_putstr_fd(tmp->files->next->name, 2);
+		ft_putstr_fd("\nNew\n", 2);
 		tmp = tmp->next;
 	}
 }
@@ -45,7 +45,6 @@ void	run_minishell(t_minishell *mini, char *input)
 	if (!ft_strncmp(input, "env", ft_strlen(input)) && \
 		ft_strlen(input) == 3)
 		ft_env(mini);
-	ft_lookup_input(mini, input);
 	//print_commands(mini);
 	//printf("EXIT_CODE = %d\n", execute_commands(mini));
 	free(input);
