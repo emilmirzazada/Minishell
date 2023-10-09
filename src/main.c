@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 16:01:00 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/07 21:27:06 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,20 @@ void	run_minishell(t_minishell *mini, char *input)
 	mini->file = NULL;
 	mini->lex = NULL;
 	mini->cmd = NULL;
+	ft_lookup_input(mini, input);
 	if (!ft_strncmp(input, "exit", ft_strlen(input)) && \
 		ft_strlen(input) == 4)
 		exit_minishell(input);
 	if (!ft_strncmp(input, "env", ft_strlen(input)) && \
 		ft_strlen(input) == 3)
 		ft_env(mini);
-	ft_lookup_input(mini, input);
-	printf("EXIT_CODE = %d\n", execute_commands(mini));
+	if (!ft_strncmp(input, "pwd", ft_strlen(input)) && \
+		ft_strlen(input) == 3)
+		ft_pwd();
+	else if (!ft_strncmp(input, "cd", 2))
+		ft_cd(mini, mini->cmd);
+	else
+		printf("EXIT_CODE = %d\n", execute_commands(mini));
 	free(input);
 }
 

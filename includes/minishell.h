@@ -92,7 +92,9 @@ typedef struct s_env
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
 char	*find_env(t_env *lst, char *key);
-static	void	set_env_array(t_minishell *mini);
+void	set_env_array(t_minishell *mini);
+int		ft_cd(t_minishell *mini, t_cmd *cmd);
+int		ft_pwd(void);
 
 // executor
 int		execute_commands(t_minishell *mini);
