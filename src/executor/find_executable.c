@@ -6,18 +6,12 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:05:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/05 15:04:33 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/06 09:12:57 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin(char *name)
-{
-	if (ft_strncmp(name, "env", 4))
-		return (1);
-	return (0);
-}
 
 static char	*search_paths(char **paths, char *cmd)
 {
@@ -40,7 +34,7 @@ static char	*search_paths(char **paths, char *cmd)
 	return (NULL);
 }
 
-char	*get_executable_path(t_cmd cmd, char *pwd, char	*path_env)
+char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env)
 {
 	char	**paths;
 	char	*file_name;

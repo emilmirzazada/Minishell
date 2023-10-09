@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
+#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/07 21:21:26 by emirzaza         ###   ########.fr        #
+#    Created: 2023/09/06 23:31:04 by wrottger          #+#    #+#              #
+#    Updated: 2023/10/09 11:25:12 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,9 @@ SRC =	main \
 		executor/executor \
 		executor/find_executable \
 		executor/pipes \
+		executor/program_executor \
+		executor/builtin_executor \
+		executor/std_io_utils \
 		builtins/env \
 		builtins/env_tools \
 		builtins/cd \
