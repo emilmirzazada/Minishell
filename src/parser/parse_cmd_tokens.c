@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 17:52:23 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/09 19:07:18 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_cmd_args_malloc(t_cmd *cmd, t_lex *lex)
 	return (0);
 }
 
-t_cmd	*add_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc)
+t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc)
 {
 	t_cmd	*new_cmd;
 	t_lex	*tmp_lex;
@@ -71,36 +71,40 @@ t_cmd	*add_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc)
 	return (new_cmd);
 }
 
+void	parse_cmd_files(t_cmd *cmd, t_lex	**lex, t_lex **temp)
+{
+	while ((*temp) && (*temp)->token != TOK_PIPE)
+	{
+		if ((*temp)->token == TOK_IN || (*temp)->token == TOK_OUT)
+		{
+			if (handle_redir_tokens(cmd, temp))
+				return ;
+			*lex = (*lex)->next;
+		}
+		(*temp) = (*temp)->next;
+	}
+	if ((*lex)->token == TOK_FILE)
+		*lex = (*lex)->next;
+}
+
 int	handle_word_tokens(t_minishell *mini, t_lex **lex)
 {
 	t_cmd	*new_cmd;
 	int		cmd_argc;
 	t_lex	**temp;
 
-	
+	temp = lex;
 	lex = &mini->lex;
 	new_cmd = NULL;
 	while (*lex)
 	{
 		if ((*lex)->token == TOK_PIPE || new_cmd == NULL)
-			new_cmd = add_new_command(mini, *lex, &cmd_argc);
-		*temp = *lex;
-		while (*lex && (*lex)->token != TOK_PIPE)
-		{
-			if ((*lex)->token == TOK_IN || (*lex)->token == TOK_OUT)
-			{
-				if (handle_redir_tokens(new_cmd, lex))
-					return (1);
-			}
-			*lex = (*lex)->next;
-		}
-		*lex = *temp;
-		if ((*lex)->token == TOK_FILE)
-			*lex = (*lex)->next;
+			new_cmd = init_new_command(mini, *lex, &cmd_argc);
+		parse_cmd_files(new_cmd, lex, temp);
 		while (*lex && (*lex)->token != TOK_PIPE && (*lex)->token == TOK_WORD)
 		{
 			new_cmd->args[cmd_argc++] = ft_strdup((*lex)->value);
-			if ((*lex)->next->token != TOK_OUT)
+			if ((*lex)->next && (*lex)->next->token != TOK_OUT)
 				*lex = (*lex)->next;
 			else
 				break ;
@@ -109,10 +113,20 @@ int	handle_word_tokens(t_minishell *mini, t_lex **lex)
 		{
 			new_cmd->cmd = new_cmd->args[0];
 			new_cmd->args[cmd_argc] = 0;
-			new_cmd = add_new_command(mini, *lex, &cmd_argc);
+			new_cmd = init_new_command(mini, *lex, &cmd_argc);
+			*temp =  (*lex)->next;
 		}
 		if (*lex)
-			*lex = (*lex)->next;
+		{
+			if (!((*lex)->next))
+			{
+				new_cmd->cmd = new_cmd->args[0];
+				new_cmd->args[cmd_argc] = 0;
+				return (0);
+			}
+			else
+				*lex = (*lex)->next;
+		}
 		else
 		{
 			new_cmd->cmd = new_cmd->args[0];

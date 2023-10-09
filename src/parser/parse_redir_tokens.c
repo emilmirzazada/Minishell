@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:06:01 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 16:06:25 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:57:50 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ int	handle_redir_tokens(t_cmd *cmd, t_lex **lex)
 		return (1);
 	}
 	create_file(cmd, token, (*lex)->next->value);
-	// ft_putstr_fd(" \n file\n", 2);
-	// ft_putstr_fd((*lex)->next->value, 2);
-	// ft_putstr_fd("\n", 2);
 	*lex = (*lex)->next;
 	(*lex)->token = TOK_FILE;
 	return (0);
