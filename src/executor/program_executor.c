@@ -6,17 +6,13 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/06 09:28:28 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:07:04 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_program(
-	t_minishell *mini,
-	int command_count,
-	int *pipe_fds,
-	int j)
+int	execute_program(t_minishell *mini)
 {
 	char const	*pwd;
 	char const	*path;

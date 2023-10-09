@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/12 14:19:34 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:58:19 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,8 @@
 
 int	handle_token_type(t_minishell *mini, t_lex **lex)
 {
-	if ((*lex)->token == TOK_IN || (*lex)->token == TOK_OUT)
-	{
-		if (handle_redir_tokens(mini, lex))
-			return (1);
-	}
-	else if ((*lex)->token == TOK_WORD)
-	{
-		if (handle_word_tokens(mini, lex))
-			return (1);
-	}
+	if (handle_word_tokens(mini, lex))
+		return (1);
 	return (0);
 }
 

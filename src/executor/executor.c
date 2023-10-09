@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/09 11:14:57 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:07:22 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	execute_commands(t_minishell *mini)
 		{
 			if (clean_pipes(pipe_fds, command_count * 2) == -1)
 				exit(EXIT_FAILURE);
-			execute_program(mini, command_count, pipe_fds, j);
+			execute_program(mini);
 		}
 		else if (pid < 0)
 			exit(EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/06 12:49:21 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:07:49 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,21 @@ int	*create_pipes(int pipe_count)
 	return (pipe_fds);
 }
 
-static int	loop_files(t_file current_file, int *in_fds, int *out_fds)
+static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 {
 	while (current_file)
 	{
-		if (current_file.token == TOK_IN)
+		if (current_file->token == TOK_IN)
 		{
-			if (in_fds != 0)
-				close(in_fds);
-			in_fds = open(current_file, "r");
+			if (*in_fds != 0)
+				close(*in_fds);
+			in_fds = open(current_file, 'r');
 		}
-		if (current_file.token == TOK_OUT)
+		if (current_file->token == TOK_OUT)
 		{
 			if (out_fds != 1)
-				close(out_fds);
-			out_fds = open(current_file, "w");
+				close(*out_fds);
+			*out_fds = open(current_file, 'w');
 		}
 		current_file = current_file->next;
 	}
@@ -53,14 +53,14 @@ static int	loop_files(t_file current_file, int *in_fds, int *out_fds)
 
 int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 {
-	t_file	current_file;
+	t_file	*current_file;
 	int		in_fds;
 	int		out_fds;
 
 	current_file = mini->cmd->files;
 	in_fds = 0;
 	out_fds = 1;
-	loop_files(current_file, in_fds, out_fds);
+	loop_files(current_file, &in_fds, &out_fds);
 	if (mini->cmd->next)
 		if (dup2(pipe_fds[j + 1], in_fds) < 0)
 			exit(EXIT_FAILURE);

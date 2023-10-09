@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 11:23:26 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:07:15 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_file
 typedef struct s_cmd
 {
 	char			*cmd;
+	t_file			*files;
 	char			*path;
 	char			**args;
 	struct s_cmd	*next;
@@ -74,10 +75,8 @@ typedef struct s_minishell
 {
 	struct s_env	*env;
 	char			**env_arr;
-	char			**args;
 	t_stdio			std_io;
 	t_cmd			*cmd;
-	t_file			*file;
 	t_lex			*lex;
 }				t_minishell;
 
@@ -92,7 +91,7 @@ typedef struct s_env
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
 char	*find_env(t_env *lst, char *key);
-static	void	set_env_array(t_minishell *mini);
+void	set_env_array(t_minishell *mini);
 
 // executor
 int		execute_commands(t_minishell *mini);
@@ -100,11 +99,7 @@ int		*create_pipes(int pipe_count);
 int		clean_pipes(int *pipes, int size);
 char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env);
 int		execute_builtin(t_minishell *mini);
-int		execute_program(
-			t_minishell *mini,
-			int command_count,
-			int *pipe_fds,
-			int j);
+int		execute_program(t_minishell *mini);
 int		is_builtin(char *name);
 void	save_stdio(t_stdio std_io);
 void	load_stdio(t_stdio std_io);
@@ -113,7 +108,7 @@ int		configure_pipes(t_minishell *mini, int *pipe_fds, int j);
 
 // parser
 int		parse_tokens(t_minishell *mini);
-int		handle_redir_tokens(t_minishell *mini, t_lex **lex);
+int		handle_redir_tokens(t_cmd *cmd, t_lex **lex);
 int		handle_word_tokens(t_minishell *mini, t_lex **lex);
 
 // signals

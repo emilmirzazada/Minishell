@@ -6,35 +6,36 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 16:01:00 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:17:57 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	print_commands(t_minishell *mini)
-// {
-// 	t_cmd	*tmp;
-// 	char	**tmp_args;
+void	print_commands(t_minishell *mini)
+{
+	t_cmd	*tmp;
+	char	**tmp_args;
 
-// 	tmp = mini->cmd;
-// 	while (tmp)
-// 	{
-// 		tmp_args = tmp->args;
-// 		while (*tmp_args)
-// 		{
-// 			ft_putstr_fd(*tmp_args, 2);
-// 			ft_putstr_fd("\n", 2);
-// 			tmp_args++;
-// 		}
-// 		ft_putstr_fd("New\n", 2);
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = mini->cmd;
+	while (tmp)
+	{
+		tmp_args = tmp->args;
+		while (*tmp_args)
+		{
+			ft_putstr_fd(*tmp_args, 2);
+			ft_putstr_fd("\n", 2);
+			tmp_args++;
+		}
+		ft_putstr_fd(tmp->files->name, 2);
+		ft_putstr_fd("New\n", 2);
+		ft_putstr_fd(tmp->files->next->name, 2);
+		tmp = tmp->next;
+	}
+}
 
 void	run_minishell(t_minishell *mini, char *input)
 {
-	mini->file = NULL;
 	mini->lex = NULL;
 	mini->cmd = NULL;
 	if (!ft_strncmp(input, "exit", ft_strlen(input)) && \
@@ -44,7 +45,8 @@ void	run_minishell(t_minishell *mini, char *input)
 		ft_strlen(input) == 3)
 		ft_env(mini);
 	ft_lookup_input(mini, input);
-	printf("EXIT_CODE = %d\n", execute_commands(mini));
+	//print_commands(mini);
+	//printf("EXIT_CODE = %d\n", execute_commands(mini));
 	free(input);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 14:24:36 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:46:58 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,19 @@ int	handle_word_tokens(t_minishell *mini, t_lex **lex)
 	if (ft_cmd_args_malloc(new_cmd, tmp_lex))
 		return (1);
 	cmd_argc = 0;
+
+	if (((*lex)->token == TOK_IN || (*lex)->token == TOK_OUT)
+		&& (*lex)->token != TOK_PIPE)
+	{
+		ft_putstr_fd((*lex)->value, 2);
+		ft_putstr_fd("\n", 2);
+		// if (handle_redir_tokens(new_cmd, lex))
+		// 	return (1);
+		*lex = (*lex)->next;
+	}
+	ft_putstr_fd("sep\n", 2);
+	ft_putstr_fd((*lex)->value, 2);
+	ft_putstr_fd("\n", 2);
 	while (*lex && (*lex)->token != TOK_PIPE && (*lex)->token == TOK_WORD)
 	{
 		new_cmd->args[cmd_argc++] = ft_strdup((*lex)->value);
