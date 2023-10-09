@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/05 16:17:57 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:14:57 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,6 @@ static int	count_commands(t_minishell *mini)
 	return (cmd_count);
 }
 
-static int	child_execution(
-	t_minishell *mini,
-	int command_count,
-	int *pipe_fds,
-	int j)
-{
-	if (mini->cmd->next)
-		if (dup2(pipe_fds[j + 1], 1) < 0)
-			exit(EXIT_FAILURE);
-	if (j != 0)
-		if (dup2(pipe_fds[j - 2], 0) < 0)
-			exit(EXIT_FAILURE);
-	if (clean_pipes(pipe_fds, command_count * 2) == -1)
-		exit(EXIT_FAILURE);
-	mini->cmd->path = get_executable_path(
-			*mini->cmd,
-			find_env(
-				mini->env,
-				"PWD"),
-			find_env(
-				mini->env,
-				"PATH"));
-	if (execve(mini->cmd->path, mini->cmd->args, mini->cmd->args) < 0)
-	{
-		perror(*mini->cmd->args);
-		exit(EXIT_FAILURE);
-	}
-	return (0);
-}
-
 static int	getexitstatus(int waitstatus)
 {
 	int	exitstatus;
@@ -65,26 +35,55 @@ static int	getexitstatus(int waitstatus)
 	if (WIFEXITED(waitstatus))
 		exitstatus = WEXITSTATUS(waitstatus);
 	else
-		exitstatus = WTERMSIG(waitstatus);
+		exitstatus =  128 + WTERMSIG(waitstatus);
 	return (exitstatus);
+}
+
+static int	execute_command(t_minishell *mini)
+{
+	char	*pwd;
+	char	*path;
+
+	if (is_builtin(mini->cmd->cmd))
+		execute_builtin(mini);
+	else
+	{
+		pwd = find_env(mini->env, "PWD");
+		path = find_env(mini->env, "PATH");
+		mini->cmd->path = get_executable_path(*mini->cmd, pwd, path);
+		execve(mini->cmd->path, mini->cmd->args, mini->cmd->args);
+	}
 }
 
 int	execute_commands(t_minishell *mini)
 {
 	int		command_count;
 	int		status;
-	pid_t	pid;
+	int		pid;
 	int		*pipe_fds;
 	int		j;
 
 	command_count = count_commands(mini);
+	if (command_count == 1 && is_builtin(mini->cmd->cmd))
+	{
+		save_stdio(mini->std_io);
+		status = execute_command(mini);
+		load_stdio(mini->std_io);
+		return (status);
+	}
 	pipe_fds = create_pipes(command_count);
 	j = 0;
+	save_stdio(mini->std_io);
 	while (mini->cmd)
 	{
+		configure_pipes(mini, pipe_fds, j);
 		pid = fork();
 		if (pid == 0)
-			child_execution(mini, command_count, pipe_fds, j);
+		{
+			if (clean_pipes(pipe_fds, command_count * 2) == -1)
+				exit(EXIT_FAILURE);
+			execute_program(mini, command_count, pipe_fds, j);
+		}
 		else if (pid < 0)
 			exit(EXIT_FAILURE);
 		mini->cmd = mini->cmd->next;
