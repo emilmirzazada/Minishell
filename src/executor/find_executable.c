@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:05:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/06 09:12:57 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:42:19 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ static char	*search_paths(char **paths, char *cmd)
 {
 	char	*tmp;
 	char	*file_name;
-	char	slash[2];
+	char	*slash;
 
-	slash[0] = '/';
-	slash[1] = 0;
+	slash = "/";
 	while (*paths)
 	{
-		tmp = ft_strjoin((char *) &slash[0], cmd);
+		tmp = ft_strjoin(slash, cmd);
 		file_name = ft_strjoin(*paths, tmp);
 		free(tmp);
 		if (access(file_name, F_OK) == 0)
@@ -38,14 +37,12 @@ char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env)
 {
 	char	**paths;
 	char	*file_name;
-	char	dot_slash[3];
+	char	*dot_slash;
 
-	dot_slash[0] = '.';
-	dot_slash[1] = '/';
-	dot_slash[2] = 0;
+	dot_slash = "./";
 	if (cmd.cmd[0] == '/' && access(cmd.cmd, F_OK) == 0)
 		return (cmd.cmd);
-	if (ft_strncmp(cmd.cmd, (char *) &dot_slash, 2) == 0)
+	if (ft_strncmp(cmd.cmd, dot_slash, 3) == 0)
 	{
 		file_name = ft_strjoin(pwd, &cmd.cmd[1]);
 		printf("%s", file_name);
