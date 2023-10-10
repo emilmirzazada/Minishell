@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/10 15:22:32 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:39:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ void	parse_cmd_files(t_cmd *cmd, t_lex	**lex, t_lex **temp)
 		{
 			if (handle_redir_tokens(cmd, temp))
 				return ;
+			if ((*temp)->token == TOK_IN)
+				(*temp)->next->token = TOK_IN;
+			else if ((*temp)->token == TOK_OUT)
+				(*temp)->next->token = TOK_OUT;
+			(*temp) = (*temp)->next;
 		}
 		(*temp) = (*temp)->next;
 	}
-	if ((*lex)->next)
-		*lex = (*lex)->next;
 }
 
 int	parse_tokens(t_minishell *mini)
