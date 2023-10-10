@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 20:46:18 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:22:32 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	parse_cmd_files(t_cmd *cmd, t_lex	**lex, t_lex **temp)
 		}
 		(*temp) = (*temp)->next;
 	}
-	if ((*lex)->token == TOK_FILE)
+	if ((*lex)->next)
 		*lex = (*lex)->next;
 }
 
