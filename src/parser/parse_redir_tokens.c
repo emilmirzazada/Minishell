@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:06:01 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/10 15:23:34 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:40:00 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ int	handle_redir_tokens(t_cmd *cmd, t_lex **lex)
 		return (1);
 	}
 	create_file(cmd, token, (*lex)->next->value);
-	*lex = (*lex)->next;
 	return (0);
 }
