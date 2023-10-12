@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/10 14:30:43 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:30:31 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	print_commands(t_minishell *mini)
 		ft_putstr_fd("\nfiles \n", 2);
 		while (tmp->files)
 		{
-			ft_putstr_fd(tmp->files->name, 2);
+			if (tmp->files->name)
+				ft_putstr_fd(tmp->files->name, 2);
+			if (tmp->files->delimeter)
+				ft_putstr_fd(tmp->files->delimeter, 2);
 			ft_putstr_fd("\n", 2);
 			tmp->files = tmp->files->next;
 		}
@@ -72,3 +75,7 @@ int	main(int ac, char **av, char **env)
 
 // < input grep Hello | wc -l > out
 // < input grep Hello | awk '{count++} END {print count}' > output
+// ls > asd | grep input
+// shllevel
+// > $NAME
+// afl++

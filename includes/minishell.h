@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 11:16:55 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:30:23 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef enum s_token
 	TOK_IN = '<',
 	TOK_OUT = '>',
 	TOK_HERE_DOC = 'H',
+	TOK_APPEND = 'A'
 }			t_token;
 
 typedef struct s_lex
@@ -111,7 +112,9 @@ int		configure_pipes(t_minishell *mini, int *pipe_fds, int j);
 // parser
 int		parse_tokens(t_minishell *mini);
 int		handle_redir_tokens(t_cmd *cmd, t_lex **lex);
+int		handle_heredoc_token(t_cmd *cmd, t_lex **temp);
 t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc);
+void	create_file(t_cmd *cmd, t_token token, char *name);
 
 // signals
 void	init_signals(struct sigaction *sa);
