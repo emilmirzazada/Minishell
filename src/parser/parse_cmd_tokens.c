@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 13:36:01 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:12:15 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc)
 		return (NULL);
 	new_cmd->files = NULL;
 	tmp_lex = lex;
+	ft_bzero(new_cmd, sizeof(new_cmd));
 	if (ft_cmd_args_malloc(new_cmd, tmp_lex))
 		return (NULL);
 	*cmd_argc = 0;

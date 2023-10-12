@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 13:35:31 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:12:22 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,4 @@ int	parse_tokens(t_minishell *mini)
 			return (0);
 	}
 	return (0);
-}
+}  
