@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 13:18:26 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:51:05 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	run_minishell(t_minishell *mini, char *input)
 	mini->cmd = NULL;
 	ft_lookup_input(mini, input);
 	print_commands(mini);
-	//printf("EXIT_CODE = %d\n", execute_commands(mini));
+	printf("EXIT_CODE = %d\n", execute_commands(mini));
 	//free(input);
 }
 

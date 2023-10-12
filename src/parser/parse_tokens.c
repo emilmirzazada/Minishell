@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 13:20:21 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:00:53 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,4 @@ int	parse_tokens(t_minishell *mini)
 			return (0);
 	}
 	return (0);
-}
+}  
