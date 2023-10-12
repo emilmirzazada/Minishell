@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/06 16:03:05 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:18:26 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,29 @@ void	print_commands(t_minishell *mini)
 			ft_putstr_fd("\n", 2);
 			tmp_args++;
 		}
-		ft_putstr_fd("\nfiles:\n", 2);
-		ft_putstr_fd(mini->file->name, 2);
-		ft_putstr_fd("\n", 2);
-		ft_putstr_fd(mini->file->next->name, 2);
-		ft_putstr_fd("\n\n", 2);
+		ft_putstr_fd("\nfiles \n", 2);
+		while (tmp->files)
+		{
+			if (tmp->files->name)
+				ft_putstr_fd(tmp->files->name, 2);
+			if (tmp->files->delimeter)
+				ft_putstr_fd(tmp->files->delimeter, 2);
+			ft_putstr_fd("\n", 2);
+			tmp->files = tmp->files->next;
+		}
+		ft_putstr_fd("\nNew\n", 2);
 		tmp = tmp->next;
 	}
 }
 
 void	run_minishell(t_minishell *mini, char *input)
 {
-	if (!ft_strncmp(input, "exit", ft_strlen(input)) && \
-		ft_strlen(input) == 4)
-		exit_minishell(input);
-	if (!ft_strncmp(input, "env", ft_strlen(input)) && \
-		ft_strlen(input) == 3)
-		ft_env(mini);
+	mini->lex = NULL;
+	mini->cmd = NULL;
 	ft_lookup_input(mini, input);
-	//print_commands(mini);
+	print_commands(mini);
+	//printf("EXIT_CODE = %d\n", execute_commands(mini));
+	//free(input);
 }
 
 int	main(int ac, char **av, char **env)
@@ -60,18 +64,21 @@ int	main(int ac, char **av, char **env)
 	override_ctrl_echo();
 	while (1)
 	{
+		input = readline("\e[32m💀💀💀Minishell :\e[0m");
 		init_interactive_signals();
-		input = readline("minishell: ");
 		if (ft_strlen(input) > 0)
-				add_history(input);
+			add_history(input);
 		if (!input)
 			exit_minishell(input);
 		run_minishell(&mini, input);
-		free(input);
 	}
 	return (0);
 }
 
 // < input grep Hello | wc -l > out
 // < input grep Hello | awk '{count++} END {print count}' > output
+// ls > asd | grep input
+// shllevel
+// > $NAME
+// afl++
 // < input grep Hello | cat -e > out

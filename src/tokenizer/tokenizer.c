@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:29:26 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/02 22:39:48 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:47:05 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ void	create_lex(t_minishell *mini, char *split)
 		new_lex->token = TOK_IN;
 	else if (!(ft_strncmp(split, ">", ft_strlen(split))))
 		new_lex->token = TOK_OUT;
+	else if (!(ft_strncmp(split, "<<", ft_strlen(split))))
+		new_lex->token = TOK_HERE_DOC;
+	else if (!(ft_strncmp(split, ">>", ft_strlen(split))))
+		new_lex->token = TOK_APPEND;
 	else
 		new_lex->token = TOK_ARG;
 	new_lex->value = ft_strdup(split);

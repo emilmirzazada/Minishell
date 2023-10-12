@@ -6,14 +6,23 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/06 11:51:27 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/12 12:40:43 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 SRC =	main \
 		signals/signals \
+		executor/executor \
+		executor/find_executable \
+		executor/pipes \
+		executor/program_executor \
+		executor/builtin_executor \
+		executor/std_io_utils \
 		builtins/env \
+		builtins/env_tools \
+		builtins/cd \
+		builtins/pwd \
 		builtins/echo \
 		tokenizer/tokenizer \
 		tokenizer/expansion \
@@ -42,7 +51,7 @@ OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
 
 UNAME := $(shell uname)
 ifeq ($(UNAME),Linux)
-    LIBREADLINE_FLAGS = -lreadline -lhistory
+    LIBREADLINE_FLAGS = /lib/x86_64-linux-gnu/libreadline.so.8
 else ifeq ($(UNAME),Darwin)
     LIBREADLINE_FLAGS = -I${READLINE_PATH}/include -L${READLINE_PATH}/lib -lreadline -lhistory -ltermcap
 endif
