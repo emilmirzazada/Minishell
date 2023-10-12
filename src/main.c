@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 13:51:05 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:23:12 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	print_commands(t_minishell *mini)
 			ft_putstr_fd("\n", 2);
 			tmp_args++;
 		}
+		printf("%s\n", tmp->name);
 		ft_putstr_fd("\nfiles \n", 2);
 		while (tmp->files)
 		{
@@ -49,7 +50,6 @@ void	run_minishell(t_minishell *mini, char *input)
 	ft_lookup_input(mini, input);
 	print_commands(mini);
 	printf("EXIT_CODE = %d\n", execute_commands(mini));
-	//free(input);
 }
 
 int	main(int ac, char **av, char **env)

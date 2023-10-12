@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 14:00:53 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:35:37 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	parse_cmd_files(t_cmd *cmd, t_lex **temp)
 
 t_cmd	*finalize_cmd(t_minishell *mini, t_cmd *cmd, t_lex **lex, int *cmd_argc)
 {
+	cmd->name = NULL;
 	if (*lex && ((*lex)->token == TOK_PIPE))
 	{
 		cmd->name = cmd->args[0];
