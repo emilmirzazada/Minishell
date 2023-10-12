@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:29:26 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/10 17:10:17 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:47:05 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	create_lex(t_minishell *mini, char *split)
 	else if (!(ft_strncmp(split, ">>", ft_strlen(split))))
 		new_lex->token = TOK_APPEND;
 	else
-		new_lex->token = TOK_WORD;
+		new_lex->token = TOK_ARG;
 	new_lex->value = ft_strdup(split);
 	new_lex->next = NULL;
 	ft_lex_addback(&(mini->lex), new_lex);
@@ -48,8 +48,10 @@ void	create_lex(t_minishell *mini, char *split)
 
 void	ft_lookup_input(t_minishell *mini, char *input)
 {
+	char	*expanded;
 	char	**split;
 
+	expanded = expand(mini, input);
 	split = ft_input_split(input);
 	while (*split)
 	{

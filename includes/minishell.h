@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 11:30:23 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:42:35 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define READLINE_LIBRARY
 
 # include <stdbool.h>
+#include <errno.h>
+#include <termios.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
@@ -31,6 +33,8 @@
 # define STDOUT 1
 # define STDERR 2
 
+int		g_exit_code;
+
 typedef struct s_stdio
 {
 	int	stdin;
@@ -39,7 +43,7 @@ typedef struct s_stdio
 
 typedef enum s_token
 {
-	TOK_WORD = 'W',
+	TOK_ARG = 'A',
 	TOK_PIPE = '|',
 	TOK_IN = '<',
 	TOK_OUT = '>',
@@ -66,6 +70,7 @@ typedef struct s_file
 typedef struct s_cmd
 {
 	char			*cmd;
+	int				exit_code;
 	t_file			*files;
 	char			*path;
 	char			**args;
@@ -87,6 +92,17 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }				t_env;
+
+//builtins
+void	echo (t_cmd *cmd);
+
+//expansion
+char	*expand(t_minishell *mini, char *s);
+int		expansion_end_check(char *s, char *check);
+char	*place_value(char *temp, char *value, char *s);
+void	place_rest_of_string(char *s, char *temp, int *i, int *t);
+char	*get_name(char *s, int i);
+char	*last_command_exit_code(char c, int *i);
 
 // builtins
 void	ft_env_init(t_minishell *mini, char **env);
@@ -117,12 +133,14 @@ t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc);
 void	create_file(t_cmd *cmd, t_token token, char *name);
 
 // signals
-void	init_signals(struct sigaction *sa);
-void	register_signals(struct sigaction *sa);
+void	init_interactive_signals();
+void	init_non_interactive_signals(void);
+void	override_ctrl_echo(void);
 void	exit_minishell(char *input);
 
 // splitter
 char	**ft_input_split(char *s);
+char	*handle_redir_symbols(char *s);
 bool	ft_isspace(int c);
 bool	ft_mode_equal(char *m1, char *m2, int len);
 bool	ft_mode_diff(char *m1, char *m2, int len);

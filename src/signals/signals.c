@@ -3,33 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:55:02 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 11:27:39 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:46:31 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_sigquit(void)
+static void	interactive_signal_handler(int sign)
 {
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (sign == SIGINT)
+	{
+		g_exit_code = 128 + sign;
+		rl_replace_line("", 0);
+		write(STDIN_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-void	handle_sigint(int signum)
+void	non_interactive_signal_handler(int sign)
 {
-	if (signum == 3)
+	if (sign == SIGINT)
 	{
-		handle_sigquit();
-		return ;
+		g_exit_code = 128 + sign;
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
 	}
-	rl_replace_line("", 0);
-	ft_putchar_fd('\n', 1);
-	rl_on_new_line();
-	rl_redisplay();
+	else if (sign == SIGQUIT)
+	{
+		g_exit_code = 128 + sign;
+		ft_putstr_fd("Quit\n", 1);
+	}
+}
+
+void	init_interactive_signals()
+{
+	signal(SIGINT, interactive_signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	init_non_interactive_signals(void)
+{
+	signal(SIGINT, &non_interactive_signal_handler);
+	signal(SIGQUIT, &non_interactive_signal_handler);
 }
 
 void	exit_minishell(char *input)
@@ -40,15 +59,27 @@ void	exit_minishell(char *input)
 	exit(1);
 }
 
-void	init_signals(struct sigaction *sa)
+void	override_ctrl_echo(void)
 {
-	sa->sa_handler = &handle_sigint;
-	sigemptyset(&sa->sa_mask);
-	sa->sa_flags = 0;
-}
+	struct termios	term;
 
-void	register_signals(struct sigaction *sa)
-{
-	sigaction(SIGINT, sa, NULL);
-	sigaction(SIGQUIT, sa, NULL);
+	if (isatty(STDIN_FILENO))
+	{
+		tcgetattr(STDIN_FILENO, &term);
+		term.c_lflag = term.c_lflag & ~ECHOCTL;
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	}
+	else if (isatty(STDOUT_FILENO))
+	{
+		tcgetattr(STDOUT_FILENO, &term);
+		term.c_lflag = term.c_lflag & ~ECHOCTL;
+		tcsetattr(STDOUT_FILENO, TCSANOW, &term);
+	}
+	else if (isatty(STDERR_FILENO))
+	{
+		tcgetattr(STDERR_FILENO, &term);
+		term.c_lflag = term.c_lflag & ~ECHOCTL;
+		tcsetattr(STDERR_FILENO, TCSANOW, &term);
+	}
 }
+ 

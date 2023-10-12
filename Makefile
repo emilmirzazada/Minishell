@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
+#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/06 23:31:04 by wrottger          #+#    #+#              #
-#    Updated: 2023/10/09 11:25:12 by wrottger         ###   ########.fr        #
+#    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
+#    Updated: 2023/10/12 12:40:43 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,14 @@ SRC =	main \
 		builtins/env_tools \
 		builtins/cd \
 		builtins/pwd \
+		builtins/echo \
 		tokenizer/tokenizer \
+		tokenizer/expansion \
+		tokenizer/expansion_utils \
 		splitter/split \
 		splitter/split_quotes \
 		splitter/split_tools \
+		splitter/split_redirects \
 		parser/parse_tokens \
 		parser/parse_redir_tokens \
 		parser/parse_cmd_tokens 
