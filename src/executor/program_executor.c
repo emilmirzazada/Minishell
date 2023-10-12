@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/12 11:27:15 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:57:51 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	execute_program(t_minishell *mini)
 	char	*pwd;
 	char	*path;
 
-	pwd = find_env(mini->env, "PWD");
+	pwd = getcwd(NULL, 0);
 	path = find_env(mini->env, "PATH");
 	if (path != NULL)
 		mini->cmd->path = get_executable_path(*mini->cmd, pwd, path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:23:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/06 12:11:06 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:49:26 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ int	echo_without_new_line(t_cmd *cmd)
 	return (0);
 }
 
-void	echo (t_cmd *cmd)
+int	echo (t_cmd *cmd)
 {
 	if (echo_no_args(cmd))
-		return ;
+		return (1);
 	else if (cmd->args[1]
 			&& ft_strncmp(cmd->args[1], "-n", 2) == 0)
 		echo_without_new_line(cmd);
 	else
 		echo_with_new_line(cmd);
+	return (0);
 }

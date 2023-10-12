@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/10 17:58:37 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:07:53 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 
 	current_file = mini->cmd->files;
 	in_fds = 0;
+	printf("SEARCHING FOR FILE\n");
 	out_fds = 1;
 	loop_files(current_file, &in_fds, &out_fds);
 	if (out_fds != 1)

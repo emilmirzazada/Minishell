@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/12 13:19:38 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:02:26 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,22 @@ static int	execute_command(t_minishell *mini)
 		return (execute_program(mini));
 }
 
+static void	free_command(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->args[i])
+		free(cmd->args[i++]);
+	free(cmd->args);
+	free(cmd);
+	cmd = NULL;
+}
+
 int	execute_commands(t_minishell *mini)
 {
 	int		command_count;
+	t_cmd	*tmp;
 	int		status;
 	int		pid;
 	int		*pipe_fds;
@@ -73,18 +86,10 @@ int	execute_commands(t_minishell *mini)
 	j = 0;
 	while (mini->cmd)
 	{
-		// save_stdio(mini->std_io);
-		// configure_pipes(mini, pipe_fds, j);
 		printf("MAKING FORKS\n");
 		pid = fork();
 		if (pid == 0)
 		{
-			// if (mini->cmd->next)
-			// 	if (dup2(pipe_fds[j + 1], 1) < 0)
-			// 		exit(EXIT_FAILURE);
-			// if (j != 0)
-			// 	if (dup2(pipe_fds[j - 2], 0) < 0)
-			// 		exit(EXIT_FAILURE);
 			configure_pipes(mini, pipe_fds, j);
 			if (clean_pipes(pipe_fds, command_count * 2) == -1)
 				exit(EXIT_FAILURE);
@@ -92,8 +97,9 @@ int	execute_commands(t_minishell *mini)
 		}
 		else if (pid < 0)
 			exit(EXIT_FAILURE);
-		// load_stdio(mini->std_io);
+		tmp = mini->cmd;
 		mini->cmd = mini->cmd->next;
+		free_command(tmp);
 		j += 2;
 	}
 	printf("Finished Execution\n");

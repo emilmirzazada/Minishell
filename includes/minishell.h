@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 13:20:13 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:50:26 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
-//builtins
-void	echo (t_cmd *cmd);
-
 //expansion
 char	*expand(t_minishell *mini, char *s);
 int		expansion_end_check(char *s, char *check);
@@ -105,6 +102,7 @@ char	*get_name(char *s, int i);
 char	*last_command_exit_code(char c, int *i);
 
 // builtins
+int		echo (t_cmd *cmd);
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *cmd);
 char	*find_env(t_env *lst, char *key);
