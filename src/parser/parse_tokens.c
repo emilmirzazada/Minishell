@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 12:46:25 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:20:21 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_cmd	*finalize_cmd(t_minishell *mini, t_cmd *cmd, t_lex **lex, int *cmd_argc)
 {
 	if (*lex && ((*lex)->token == TOK_PIPE))
 	{
-		cmd->cmd = cmd->args[0];
+		cmd->name = cmd->args[0];
 		cmd->args[*cmd_argc] = 0;
 		cmd = init_new_command(mini, *lex, cmd_argc);
 	}
@@ -44,7 +44,7 @@ t_cmd	*finalize_cmd(t_minishell *mini, t_cmd *cmd, t_lex **lex, int *cmd_argc)
 	{
 		if (!((*lex)->next))
 		{
-			cmd->cmd = cmd->args[0];
+			cmd->name = cmd->args[0];
 			cmd->args[*cmd_argc] = 0;
 			return (NULL);
 		}
@@ -53,7 +53,7 @@ t_cmd	*finalize_cmd(t_minishell *mini, t_cmd *cmd, t_lex **lex, int *cmd_argc)
 	}
 	else
 	{
-		cmd->cmd = cmd->args[0];
+		cmd->name = cmd->args[0];
 		cmd->args[*cmd_argc] = 0;
 	}
 	return (cmd);
@@ -61,7 +61,7 @@ t_cmd	*finalize_cmd(t_minishell *mini, t_cmd *cmd, t_lex **lex, int *cmd_argc)
 
 void	parse_cmd_args(t_cmd *new_cmd, t_lex **lex, int *cmd_argc)
 {
-	while (*lex && (*lex)->token != TOK_PIPE && (*lex)->token == TOK_WORD)
+	while (*lex && (*lex)->token != TOK_PIPE && (*lex)->token == TOK_ARG)
 	{
 		new_cmd->args[(*cmd_argc)++] = ft_strdup((*lex)->value);
 		if ((*lex)->next && (*lex)->next->token != TOK_OUT)

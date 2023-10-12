@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 12:45:51 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:48:43 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_cmd_args_malloc(t_cmd *cmd, t_lex *lex)
 
 	temp = lex;
 	argc = 0;
-	while (lex && lex->token != TOK_WORD)
+	while (lex && lex->token != TOK_ARG)
 		lex = lex->next;
 	while (lex && lex->token != TOK_PIPE)
 	{

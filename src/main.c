@@ -6,16 +6,12 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 12:44:36 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:18:26 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_commands(t_minishell *mini)
-{
-	t_cmd	*tmp;
-	char	**tmp_args;
 void	print_commands(t_minishell *mini)
 {
 	t_cmd	*tmp;
@@ -51,8 +47,9 @@ void	run_minishell(t_minishell *mini, char *input)
 	mini->lex = NULL;
 	mini->cmd = NULL;
 	ft_lookup_input(mini, input);
-	printf("EXIT_CODE = %d\n", execute_commands(mini));
-	free(input);
+	print_commands(mini);
+	//printf("EXIT_CODE = %d\n", execute_commands(mini));
+	//free(input);
 }
 
 int	main(int ac, char **av, char **env)
@@ -70,11 +67,10 @@ int	main(int ac, char **av, char **env)
 		input = readline("\e[32m💀💀💀Minishell :\e[0m");
 		init_interactive_signals();
 		if (ft_strlen(input) > 0)
-				add_history(input);
+			add_history(input);
 		if (!input)
 			exit_minishell(input);
 		run_minishell(&mini, input);
-		free(input);
 	}
 	return (0);
 }

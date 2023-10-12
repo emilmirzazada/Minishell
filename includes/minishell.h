@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 12:42:35 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:20:13 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_stdio
 
 typedef enum s_token
 {
-	TOK_ARG = 'A',
+	TOK_ARG = 'G',
 	TOK_PIPE = '|',
 	TOK_IN = '<',
 	TOK_OUT = '>',
@@ -69,7 +69,7 @@ typedef struct s_file
 
 typedef struct s_cmd
 {
-	char			*cmd;
+	char			*name;
 	int				exit_code;
 	t_file			*files;
 	char			*path;

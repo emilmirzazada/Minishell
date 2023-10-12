@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:06:01 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 12:46:01 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:48:29 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	handle_heredoc_token(t_cmd *cmd, t_lex **lex)
 		return (1);
 	}
 	*lex = (*lex)->next;
-	if ((*lex)->token != TOK_WORD)
+	if ((*lex)->token != TOK_ARG)
 	{
 		ft_putstr_fd("Provide delimiter for heredoc\n", 2);
 		return (1);

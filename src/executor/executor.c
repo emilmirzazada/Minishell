@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/11 21:16:01 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:19:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	getexitstatus(int waitstatus)
 
 static int	execute_command(t_minishell *mini)
 {
-	if (is_builtin(mini->cmd->cmd))
+	if (is_builtin(mini->cmd->name))
 		return (execute_builtin(mini));
 	else
 		return (execute_program(mini));
@@ -59,7 +59,7 @@ int	execute_commands(t_minishell *mini)
 	printf("EXECUTING COMMAND\n");
 	command_count = count_commands(mini);
 	printf("COUNTED COMMANDS\n");
-	if (command_count == 1 && is_builtin(mini->cmd->cmd))
+	if (command_count == 1 && is_builtin(mini->cmd->name))
 	{
 		printf("IS BUILTIN\n");
 		save_stdio(mini->std_io);
