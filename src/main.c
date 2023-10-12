@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/09 20:11:25 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:30:43 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,7 @@ void	run_minishell(t_minishell *mini, char *input)
 	mini->lex = NULL;
 	mini->cmd = NULL;
 	ft_lookup_input(mini, input);
-	if (!ft_strncmp(input, "exit", ft_strlen(input)) && \
-		ft_strlen(input) == 4)
-		exit_minishell(input);
-	if (!ft_strncmp(input, "env", ft_strlen(input)) && \
-		ft_strlen(input) == 3)
-		ft_env(mini);
-	print_commands(mini);
-	//printf("EXIT_CODE = %d\n", execute_commands(mini));
+	printf("EXIT_CODE = %d\n", execute_commands(mini));
 	free(input);
 }
 

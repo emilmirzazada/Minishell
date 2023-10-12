@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:05:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/10 15:43:22 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:02:39 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ static char	*search_paths(char **paths, char *cmd)
 	return (NULL);
 }
 
+void	free_paths(char **paths)
+{
+	int	i;
+
+	i = 0;
+	while (paths[i])
+		free(paths[i++]);
+	free(paths);
+}
+
 char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env)
 {
 	char	**paths;
@@ -51,6 +61,6 @@ char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env)
 	}
 	paths = ft_split(path_env, ':');
 	file_name = search_paths(paths, cmd.cmd);
-	// TODO free paths
+	free_paths(paths);
 	return (file_name);
 }
