@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:10:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/12 14:51:20 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:24:51 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	execute_builtin(t_minishell *mini)
 	char	*name;
 
 	name = mini->cmd->name;
-	if (strcmp(name, "env") == 0)
+	if (ft_strcmp(name, "env") == 0)
 		return (1);
 	if (ft_strcmp(name, "echo") == 0)
 		return (echo(mini->cmd));
@@ -35,7 +35,7 @@ int	is_builtin(char *name)
 {
 	if (!name)
 		return (0);
-	if (strcmp(name, "env") == 0)
+	if (ft_strcmp(name, "env") == 0)
 		return (1);
 	if (ft_strcmp(name, "echo") == 0)
 		return (1);
