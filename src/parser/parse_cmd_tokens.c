@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 15:12:15 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/13 11:28:13 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_cmd_args_malloc(t_cmd *cmd, t_lex *lex)
 			argc++;
 		lex = lex->next;
 	}
-	cmd->args = malloc(sizeof(char **) * (argc + 2));
+	cmd->args = ft_calloc(sizeof(char **) , (argc + 2));
 	if (!(cmd->args))
 		return (1);
 	return (0);

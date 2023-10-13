@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 15:12:22 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/13 11:28:22 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	parse_cmd_files(t_cmd *cmd, t_lex **temp)
 
 t_cmd	*finalize_cmd(t_minishell *mini, t_cmd *cmd, t_lex **lex, int *cmd_argc)
 {
+	cmd->name = NULL;
 	if (*lex && ((*lex)->token == TOK_PIPE))
 	{
 		cmd->name = cmd->args[0];

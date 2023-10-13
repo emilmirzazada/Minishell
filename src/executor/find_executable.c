@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:05:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/12 13:19:58 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:21:45 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env)
 	char	*dot_slash;
 
 	dot_slash = "./";
-	if (cmd.name[0] == '/' && access(cmd.name, F_OK) == 0)
+	if (cmd.name && cmd.name[0] == '/' && access(cmd.name, F_OK) == 0)
 		return (cmd.name);
 	if (ft_strncmp(cmd.name, dot_slash, 3) == 0)
 	{
