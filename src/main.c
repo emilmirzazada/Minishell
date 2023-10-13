@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 18:23:12 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:28:56 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void	print_commands(t_minishell *mini)
 		}
 		printf("%s\n", tmp->name);
 		ft_putstr_fd("\nfiles \n", 2);
-		while (tmp->files)
-		{
-			if (tmp->files->name)
-				ft_putstr_fd(tmp->files->name, 2);
-			if (tmp->files->delimeter)
-				ft_putstr_fd(tmp->files->delimeter, 2);
-			ft_putstr_fd("\n", 2);
-			tmp->files = tmp->files->next;
-		}
+		// while (tmp->files)
+		// {
+		// 	if (tmp->files->name)
+		// 		ft_putstr_fd(tmp->files->name, 2);
+		// 	if (tmp->files->delimeter)
+		// 		ft_putstr_fd(tmp->files->delimeter, 2);
+		// 	ft_putstr_fd("\n", 2);
+		// 	tmp->files = tmp->files->next;
+		// }
 		ft_putstr_fd("\nNew\n", 2);
 		tmp = tmp->next;
 	}
