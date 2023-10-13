@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/12 15:07:53 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:18:58 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 			if (*out_fds != 1)
 				close(*out_fds);
 			*out_fds = open(current_file->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			printf("OUTFDS = %d\n", *out_fds);
+		}
+		if (current_file->token == TOK_APPEND)
+		{
+			if (*out_fds != 1)
+				close(*out_fds);
+			*out_fds = open(current_file->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
 			printf("OUTFDS = %d\n", *out_fds);
 		}
 		current_file = current_file->next;
