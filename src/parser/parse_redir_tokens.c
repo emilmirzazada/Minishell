@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:06:01 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/13 13:35:52 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 13:25:31 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,16 @@ int	handle_redir_tokens(t_cmd *cmd, t_lex **lex)
 	token = (*lex)->token;
 	if (!((*lex)->next))
 	{
-		ft_putstr_fd("Minishell: Unexpected token", 2);
+		ft_putstr_fd("Minishell: Unexpected token\n", 2);
 		return (1);
 	}
 	create_file(cmd, token, (*lex)->next->value);
 	*lex = (*lex)->next;
+	if (*lex && (*lex)->token != TOK_ARG)
+	{
+		ft_putstr_fd("Minishell: Unexpected token\n", 2);
+		return (1);
+	}
 	(*lex)->token = token;
 	return (0);
 }
