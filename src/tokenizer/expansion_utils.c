@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 17:19:01 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:32:03 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,10 @@ char	*expand_dollar_special(char c, int *i)
 	}
 	else if (c == ' ')
 	{
-		value = malloc(3 * sizeof(char));
-		value[0] = '$';
-		value[1] = ' ';
-		value[2] = '\0';
+		value = ft_strdup("$ ");
 		*i = *i + 1;
 	}
 	else if (c == '\0')
-	{
-		value = malloc(2 * sizeof(char));
-		value[0] = '$';
-		value[1] = '\0';
-	}
+		value = ft_strdup("$");
 	return (value);
 }
