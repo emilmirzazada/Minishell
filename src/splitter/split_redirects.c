@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:52:00 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 13:40:57 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:36:07 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,15 @@ char	*add_space_before_redir(char *old_str, char *new_str)
 {
 	int		i;
 	char	*temp;
-	char	quote;
 
 	i = -1;
 	while (old_str[++i])
 	{
-		if (old_str[i] == '\'' || old_str[i] == '\"')
-		{
-			quote = old_str[i++];
-			while (old_str[i] && old_str[i] != quote)
-				i++;
-		}
+		i = skip_quotes(old_str, i);
 		if (old_str[i] == '<' || old_str[i] == '>')
 		{
-			if (i > 0 && old_str[i - 1] != ' ' && (old_str[i - 1] != '<' && old_str[i - 1] != '>'))
+			if (i > 0 && old_str[i - 1] != ' ' && (old_str[i - 1] != '<'
+					&& old_str[i - 1] != '>'))
 			{
 				temp = old_str;
 				old_str = add_char_to_string(temp, new_str, ' ', i);
@@ -75,21 +70,15 @@ char	*add_space_after_redir(char *old_str, char *new_str)
 {
 	int		i;
 	char	*temp;
-	char	quote;
 
 	i = -1;
-	printf("%s\n", old_str);
 	while (old_str[++i])
 	{
-		if (old_str[i] == '\'' || old_str[i] == '\"')
-		{
-			quote = old_str[i++];
-			while (old_str[i] && old_str[i] != quote)
-				i++;
-		}
+		i = skip_quotes(old_str, i);
 		if (old_str[i] == '<' || old_str[i] == '>')
 		{
-			if (old_str[i + 1] != ' ' && (old_str[i + 1] != '<' && old_str[i + 1] != '>'))
+			if (old_str[i + 1] != ' ' && (old_str[i + 1] != '<'
+					&& old_str[i + 1] != '>'))
 			{
 				temp = old_str;
 				old_str = add_char_to_string(temp, new_str, ' ', i + 1);

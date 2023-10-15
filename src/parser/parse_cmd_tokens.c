@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 17:22:02 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:22:58 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_cmd_args_malloc(t_cmd *cmd, t_lex *lex)
 			argc++;
 		lex = lex->next;
 	}
-	cmd->args = ft_calloc(sizeof(char **) , (argc + 2));
+	cmd->args = ft_calloc(sizeof(char **), (argc + 2));
 	if (!(cmd->args))
 		return (1);
 	return (0);
