@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/02 22:44:25 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 13:17:56 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,44 @@ char	**ft_wordout(char *s, char **buf, int i, char *temp)
 	return (buf);
 }
 
+int	check_quotes(char *s)
+{
+	bool	double_quote;
+	bool	single_quote;
+	int		i;
+
+	i = -1;
+	double_quote = 0;
+	single_quote = 0;
+	while (s[++i] != '\0')
+	{
+		if (s[i] == '\'' && !double_quote && !single_quote)
+			single_quote = 1;
+		else if (s[i] == '\'' && !double_quote && single_quote)
+			single_quote = false;
+		else if (s[i] == '"' && !double_quote && !single_quote)
+			double_quote = 1;
+		else if (s[i] == '"' && double_quote && !single_quote)
+			double_quote = false;
+	}
+	if (double_quote)
+		return (-1);
+	if (single_quote)
+		return (-1);
+	return (0);
+}
+
 char	**ft_input_split(char *s)
 {
 	int		i;
 	char	*start;
 	char	**buf;
 
+	if (check_quotes(s) == -1)
+	{
+		printf("Syntax error: Unclosed quote\n");
+		exit_minishell(NULL);
+	}
 	s = handle_redir_symbols(s);
 	i = 0;
 	if (!s || !ft_pcalloc((void **)(&buf), ft_wordlen(s) + 1, sizeof(char *)))
