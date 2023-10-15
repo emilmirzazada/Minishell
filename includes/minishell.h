@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 14:40:45 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:19:18 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		expansion_end_check(char *s, char *check);
 char	*place_value(char *temp, char *value, char *s);
 void	place_rest_of_string(char *s, char *temp, int *i, int *t);
 char	*get_name(char *s, int i);
-char	*last_command_exit_code(char c, int *i);
+char	*expand_dollar_special(char c, int *i);
 
 // builtins
 int		echo (t_cmd *cmd);

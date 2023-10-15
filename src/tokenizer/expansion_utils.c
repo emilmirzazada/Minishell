@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/14 23:31:51 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:19:01 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,17 @@ char	*get_name(char *s, int i)
 	return (name);
 }
 
-char	*last_command_exit_code(char c, int *i)
+char	*expand_dollar_special(char c, int *i)
 {
 	char	*value;
 
 	value = NULL;
-	if (c == '?')
+	if (c == '?' || c == '$')
 	{
-		value = ft_itoa(g_exit_code);
+		if (c == '?')
+			value = ft_itoa(g_exit_code);
+		else
+			value = ft_itoa(65717);
 		*i = *i + 1;
 	}
 	else if (c == ' ')
