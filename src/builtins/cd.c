@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:14:43 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/07 21:20:47 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:25:51 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	void	update_env(t_env *env, char *key, char *value)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = env;
 	while (tmp)
