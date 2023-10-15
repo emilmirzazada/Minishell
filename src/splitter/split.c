@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:21:07 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:30:40 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static size_t	ft_wordlen(char *s)
 	if (*s && ++cnt)
 		while (*s && !ft_isspace(*s))
 			++s;
-	while (*s && !is_end)
+	while (!is_end && *s)
 	{
 		mode = ft_check_special_chr(*s, *(s + 1), *(s - 1));
 		ft_shift_special_chr(&s, mode);
@@ -76,17 +76,17 @@ static char	**ft_wordfree(char **s, int i)
 	return (NULL);
 }
 
-char	**ft_wordout(char *s, char **buf, int i, char *temp)
+char	**ft_wordout(char *s, char **buf, int i)
 {
-	char	*from;
+	char	*start;
 	char	*mode;
 	bool	is_end;
 
 	is_end = false;
-	while (*s && !is_end)
+	while (!is_end && *s)
 	{
 		mode = ft_check_special_chr(*s, *(s + 1), *(s - 1));
-		from = ft_shift_special_chr(&s, mode);
+		start = ft_shift_special_chr(&s, mode);
 		if (ft_mode_equal(mode, "sp", 2) || ft_mode_equal(mode, "nan", 3))
 			ft_spec_chr_comb((char **)&s, mode, ft_mode_diff, &is_end);
 		else if (ft_mode_equal(mode, "sq", 2) || ft_mode_equal(mode, "dq", 2))
@@ -95,8 +95,7 @@ char	**ft_wordout(char *s, char **buf, int i, char *temp)
 			ft_spec_chr_comb((char **)&s, mode, ft_mode_equal, &is_end);
 		if (ft_mode_diff(mode, "sp", 2))
 		{
-			temp = ft_substr(from, 0, s - from);
-			buf[i] = ft_removechr(temp, '\\');
+			buf[i] = substring_argument(s, start, false);
 			if (!buf[i++])
 				return (ft_wordfree(buf, i));
 		}
@@ -127,9 +126,9 @@ char	**ft_input_split(char *s)
 		start = (char *)s;
 		while (*s && !ft_isspace(*s))
 			++s;
-		buf[i] = ft_substr(start, 0, (s - start));
+		buf[i] = substring_argument(s, start, true);
 		if (!buf[i++])
 			return (ft_wordfree(buf, i));
 	}
-	return (ft_wordout(s, buf, i, NULL));
+	return (ft_wordout(s, buf, i));
 }

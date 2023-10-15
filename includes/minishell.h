@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:40:21 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:31:07 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ void	free_set_null(void **ptr);
 int		skip_quotes(char *s, int i);
 int		check_quotes(char *s);
 bool	iterate_string(char **s, bool *is_end);
+char	*substring_argument(char *s, char *start, bool is_first);
 
 // tokenizer
 int	ft_lookup_input(t_minishell *mini, char *input);

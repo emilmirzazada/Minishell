@@ -6,11 +6,28 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:40:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:12:54 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:30:55 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*substring_argument(char *s, char *start, bool is_first)
+{
+	char	*temp;
+	char	*res;
+
+	res = NULL;
+	temp = ft_substr(start, 0, s - start);
+	if (ft_strcmp(temp, "'") && ft_strcmp(temp, "\""))
+	{
+		if (is_first == 1)
+			res = ft_removechr(temp, '\\');
+		else
+			res = temp;
+	}
+	return (res);
+}
 
 bool	iterate_string(char **s, bool *is_end)
 {
