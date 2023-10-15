@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 17:19:18 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:40:21 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*get_name(char *s, int i);
 char	*expand_dollar_special(char c, int *i);
 
 // builtins
-int		echo (t_cmd *cmd);
+int		ft_echo (t_cmd *cmd);
 void	ft_env_init(t_minishell *mini, char **env);
 int		ft_env(t_minishell *mini);
 char	*find_env(t_env *lst, char *key);
@@ -142,10 +142,13 @@ char	*handle_redir_symbols(char *s);
 bool	ft_isspace(int c);
 bool	ft_mode_equal(char *m1, char *m2, int len);
 bool	ft_mode_diff(char *m1, char *m2, int len);
-void	ft_shift_special_chr(char **s, char *mode);
+char	*ft_shift_special_chr(char **s, char *mode);
 char	*ft_check_special_chr(int c1, int c2, int c0);
 char	*ft_removechr(char	*str, char chr);
 void	free_set_null(void **ptr);
+int		skip_quotes(char *s, int i);
+int		check_quotes(char *s);
+bool	iterate_string(char **s, bool *is_end);
 
 // tokenizer
 int	ft_lookup_input(t_minishell *mini, char *input);
