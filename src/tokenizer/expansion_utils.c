@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 19:41:25 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/14 23:31:51 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ char	*place_value(char *temp, char *value, char *s)
 // single quotes and continues copying characters one by one afterward.
 void	place_rest_of_string(char *s, char *temp, int *i, int *t)
 {
-	if (s[*i] == '\'')
+	if (s[*i] && s[*i] == '\'')
 	{
 		temp[*t] = s[*i];
 		(*t)++;
 		(*i)++;
-		while (s[*i] != '\'')
+		while (s[*i] && s[*i] != '\'')
 		{
 			temp[*t] = s[*i];
 			(*t)++;
@@ -67,8 +67,11 @@ void	place_rest_of_string(char *s, char *temp, int *i, int *t)
 		}
 	}
 	temp[*t] = s[*i];
-	(*t)++;
-	(*i)++;
+	if (s[*i])
+	{
+		(*i)++;
+		(*t)++;
+	}
 }
 
 char	*get_name(char *s, int i)
