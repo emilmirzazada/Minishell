@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 14:50:26 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:40:45 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,21 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }				t_cmd;
 
-typedef struct s_minishell
-{
-	struct s_env	*env;
-	char			**env_arr;
-	t_stdio			std_io;
-	t_cmd			*cmd;
-	t_lex			*lex;
-}				t_minishell;
-
 typedef struct s_env
 {
 	char			*key;
 	char			*value;
 	struct s_env	*next;
 }				t_env;
+
+typedef struct s_minishell
+{
+	t_env			*env;
+	char			**env_arr;
+	t_stdio			std_io;
+	t_cmd			*cmd;
+	t_lex			*lex;
+}				t_minishell;
 
 //expansion
 char	*expand(t_minishell *mini, char *s);
@@ -104,7 +104,7 @@ char	*last_command_exit_code(char c, int *i);
 // builtins
 int		echo (t_cmd *cmd);
 void	ft_env_init(t_minishell *mini, char **env);
-int		ft_env(t_minishell *cmd);
+int		ft_env(t_minishell *mini);
 char	*find_env(t_env *lst, char *key);
 void	set_env_array(t_minishell *mini);
 int		ft_cd(t_minishell *mini, t_cmd *cmd);
@@ -148,6 +148,6 @@ char	*ft_removechr(char	*str, char chr);
 void	free_set_null(void **ptr);
 
 // tokenizer
-void	ft_lookup_input(t_minishell *mini, char *input);
+int	ft_lookup_input(t_minishell *mini, char *input);
 
 #endif
