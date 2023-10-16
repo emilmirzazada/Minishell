@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 14:50:26 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:55:23 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int		is_builtin(char *name);
 void	save_stdio(t_stdio std_io);
 void	load_stdio(t_stdio std_io);
 int		configure_pipes(t_minishell *mini, int *pipe_fds, int j);
+int		here_doc(char *delimiter);
 
 
 // parser
