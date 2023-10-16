@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:31:35 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/16 16:49:16 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:25:01 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	here_doc(char *delimiter)
 	{
 		line_len = ft_strlen(line);
 		temp = readline("heredoc>");
-		if (line_len == 0)
+		if (temp != NULL && line_len == 0)
 			line = ft_strdup(temp);
 		else if (line_len > 0)
 		{
@@ -40,5 +40,7 @@ int	here_doc(char *delimiter)
 		if (ft_strcmp(line + line_len, delimiter) == 0)
 			break ;
 	}
+	write(1, line, ft_strlen(line) - ft_strlen(delimiter));
+	free(line);
 	return (fd);
 }

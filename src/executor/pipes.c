@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/13 17:37:04 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:21:32 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 
 	if (in_fds != 0)
 	{
+		printf("IN FDS = %d\n", in_fds);
 		if (dup2(in_fds, 0) < 0)
 			exit(EXIT_FAILURE);
 	}
