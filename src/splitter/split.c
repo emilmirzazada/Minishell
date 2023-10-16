@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/02 22:44:25 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:30:40 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,12 @@ int	ft_spec_chr_comb(char **s, char *m1,
 	char	*m2;
 	int		cnt;
 
-	cnt = 0;
-	if (ft_mode_diff(m1, "sp", 2))
-		cnt++;
+	cnt = ft_mode_diff(m1, "sp", 2);
 	previous_chr = '\0';
 	while (!*is_end)
 	{
-		if (**s)
-			++(*s);
-		else
-		{
-			*is_end = true;
+		if (!iterate_string(s, is_end))
 			break ;
-		}
 		current_chr = **s;
 		if (current_chr == '\0')
 			next_chr = '\0';
@@ -60,7 +53,7 @@ static size_t	ft_wordlen(char *s)
 	if (*s && ++cnt)
 		while (*s && !ft_isspace(*s))
 			++s;
-	while (*s)
+	while (!is_end && *s)
 	{
 		mode = ft_check_special_chr(*s, *(s + 1), *(s - 1));
 		ft_shift_special_chr(&s, mode);
@@ -71,8 +64,6 @@ static size_t	ft_wordlen(char *s)
 		else if (ft_mode_equal(mode, "esq", 3) || ft_mode_equal(mode, "edq", 3))
 			cnt += ft_spec_chr_comb((char **)&s, mode, ft_mode_equal, &is_end);
 		ft_shift_special_chr(&s, mode);
-		if (is_end)
-			break ;
 	}
 	return (cnt);
 }
@@ -85,18 +76,17 @@ static char	**ft_wordfree(char **s, int i)
 	return (NULL);
 }
 
-char	**ft_wordout(char *s, char **buf, int i, char *temp)
+char	**ft_wordout(char *s, char **buf, int i)
 {
-	char	*from;
+	char	*start;
 	char	*mode;
 	bool	is_end;
 
 	is_end = false;
-	while (*s)
+	while (!is_end && *s)
 	{
 		mode = ft_check_special_chr(*s, *(s + 1), *(s - 1));
-		ft_shift_special_chr(&s, mode);
-		from = (char *)s;
+		start = ft_shift_special_chr(&s, mode);
 		if (ft_mode_equal(mode, "sp", 2) || ft_mode_equal(mode, "nan", 3))
 			ft_spec_chr_comb((char **)&s, mode, ft_mode_diff, &is_end);
 		else if (ft_mode_equal(mode, "sq", 2) || ft_mode_equal(mode, "dq", 2))
@@ -105,17 +95,13 @@ char	**ft_wordout(char *s, char **buf, int i, char *temp)
 			ft_spec_chr_comb((char **)&s, mode, ft_mode_equal, &is_end);
 		if (ft_mode_diff(mode, "sp", 2))
 		{
-			temp = ft_substr(from, 0, s - from);
-			buf[i] = ft_removechr(temp, '\\');
+			buf[i] = substring_argument(s, start, false);
 			if (!buf[i++])
 				return (ft_wordfree(buf, i));
 		}
 		ft_shift_special_chr(&s, mode);
-		if (is_end)
-			break ;
 	}
-	buf[i] = NULL;
-	return (buf);
+	return (buf[i] = NULL, buf);
 }
 
 char	**ft_input_split(char *s)
@@ -124,6 +110,11 @@ char	**ft_input_split(char *s)
 	char	*start;
 	char	**buf;
 
+	if (check_quotes(s) == -1)
+	{
+		printf("Minishell: Unclosed quote\n");
+		return (NULL);
+	}
 	s = handle_redir_symbols(s);
 	i = 0;
 	if (!s || !ft_pcalloc((void **)(&buf), ft_wordlen(s) + 1, sizeof(char *)))
@@ -135,9 +126,9 @@ char	**ft_input_split(char *s)
 		start = (char *)s;
 		while (*s && !ft_isspace(*s))
 			++s;
-		buf[i] = ft_substr(start, 0, (s - start));
+		buf[i] = substring_argument(s, start, true);
 		if (!buf[i++])
 			return (ft_wordfree(buf, i));
 	}
-	return (ft_wordout(s, buf, i, NULL));
+	return (ft_wordout(s, buf, i));
 }

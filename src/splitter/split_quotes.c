@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   special_chr_check.c                                :+:      :+:    :+:   */
+/*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:04:24 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/10 11:46:01 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:19:34 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ bool	ft_mode_diff(char *m1, char *m2, int len)
 	return (ft_strncmp(m1, m2, len));
 }
 
-void	ft_shift_special_chr(char **s, char *mode)
+char	*ft_shift_special_chr(char **s, char *mode)
 {
 	if (ft_mode_equal(mode, "sq", 2) || ft_mode_equal(mode, "dq", 2))
 		++(*s);
 	if (ft_mode_equal(mode, "esq", 3) || ft_mode_equal(mode, "edq", 3))
 		*s += 2;
+	return (*s);
 }
 
 char	*ft_check_special_chr(int c1, int c2, int c0)

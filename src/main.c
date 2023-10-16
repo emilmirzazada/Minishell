@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/13 17:16:23 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:36:21 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,48 @@ void	print_commands(t_minishell *mini)
 {
 	t_cmd	*tmp;
 	char	**tmp_args;
+	t_file	*file;
+	int		i;
 
 	tmp = mini->cmd;
+	i = 1;
 	while (tmp)
 	{
+		printf("\n\n%d.NEW CMD, Name: %s\n", i++, tmp->name);
 		tmp_args = tmp->args;
+		printf("ARGS: ");
 		while (*tmp_args)
 		{
-			ft_putstr_fd(*tmp_args, 2);
-			ft_putstr_fd("\n", 2);
+			printf("%s, ", *tmp_args);
 			tmp_args++;
 		}
-		printf("%s\n", tmp->name);
-		ft_putstr_fd("\nfiles \n", 2);
-		// while (tmp->files)
-		// {
-		// 	if (tmp->files->name)
-		// 		ft_putstr_fd(tmp->files->name, 2);
-		// 	if (tmp->files->delimeter)
-		// 		ft_putstr_fd(tmp->files->delimeter, 2);
-		// 	ft_putstr_fd("\n", 2);
-		// 	tmp->files = tmp->files->next;
-		// }
-		ft_putstr_fd("\nNew\n", 2);
+		printf("\nFILES: ");
+		file = tmp->files;
+		while (file)
+		{
+			if (file->name)
+				printf("Name: %s & token: %c,  ", file->name, file->token);
+			if (file->delimeter)
+				printf("Delimeter: %s & token: %c,  ", file->delimeter, file->token);
+			file = file->next;
+		}
 		tmp = tmp->next;
 	}
+	printf("\n\n\n");
 }
 
-void	run_minishell(t_minishell *mini, char *input)
+int	run_minishell(t_minishell *mini, char *input)
 {
 	mini->lex = NULL;
 	mini->cmd = NULL;
-	ft_lookup_input(mini, input);
-	print_commands(mini);
-	printf("EXIT_CODE = %d\n", execute_commands(mini));
+	if (ft_lookup_input(mini, input))
+		return (1);
+	else
+	{
+		print_commands(mini);
+		printf("EXIT_CODE = %d\n", execute_commands(mini));
+		return (0);
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -62,9 +70,10 @@ int	main(int ac, char **av, char **env)
 	ft_memset(&mini, 0, sizeof(mini));
 	ft_env_init(&mini, env);
 	override_ctrl_echo();
+	set_env_array(&mini);
 	while (1)
 	{
-		input = readline("\e[32m💀💀💀Minishell :\e[0m");
+		input = readline("Minishell: ");
 		init_interactive_signals();
 		if (ft_strlen(input) > 0)
 			add_history(input);
@@ -82,3 +91,11 @@ int	main(int ac, char **av, char **env)
 // > $NAME
 // afl++
 // < input grep Hello | cat -e > out
+// echo ''
+// > >> out
+//echo"hello"
+//echo "hello">>>out
+//echo "hello">>out
+//handle pipes
+//operator token in invalid combiantions (<<< , >>> , || , ...)
+// echo "hello" <in | echo "hello world" >output | echo <infdkjgdkfgd

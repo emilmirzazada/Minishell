@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/13 17:55:23 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:53:07 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,6 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }				t_cmd;
 
-typedef struct s_minishell
-{
-	struct s_env	*env;
-	char			**env_arr;
-	t_stdio			std_io;
-	t_cmd			*cmd;
-	t_lex			*lex;
-}				t_minishell;
-
 typedef struct s_env
 {
 	char			*key;
@@ -93,18 +84,27 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_minishell
+{
+	t_env			*env;
+	char			**env_arr;
+	t_stdio			std_io;
+	t_cmd			*cmd;
+	t_lex			*lex;
+}				t_minishell;
+
 //expansion
 char	*expand(t_minishell *mini, char *s);
 int		expansion_end_check(char *s, char *check);
 char	*place_value(char *temp, char *value, char *s);
 void	place_rest_of_string(char *s, char *temp, int *i, int *t);
 char	*get_name(char *s, int i);
-char	*last_command_exit_code(char c, int *i);
+char	*expand_dollar_special(char c, int *i);
 
 // builtins
-int		echo (t_cmd *cmd);
+int		ft_echo (t_cmd *cmd);
 void	ft_env_init(t_minishell *mini, char **env);
-int		ft_env(t_minishell *cmd);
+int		ft_env(t_minishell *mini);
 char	*find_env(t_env *lst, char *key);
 void	set_env_array(t_minishell *mini);
 int		ft_cd(t_minishell *mini, t_cmd *cmd);
@@ -143,12 +143,16 @@ char	*handle_redir_symbols(char *s);
 bool	ft_isspace(int c);
 bool	ft_mode_equal(char *m1, char *m2, int len);
 bool	ft_mode_diff(char *m1, char *m2, int len);
-void	ft_shift_special_chr(char **s, char *mode);
+char	*ft_shift_special_chr(char **s, char *mode);
 char	*ft_check_special_chr(int c1, int c2, int c0);
 char	*ft_removechr(char	*str, char chr);
 void	free_set_null(void **ptr);
+int		skip_quotes(char *s, int i);
+int		check_quotes(char *s);
+bool	iterate_string(char **s, bool *is_end);
+char	*substring_argument(char *s, char *start, bool is_first);
 
 // tokenizer
-void	ft_lookup_input(t_minishell *mini, char *input);
+int	ft_lookup_input(t_minishell *mini, char *input);
 
 #endif

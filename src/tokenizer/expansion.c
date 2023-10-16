@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 19:41:50 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:19:12 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@
 char	*ft_getenv(t_env *lst, char *key)
 {
 	char	*value;
+	t_env	*temp;
 
-	while (lst)
+	temp = lst;
+	while (temp)
 	{
-		if (ft_strncmp(key, lst->key, ft_strlen(lst->key)) == 0
-			&& ft_strlen(lst->key) == ft_strlen(key))
+		if (ft_strncmp(key, temp->key, ft_strlen(temp->key)) == 0
+			&& ft_strlen(temp->key) == ft_strlen(key))
 		{
-			return (ft_strdup(lst->value));
+			return (ft_strdup(temp->value));
 		}
-		lst = lst->next;
+		temp = temp->next;
 	}
 	value = malloc(1);
 	if (!value)
@@ -40,8 +42,8 @@ int	search_variable(t_minishell *mini, char *s, char **value)
 
 	i = 1;
 	name = NULL;
-	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0')
-		*value = last_command_exit_code(s[i], &i);
+	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0' || s[i] == '$')
+		*value = expand_dollar_special(s[i], &i);
 	else
 	{
 		i += expansion_end_check(&s[i], " <>|\"'$[]{}()");

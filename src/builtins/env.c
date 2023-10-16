@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:35:36 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/12 14:23:36 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:36:13 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_env(t_minishell *mini)
 	env = mini->env;
 	while (env)
 	{
-		if (env->value[0] != '\0')
+		if (env->value && env->value[0] != '\0')
 			printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
