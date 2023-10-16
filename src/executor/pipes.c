@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/13 17:18:58 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:37:04 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 			if (*in_fds != 0)
 				close(*in_fds);
 			*in_fds = open(current_file->name, O_RDONLY);
+			if (*in_fds == -1)
+			{
+				perror(current_file->name);
+				exit(EXIT_FAILURE);
+			}
+		}
+		if (current_file->token == TOK_HERE_DOC)
+		{
+			if (*in_fds != 0)
+				close(*in_fds);
+			*in_fds = here_doc(current_file->delimeter);
 			if (*in_fds == -1)
 			{
 				perror(current_file->name);

@@ -6,7 +6,7 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/15 17:40:25 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/16 16:52:34 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRC =	main \
 		signals/signals \
 		executor/executor \
 		executor/find_executable \
+		executor/heredoc \
 		executor/pipes \
 		executor/program_executor \
 		executor/builtin_executor \
