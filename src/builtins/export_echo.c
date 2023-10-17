@@ -6,13 +6,13 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:27:34 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 11:28:04 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:56:54 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_key(char *str)
+static char	*get_key(char *str)
 {
 	char	*sep;
 	char	*key;
@@ -22,7 +22,7 @@ char	*get_key(char *str)
 	return (key);
 }
 
-int	cmp_keys(char *env1, char *env2)
+static int	cmp_keys(char *env1, char *env2)
 {
 	char	*key1;
 	char	*key2;
@@ -39,7 +39,7 @@ int	cmp_keys(char *env1, char *env2)
 	return (res);
 }
 
-void	sort_env_arr(t_minishell *mini)
+static void	sort_env_arr(t_minishell *mini)
 {
 	int		i;
 	int		j;

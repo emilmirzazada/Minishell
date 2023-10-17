@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 11:22:48 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:07:28 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,3 +99,16 @@ int	main(int ac, char **av, char **env)
 //handle pipes
 //operator token in invalid combiantions (<<< , >>> , || , ...)
 // echo "hello" <in | echo "hello world" >output | echo <infdkjgdkfgd
+// refactor signals
+
+// bash-3.2$ echo hello"world"
+// helloworld
+// bash-3.2$ echo hello"world$PWD"'"$PWD"'
+// helloworld/Users/emirzaza/Desktop/42/CoreCurriculum/Projects"$PWD"
+// bash-3.2$ echo hello"'world$PWD'"'"$PWD"'
+// hello'world/Users/emirzaza/Desktop/42/CoreCurriculum/Projects'"$PWD"
+// bash-3.2$ echo >|< hello
+// bash: syntax error near unexpected token `<'
+// bash-3.2$ echo >< hello
+// bash: syntax error near unexpected token `<'
+// bash-3.2$ 

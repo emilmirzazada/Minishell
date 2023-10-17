@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 11:28:12 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:24:47 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ char	*expand_dollar_special(char c, int *i);
 // builtins
 int		ft_echo (t_cmd *cmd);
 t_env	*ft_env_init( char **env);
+t_env	*ft_setenv(char *env_str);
 int		ft_env(t_minishell *mini);
 char	*find_env(t_env *lst, char *key);
 void	set_env_array(t_minishell *mini);

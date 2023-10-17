@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:40:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/16 15:25:45 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:57:42 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*substring_argument(char *s, char *start, bool is_first)
 {
 	char	*temp;
 	char	*res;
-	
+
 	res = NULL;
 	temp = ft_substr(start, 0, s - start);
 	if (ft_strcmp(temp, "'") && ft_strcmp(temp, "\""))
