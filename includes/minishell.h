@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 15:24:47 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:22:12 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+
+# define HEREDOC_FILE "/tmp/minishell_heredoc"
 
 int		g_exit_code;
 
@@ -113,6 +115,10 @@ int		ft_cd(t_minishell *mini, t_cmd *cmd);
 int		ft_pwd(void);
 int		ft_export(t_minishell *mini, t_cmd *cmd);
 void	export_echo_sorted(t_minishell *mini);
+
+// cleaner
+void	perror_exit(char *str, t_minishell *mini, int exit_code);
+void	free_mini(t_minishell *mini);
 
 // executor
 int		execute_commands(t_minishell *mini);

@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 15:07:28 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:22:21 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int ac, char **av, char **env)
 		init_interactive_signals();
 		if (ft_strlen(input) > 0)
 			add_history(input);
-		if (!input)
+		if (!input || ft_strcmp(input, "exit") == 0)
 			exit_minishell(input);
 		run_minishell(&mini, input);
 	}

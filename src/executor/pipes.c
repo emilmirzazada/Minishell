@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/16 17:21:32 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:13:28 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ int	*create_pipes(int pipe_count)
 	int	i;
 
 	pipe_fds = (int *) ft_calloc(2 * pipe_count + 1, sizeof(pipe_fds));
+	if (!pipe_fds)
+		return (NULL);
 	i = 0;
 	while (i < pipe_count)
 	{
 		if (pipe(pipe_fds + i * 2) < 0)
 		{
-			perror("couldn't pipe");
-			exit(EXIT_FAILURE);
+			return (NULL);
 		}
 		i++;
 	}
@@ -119,8 +120,6 @@ int	clean_pipes(int *pipes, int size)
 	while (i < size)
 	{
 		return_value = close(pipes[i]);
-		if (return_value == -1)
-			return (-1);
 		i++;
 	}
 	return (0);

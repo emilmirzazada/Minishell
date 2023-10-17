@@ -6,13 +6,14 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/17 11:27:17 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/17 17:22:00 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 SRC =	main \
 		signals/signals \
+		cleaner/free_mini \
 		executor/executor \
 		executor/find_executable \
 		executor/heredoc \

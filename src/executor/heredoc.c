@@ -6,41 +6,38 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:31:35 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/16 17:25:01 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:56:48 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	get_all_lines(char *delimiter, int fd)
+{
+	char	*temp;
+
+	while (true)
+	{
+		temp = readline("heredoc>");
+		if (ft_strcmp(temp, delimiter) == 0)
+			break ;
+		write(fd, temp, ft_strlen(temp));
+		write(fd, "\n", 1);
+		free(temp);
+	}
+	free(temp);
+}
+
 int	here_doc(char *delimiter)
 {
 	int		fd;
-	int		line_len;
-	char	*line;
-	char	*old_line;
-	char	*temp;
 
-	fd = open("/tmp/minishell_heredoc", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	fd = open(HEREDOC_FILE, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 		exit(-500);
-	line = NULL;
-	while (true)
-	{
-		line_len = ft_strlen(line);
-		temp = readline("heredoc>");
-		if (temp != NULL && line_len == 0)
-			line = ft_strdup(temp);
-		else if (line_len > 0)
-		{
-			old_line = line;
-			line = ft_strjoin(line, temp);
-			free(old_line);
-		}
-		free(temp);
-		if (ft_strcmp(line + line_len, delimiter) == 0)
-			break ;
-	}
-	write(1, line, ft_strlen(line) - ft_strlen(delimiter));
-	free(line);
+	get_all_lines(delimiter, fd);
+	fd = open(HEREDOC_FILE, O_RDONLY);
+	if (fd == -1)
+		exit(-500);
 	return (fd);
 }
