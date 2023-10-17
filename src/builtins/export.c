@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:49:34 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 17:19:50 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:25:34 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ static bool	validate_arg(char *str)
 	if (temp[0] == '=')
 	{
 		free(temp);
-		return (printf("Invalid identifier for export\n"), false);
+		return (false);
 	}
 	while (temp[++i] && temp[i] != '=')
 	{
 		if ((ft_isalpha(temp[i]) == 1) || ft_isdigit(temp[i]) == 1)
-			return (printf("Invalid identifier for export\n"), false);
+			return (false);
 		if (ft_strchr("!@#$%^&*()+-", temp[i]) || ft_isspace(temp[i]) == 1)
-			return (printf("Invalid identifier for export\n"), false);
+			return (false);
 	}
 	free(temp);
 	return (true);
@@ -51,7 +51,7 @@ static int	export_args(t_minishell *mini, t_cmd *cmd)
 			ft_envadd_back(&mini->env, env);
 		}
 		else
-			exit(1); // replace with perror_and_exit
+			perror_exit("Invalid identifier for export\n", mini, 1);
 	}
 	return (0);
 }
