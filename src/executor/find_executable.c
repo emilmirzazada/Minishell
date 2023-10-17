@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:05:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/14 23:55:24 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:26:56 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*search_paths(char **paths, char *cmd)
 	char	*slash;
 
 	slash = "/";
-	while (*paths)
+	while (paths && *paths)
 	{
 		tmp = ft_strjoin(slash, cmd);
 		file_name = ft_strjoin(*paths, tmp);

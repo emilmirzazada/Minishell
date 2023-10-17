@@ -6,19 +6,21 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:49:34 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 17:25:34 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 22:07:05 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	validate_arg(char *str)
+bool	validate_arg(char *str)
 {
 	int		i;
 	char	*temp;
+	bool	first_char_is_set;
 
 	i = -1;
 	temp = ft_strtrim(str, "'");
+	first_char_is_set = 0;
 	if (!temp)
 		return (false);
 	if (temp[0] == '=')
@@ -28,7 +30,9 @@ static bool	validate_arg(char *str)
 	}
 	while (temp[++i] && temp[i] != '=')
 	{
-		if ((ft_isalpha(temp[i]) == 1) || ft_isdigit(temp[i]) == 1)
+		if ((first_char_is_set == false) && (ft_isalpha(temp[i]) == 1))
+			first_char_is_set = true;
+		if (first_char_is_set == false && ft_isdigit(temp[i]) == 1)
 			return (false);
 		if (ft_strchr("!@#$%^&*()+-", temp[i]) || ft_isspace(temp[i]) == 1)
 			return (false);
@@ -53,6 +57,7 @@ static int	export_args(t_minishell *mini, t_cmd *cmd)
 		else
 			perror_exit("Invalid identifier for export\n", mini, 1);
 	}
+	set_env_array(mini);
 	return (0);
 }
 

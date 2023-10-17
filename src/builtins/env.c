@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:35:36 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 17:16:51 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 22:09:16 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,14 @@ t_env	*ft_setenv(char *env_str)
 	key = ft_substr(env_str, 0, sep - env_str);
 	if (sep)
 		value = ft_substr(sep + 1, 0, ft_strlen(sep + 1));
-	env = (t_env *)malloc(sizeof(t_env));
-	ft_bzero(env, sizeof(*env));
+	env = (t_env *)ft_calloc(sizeof(t_env), 1);
 	if (!env)
 		return (NULL);
 	env->key = ft_strdup(key);
 	if (!value)
 		env->value = ft_strdup("");
 	else
-	{
-		if (value)
-			env->value = ft_strdup(value);
-		else
-			value = NULL;
-	}
+		env->value = ft_strdup(value);
 	free(key);
 	free(value);
 	env->next = NULL;

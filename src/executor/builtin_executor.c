@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:10:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/17 10:51:43 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 22:12:03 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	execute_builtin(t_minishell *mini)
 	if (ft_strcmp(name, "echo") == 0)
 		return (ft_echo(mini->cmd));
 	if (ft_strcmp(name, "cd") == 0)
-		return (1);
+		return (ft_cd(mini, mini->cmd));
 	if (ft_strcmp(name, "pwd") == 0)
 		return (ft_pwd());
 	if (ft_strcmp(name, "export") == 0)
 		return (ft_export(mini, mini->cmd));
 	if (ft_strcmp(name, "unset") == 0)
-		return (1);
+		return (ft_unset(mini, mini->cmd));
 }
 
 int	is_builtin(char *name)

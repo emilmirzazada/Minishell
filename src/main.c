@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 17:22:21 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:49:47 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,3 +112,5 @@ int	main(int ac, char **av, char **env)
 // bash-3.2$ echo >< hello
 // bash: syntax error near unexpected token `<'
 // bash-3.2$ 
+
+//env > out | export

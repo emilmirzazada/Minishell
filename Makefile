@@ -6,7 +6,7 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/17 17:22:00 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/17 17:40:32 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC =	main \
 		builtins/env \
 		builtins/env_tools \
 		builtins/cd \
+		builtins/unset \
 		builtins/pwd \
 		builtins/echo \
 		builtins/export \
