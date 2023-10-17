@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/16 16:53:07 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:28:12 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,15 @@ char	*expand_dollar_special(char c, int *i);
 
 // builtins
 int		ft_echo (t_cmd *cmd);
-void	ft_env_init(t_minishell *mini, char **env);
+t_env	*ft_env_init( char **env);
 int		ft_env(t_minishell *mini);
 char	*find_env(t_env *lst, char *key);
 void	set_env_array(t_minishell *mini);
+void	ft_envadd_back(t_env **lst, t_env *new);
 int		ft_cd(t_minishell *mini, t_cmd *cmd);
 int		ft_pwd(void);
+int		ft_export(t_minishell *mini, t_cmd *cmd);
+void	export_echo_sorted(t_minishell *mini);
 
 // executor
 int		execute_commands(t_minishell *mini);

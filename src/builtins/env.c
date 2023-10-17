@@ -6,16 +6,22 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:35:36 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 14:36:13 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:24:05 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ft_setenv(char *key, char *value)
+t_env	*ft_setenv(char *env_str)
 {
 	t_env	*env;
+	char	*key;
+	char	*value;
+	char	*sep;
 
+	sep = ft_strchr(env_str, '=');
+	key = ft_substr(env_str, 0, sep - env_str);
+	value = ft_substr(sep + 1, 0, ft_strlen(sep + 1));
 	env = (t_env *)malloc(sizeof(t_env));
 	ft_bzero(env, sizeof(*env));
 	if (!env)
@@ -25,6 +31,8 @@ t_env	*ft_setenv(char *key, char *value)
 		env->value = ft_strdup("");
 	else
 		env->value = ft_strdup(value);
+	free(key);
+	free(value);
 	env->next = NULL;
 	return (env);
 }
@@ -74,28 +82,20 @@ void	ft_envadd_back(t_env **lst, t_env *new)
 	*ptr = new;
 }
 
-void	ft_env_init(t_minishell *mini, char **env)
+t_env	*ft_env_init(char **env)
 {
 	t_env	*tmp;
-	char	*key;
-	char	*value;
-	char	*sep;
 	int		i;
+	t_env	*lst;
 
 	if (!env)
-	{
-		return ;
-	}
-	mini->env = NULL;
+		return (NULL);
+	lst = NULL;
 	i = -1;
 	while (env[++i])
 	{
-		sep = ft_strchr(env[i], '=');
-		key = ft_substr(env[i], 0, sep - env[i]);
-		value = ft_substr(sep + 1, 0, ft_strlen(sep + 1));
-		tmp = ft_setenv(key, value);
-		ft_envadd_back(&mini->env, tmp);
-		free(key);
-		free(value);
+		tmp = ft_setenv(env[i]);
+		ft_envadd_back(&lst, tmp);
 	}
+	return (lst);
 }

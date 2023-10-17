@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:36:21 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:22:48 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	ft_memset(&mini, 0, sizeof(mini));
-	ft_env_init(&mini, env);
+	mini.env = ft_env_init(env);
 	override_ctrl_echo();
 	set_env_array(&mini);
 	while (1)

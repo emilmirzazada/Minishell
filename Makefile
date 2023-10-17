@@ -6,7 +6,7 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/16 16:52:34 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/17 11:27:17 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ SRC =	main \
 		builtins/cd \
 		builtins/pwd \
 		builtins/echo \
+		builtins/export \
+		builtins/export_echo \
 		tokenizer/tokenizer \
 		tokenizer/expansion \
 		tokenizer/expansion_utils \
