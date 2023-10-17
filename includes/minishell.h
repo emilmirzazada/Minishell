@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 10:39:06 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:05:03 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,10 @@ char	*find_env(t_env *lst, char *key);
 void	set_env_array(t_minishell *mini);
 int		ft_cd(t_minishell *mini, t_cmd *cmd);
 int		ft_pwd(void);
+
+// cleaner
+void	perror_exit(char *str, t_minishell *mini, int exit_code);
+void	free_mini(t_minishell *mini);
 
 // executor
 int		execute_commands(t_minishell *mini);

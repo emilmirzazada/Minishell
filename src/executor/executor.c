@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/12 15:02:26 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:10:27 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ int	execute_commands(t_minishell *mini)
 	int		*pipe_fds;
 	int		j;
 
-	printf("EXECUTING COMMAND\n");
 	command_count = count_commands(mini);
-	printf("COUNTED COMMANDS\n");
 	if (command_count == 1 && is_builtin(mini->cmd->name))
 	{
 		printf("IS BUILTIN\n");
@@ -80,8 +78,9 @@ int	execute_commands(t_minishell *mini)
 		load_stdio(mini->std_io);
 		return (status);
 	}
-	printf("CREATING PIPES\n");
 	pipe_fds = create_pipes(command_count);
+	if (pipe_fds == NULL)
+		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	printf("CREATED PIPES\n");
 	j = 0;
 	while (mini->cmd)
@@ -92,20 +91,21 @@ int	execute_commands(t_minishell *mini)
 		{
 			configure_pipes(mini, pipe_fds, j);
 			if (clean_pipes(pipe_fds, command_count * 2) == -1)
-				exit(EXIT_FAILURE);
+				perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
 			execute_command(mini);
 		}
 		else if (pid < 0)
-			exit(EXIT_FAILURE);
+			perror_exit("Couldn't fork", mini, EXIT_FAILURE);
 		tmp = mini->cmd;
 		mini->cmd = mini->cmd->next;
 		free_command(tmp);
 		j += 2;
 	}
-	printf("Finished Execution\n");
-	clean_pipes(pipe_fds, command_count * 2);
+	if (clean_pipes(pipe_fds, command_count * 2) == -1)
+		perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
 	j = 0;
 	while (j++ < command_count + 1)
 		wait(&status);
+	printf("Finished Execution\n");
 	return (getexitstatus(status));
 }
