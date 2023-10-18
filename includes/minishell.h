@@ -6,18 +6,17 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/18 21:32:45 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/18 21:38:07 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 # define READLINE_LIBRARY
 
 # include <stdbool.h>
-#include <errno.h>
-#include <termios.h>
+# include <errno.h>
+# include <termios.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
@@ -113,6 +112,8 @@ int		ft_cd(t_minishell *mini, t_cmd *cmd);
 int		ft_pwd(void);
 int		ft_export(t_minishell *mini, t_cmd *cmd);
 void	export_echo_sorted(t_minishell *mini);
+bool	validate_arg(char *str);
+int		ft_unset(t_minishell *mini, t_cmd *cmd);
 
 // cleaner
 void	perror_exit(char *str, t_minishell *mini, int exit_code);

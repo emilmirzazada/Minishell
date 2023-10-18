@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:55:02 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 13:16:35 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/18 21:32:26 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,20 @@ static void	interactive_signal_handler(int sign)
 	}
 }
 
-void	non_interactive_signal_handler(int sign)
+static void	non_interactive_signal_handler(int sign)
 {
 	if (sign == SIGINT)
 	{
-		g_exit_code = 128 + sign;
-		write(1, "\n", 1);
+		g_exit_code = sign;
 		rl_replace_line("", 0);
 	}
 	else if (sign == SIGQUIT)
 	{
-		g_exit_code = 128 + sign;
-		ft_putstr_fd("Quit\n", 1);
+		g_exit_code = sign;
+		ft_putstr_fd("Quit: ", STDERR_FILENO);
+		ft_putnbr_fd(sign, STDERR_FILENO);
+		write(STDIN_FILENO, "\n", 1);
+		rl_replace_line("", 0);
 	}
 }
 
