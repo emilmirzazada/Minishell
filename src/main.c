@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/18 21:28:43 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/18 21:52:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,22 @@ int	run_minishell(t_minishell *mini, char *input)
 	}
 }
 
+void	increase_shlvl(t_minishell *mini)
+{
+	t_env	*env;
+	char	*env_val;
+	int		shlvl;
+
+	env_val = find_env(mini->env, "SHLVL");
+	if (env_val)
+		shlvl = ft_atoi(env_val);
+	else
+		shlvl = 0;
+	shlvl++;
+	env = ft_setenv(ft_strdup("SHLVL"), ft_itoa(shlvl));
+	ft_envadd_back(&mini->env, env);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char				*input;
@@ -71,6 +87,7 @@ int	main(int ac, char **av, char **env)
 	mini.env = ft_env_init(env);
 	override_ctrl_echo();
 	set_env_array(&mini);
+	increase_shlvl(&mini);
 	init_interactive_signals();
 	while (1)
 	{
@@ -116,3 +133,5 @@ int	main(int ac, char **av, char **env)
 // bash-3.2$ 
 
 //env > out | export
+// ./minishell inside minishell gives command not found
+// AND TEST INCREASE SHLVL AFTER FIXING THE ABOVE ONE

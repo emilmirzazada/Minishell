@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:49:34 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 22:07:05 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/18 21:45:57 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	export_args(t_minishell *mini, t_cmd *cmd)
 	{
 		if (validate_arg(cmd->args[i]))
 		{
-			env = ft_setenv(cmd->args[i]);
+			env = ft_set_raw_env(cmd->args[i]);
 			ft_envadd_back(&mini->env, env);
 		}
 		else
