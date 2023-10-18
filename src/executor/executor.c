@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/18 21:31:45 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/18 21:36:37 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	getexitstatus(int waitstatus)
 static int	execute_command(t_minishell *mini)
 {
 	if (is_builtin(mini->cmd->name))
-		return (execute_builtin(mini));
+		exit(execute_builtin(mini));
 	else
 		return (execute_program(mini));
 }
@@ -70,17 +70,21 @@ int	execute_commands(t_minishell *mini)
 	int		j;
 
 	command_count = count_commands(mini);
+	pipe_fds = create_pipes(command_count);
+	create_heredocs(mini);
+	if (pipe_fds == NULL)
+		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	if (command_count == 1 && is_builtin(mini->cmd->name))
 	{
 		printf("IS BUILTIN\n");
 		save_stdio(mini->std_io);
+		configure_pipes(mini, pipe_fds, 0);
+		if (clean_pipes(pipe_fds, command_count * 2) == -1)
+			perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
 		status = execute_builtin(mini);
 		load_stdio(mini->std_io);
 		return (status);
 	}
-	pipe_fds = create_pipes(command_count);
-	if (pipe_fds == NULL)
-		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	printf("CREATED PIPES\n");
 	j = 0;
 	while (mini->cmd)
