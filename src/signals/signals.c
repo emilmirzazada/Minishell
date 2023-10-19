@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:55:02 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 13:39:18 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:57:15 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	non_interactive_signal_handler(int sign)
 
 void	init_interactive_signals(void)
 {
+	override_ctrl_echo();
 	signal(SIGINT, interactive_signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

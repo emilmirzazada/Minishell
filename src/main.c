@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 13:50:51 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:57:06 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	print_commands(t_minishell *mini)
 
 int	run_minishell(t_minishell *mini, char *input)
 {
+	add_history(input);
 	mini->lex = NULL;
 	mini->cmd = NULL;
 	if (ft_lookup_input(mini, input))
@@ -60,7 +61,7 @@ int	run_minishell(t_minishell *mini, char *input)
 	}
 }
 
-void	increase_shlvl(t_minishell *mini)
+void	handle_shlvl(t_minishell *mini, int flag)
 {
 	t_env	*env;
 	char	*env_val;
@@ -69,9 +70,13 @@ void	increase_shlvl(t_minishell *mini)
 	env_val = find_env(mini->env, "SHLVL");
 	if (!env_val || !ft_atoi(env_val, &shlvl))
 		shlvl = 0;
-	shlvl++;
+	if (flag == 1)
+		shlvl++;
+	else if (flag == -1 && shlvl > 0)
+		shlvl--;
 	env = ft_setenv(ft_strdup("SHLVL"), ft_itoa(shlvl));
 	ft_envadd_back(&mini->env, env);
+	set_env_array(mini);
 }
 
 int	main(int ac, char **av, char **env)
@@ -83,20 +88,19 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	ft_memset(&mini, 0, sizeof(mini));
 	mini.env = ft_env_init(env);
-	override_ctrl_echo();
 	set_env_array(&mini);
-	increase_shlvl(&mini);
+	handle_shlvl(&mini, 1);
 	init_interactive_signals();
 	while (1)
 	{
 		input = readline("Minishell: ");
 		if (!input)
-			clean_exit(&mini, 0);
-		if (ft_strlen(input) > 0 && input[0] != '\0')
 		{
-			add_history(input);
-			run_minishell(&mini, input);
+			handle_shlvl(&mini, -1);
+			clean_exit(&mini, 0);
 		}
+		if (ft_strlen(input) > 0 && input[0] != '\0')
+			run_minishell(&mini, input);
 	}
 	return (0);
 }
