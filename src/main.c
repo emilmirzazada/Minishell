@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/18 21:52:38 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:43:56 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,10 @@ void	increase_shlvl(t_minishell *mini)
 {
 	t_env	*env;
 	char	*env_val;
-	int		shlvl;
+	long	shlvl;
 
 	env_val = find_env(mini->env, "SHLVL");
-	if (env_val)
-		shlvl = ft_atoi(env_val);
-	else
+	if (!env_val || !ft_atoi(env_val, &shlvl))
 		shlvl = 0;
 	shlvl++;
 	env = ft_setenv(ft_strdup("SHLVL"), ft_itoa(shlvl));
@@ -93,7 +91,7 @@ int	main(int ac, char **av, char **env)
 	{
 		input = readline("Minishell: ");
 		if (!input || ft_strcmp(input, "exit") == 0)
-			exit_minishell(input);
+			free_mini(&mini);
 		if (ft_strlen(input) > 0 && input[0] != '\0')
 		{
 			add_history(input);

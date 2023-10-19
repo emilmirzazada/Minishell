@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/18 21:56:36 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:38:41 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int		ft_export(t_minishell *mini, t_cmd *cmd);
 void	export_echo_sorted(t_minishell *mini);
 bool	validate_arg(char *str);
 int		ft_unset(t_minishell *mini, t_cmd *cmd);
+int		ft_exit(t_minishell *mini, t_cmd *cmd);
 
 // cleaner
 void	perror_exit(char *str, t_minishell *mini, int exit_code);
@@ -143,7 +144,7 @@ t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc);
 void	create_file(t_cmd *cmd, t_token token, char *name);
 
 // signals
-void	init_interactive_signals();
+void	init_interactive_signals(void);
 void	init_non_interactive_signals(void);
 void	override_ctrl_echo(void);
 void	exit_minishell(char *input);

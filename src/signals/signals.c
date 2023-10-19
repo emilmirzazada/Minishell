@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:55:02 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/18 21:32:26 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:39:18 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	non_interactive_signal_handler(int sign)
 	}
 }
 
-void	init_interactive_signals()
+void	init_interactive_signals(void)
 {
 	signal(SIGINT, interactive_signal_handler);
 	signal(SIGQUIT, SIG_IGN);
@@ -51,14 +51,6 @@ void	init_non_interactive_signals(void)
 {
 	signal(SIGINT, &non_interactive_signal_handler);
 	signal(SIGQUIT, &non_interactive_signal_handler);
-}
-
-void	exit_minishell(char *input)
-{
-	printf("Exitingg\n");
-	if (input)
-		free(input);
-	exit(1);
 }
 
 void	override_ctrl_echo(void)
@@ -84,4 +76,3 @@ void	override_ctrl_echo(void)
 		tcsetattr(STDERR_FILENO, TCSANOW, &term);
 	}
 }
- 
