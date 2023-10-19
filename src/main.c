@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 17:32:12 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:54:55 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	run_minishell(t_minishell *mini, char *input)
 	return (0);
 }
 
-void	handle_shlvl(t_minishell *mini, int flag)
+void	handle_shlvl(t_minishell *mini)
 {
 	t_env	*env;
 	char	*env_val;
@@ -32,10 +32,7 @@ void	handle_shlvl(t_minishell *mini, int flag)
 	env_val = find_env(mini->env, "SHLVL");
 	if (!env_val || !ft_atoi(env_val, &shlvl))
 		shlvl = 0;
-	if (flag == 1)
-		shlvl++;
-	else if (flag == -1 && shlvl > 0)
-		shlvl--;
+	shlvl++;
 	env = ft_setenv(ft_strdup("SHLVL"), ft_itoa(shlvl));
 	ft_envadd_back(&mini->env, env);
 	set_env_array(mini);
@@ -51,16 +48,13 @@ int	main(int ac, char **av, char **env)
 	ft_memset(&mini, 0, sizeof(mini));
 	mini.env = ft_env_init(env);
 	set_env_array(&mini);
-	handle_shlvl(&mini, 1);
+	handle_shlvl(&mini);
 	init_interactive_signals();
 	while (1)
 	{
 		input = readline("Minishell: ");
 		if (!input)
-		{
-			handle_shlvl(&mini, -1);
 			clean_exit(&mini, 0);
-		}
 		if (ft_strlen(input) > 0 && input[0] != '\0')
 			run_minishell(&mini, input);
 	}
