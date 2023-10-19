@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:19:35 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 17:24:14 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:28:55 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
@@ -48,7 +49,7 @@ int		ft_strcmp(char *str1, char *str2);
 void	*ft_memchr(const void *str, int c, size_t n);
 int		ft_memcmp(const void *str1, const void *str2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
-long	ft_atoi(const char *str);
+bool	ft_atoi(const char *str, long *num);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_pcalloc(void **ptr, size_t cnt, size_t n);
 char	*ft_strdup(const char *s);

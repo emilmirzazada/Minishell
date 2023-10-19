@@ -6,13 +6,13 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:35:36 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 22:09:16 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/18 21:45:27 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ft_setenv(char *env_str)
+t_env	*ft_set_raw_env(char *env_str)
 {
 	t_env	*env;
 	char	*key;
@@ -94,7 +94,7 @@ t_env	*ft_env_init(char **env)
 	i = -1;
 	while (env[++i])
 	{
-		tmp = ft_setenv(env[i]);
+		tmp = ft_set_raw_env(env[i]);
 		ft_envadd_back(&lst, tmp);
 	}
 	return (lst);

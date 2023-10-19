@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/18 21:38:07 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:49:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ char	*expand_dollar_special(char c, int *i);
 // builtins
 int		ft_echo (t_cmd *cmd);
 t_env	*ft_env_init( char **env);
-t_env	*ft_setenv(char *env_str);
+t_env	*ft_set_raw_env(char *env_str);
+t_env	*ft_setenv(char *key, char *value);
 int		ft_env(t_minishell *mini);
 char	*find_env(t_env *lst, char *key);
 void	set_env_array(t_minishell *mini);
@@ -114,10 +115,12 @@ int		ft_export(t_minishell *mini, t_cmd *cmd);
 void	export_echo_sorted(t_minishell *mini);
 bool	validate_arg(char *str);
 int		ft_unset(t_minishell *mini, t_cmd *cmd);
+int		ft_exit(t_minishell *mini, t_cmd *cmd);
 
 // cleaner
 void	perror_exit(char *str, t_minishell *mini, int exit_code);
 void	free_mini(t_minishell *mini);
+void	clean_exit(t_minishell *mini, int exit_code);
 
 // executor
 int		execute_commands(t_minishell *mini);
@@ -142,7 +145,7 @@ t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc);
 void	create_file(t_cmd *cmd, t_token token, char *name);
 
 // signals
-void	init_interactive_signals();
+void	init_interactive_signals(void);
 void	init_non_interactive_signals(void);
 void	override_ctrl_echo(void);
 void	exit_minishell(char *input);
