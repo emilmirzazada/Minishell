@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 19:15:28 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:57:23 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	execute_commands(t_minishell *mini)
 
 	command_count = count_commands(mini);
 	pipe_fds = create_pipes(command_count);
-	create_heredocs(mini);
+	if (mini->cmd)
+		create_heredocs(mini);
 	if (pipe_fds == NULL)
 		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	if (command_count == 1 && is_builtin(mini->cmd->name))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 17:54:55 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:27:19 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	run_minishell(t_minishell *mini, char *input)
 	mini->cmd = NULL;
 	if (ft_lookup_input(mini, input))
 		return (1);
-	execute_commands(mini);
+	g_exit_code = execute_commands(mini);
 	return (0);
 }
 
