@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 17:29:30 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:29:01 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ int	*create_pipes(int pipe_count)
 
 static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 {
+	printf("loop_files\n");
 	while (current_file)
 	{
+		printf("current_file->token: %d\n", current_file->token);
 		if (current_file->token == TOK_IN)
 		{
-			if (*in_fds != 0)
-				close(*in_fds);
+			close(*in_fds);
 			*in_fds = open(current_file->name, O_RDONLY);
 			if (*in_fds == -1)
 			{
@@ -49,20 +50,18 @@ static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 		}
 		if (current_file->token == TOK_HERE_DOC)
 		{
-			if (*in_fds != 0)
-				close(*in_fds);
+			close(*in_fds);
 			*in_fds = current_file->fds;
 		}
 		if (current_file->token == TOK_OUT)
 		{
-			if (*out_fds != 1)
-				close(*out_fds);
+			printf("current_file->name: %s\n", current_file->name);
+			close(*out_fds);
 			*out_fds = open(current_file->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		}
 		if (current_file->token == TOK_APPEND)
 		{
-			if (*out_fds != 1)
-				close(*out_fds);
+			close(*out_fds);
 			*out_fds = open(current_file->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		}
 		current_file = current_file->next;
@@ -79,10 +78,12 @@ int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 	int		out_fds;
 
 	current_file = mini->cmd->files;
+	printf("current_file->name: %s\n", current_file->name);
 	in_fds = 0;
 	out_fds = 1;
 	if (loop_files(current_file, &in_fds, &out_fds) == -1)
 		return (-1);
+	printf("in_fds: %d\n", in_fds);
 	if (out_fds != 1)
 	{
 		if (dup2(out_fds, 1) < 0)
