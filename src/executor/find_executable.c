@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_executable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:05:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/17 20:26:56 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:05:18 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,8 @@ char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env)
 	char	*dot_slash;
 
 	dot_slash = "./";
-	if (cmd.name && cmd.name[0] == '/' && access(cmd.name, F_OK) == 0)
+	if (cmd.name && access(cmd.name, F_OK) == 0)
 		return (cmd.name);
-	if (cmd.name && ft_strncmp(cmd.name, dot_slash, 3) == 0)
-	{
-		file_name = ft_strjoin(pwd, &cmd.name[1]);
-		printf("%s", file_name);
-		if (access(file_name, F_OK) == 0)
-			return (file_name);
-	}
 	paths = ft_split(path_env, ':');
 	file_name = search_paths(paths, cmd.name);
 	free_paths(paths);
