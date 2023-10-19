@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:31:35 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/18 21:32:11 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:51:23 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,26 @@ void	create_heredocs(t_minishell *mini)
 	t_cmd	*tmp_cmd;
 	int		cmd_count;
 	char	*cmd_count_str;
-	char	*file_name;
+	char	*f_name;
+	t_cmd	temp_cmd;
 
-	tmp_cmd = mini->cmd;
-	cmd_count = 0;
+	temp_cmd = *mini->cmd;
+	tmp_cmd = &temp_cmd;
+	cmd_count = -1;
 	while (tmp_cmd)
 	{
 		while (tmp_cmd->files)
 		{
 			if (tmp_cmd->files->token == TOK_HERE_DOC)
 			{
-				cmd_count_str = ft_itoa(cmd_count);
-				file_name = ft_strjoin("/tmp/minishell_heredoc", cmd_count_str);
+				cmd_count_str = ft_itoa(++cmd_count);
+				f_name = ft_strjoin("/tmp/minishell_heredoc", cmd_count_str);
 				free(cmd_count_str);
-				tmp_cmd->files->fds = here_doc(
-						tmp_cmd->files->delimeter,
-						file_name);
+				tmp_cmd->files->fds = here_doc(tmp_cmd->files->delimeter,
+						f_name);
 			}
 			tmp_cmd->files = tmp_cmd->files->next;
 		}
-		cmd_count++;
 		tmp_cmd = tmp_cmd->next;
 	}
 }
