@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/17 18:22:42 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:43:38 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@ static int	is_directory(char *path)
 
 int	execute_program(t_minishell *mini)
 {
-	char	*pwd;
 	char	*path;
 
-	pwd = getcwd(NULL, 0);
 	path = find_env(mini->env, "PATH");
 	if (is_directory(mini->cmd->name))
 	{
@@ -33,7 +31,7 @@ int	execute_program(t_minishell *mini)
 		perror_exit(mini->cmd->name, mini, 126);
 	}
 	if (path != NULL)
-		mini->cmd->path = get_executable_path(*mini->cmd, pwd, path);
+		mini->cmd->path = get_executable_path(*mini->cmd, path);
 	if (!mini->cmd->path && mini->cmd->name)
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -42,6 +40,7 @@ int	execute_program(t_minishell *mini)
 		free_mini(mini);
 		exit(127);
 	}
+	printf("PATH = %s", mini->cmd->path);
 	if (!mini->cmd->name)
 		exit(0);
 	execve(mini->cmd->path, mini->cmd->args, mini->env_arr);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 13:49:38 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:30:37 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	clean_exit(t_minishell *mini, int exit_code);
 int		execute_commands(t_minishell *mini);
 int		*create_pipes(int pipe_count);
 int		clean_pipes(int *pipes, int size);
-char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env);
+char	*get_executable_path(t_cmd cmd, const char	*path_env);
 int		execute_builtin(t_minishell *mini);
 int		execute_program(t_minishell *mini);
 int		is_builtin(char *name);

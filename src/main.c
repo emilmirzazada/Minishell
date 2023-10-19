@@ -3,48 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 16:57:06 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:32:12 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_commands(t_minishell *mini)
-{
-	t_cmd	*tmp;
-	char	**tmp_args;
-	t_file	*file;
-	int		i;
-
-	tmp = mini->cmd;
-	i = 1;
-	while (tmp)
-	{
-		printf("\n\n%d.NEW CMD, Name: %s\n", i++, tmp->name);
-		tmp_args = tmp->args;
-		printf("ARGS: ");
-		while (*tmp_args)
-		{
-			printf("%s, ", *tmp_args);
-			tmp_args++;
-		}
-		printf("\nFILES: ");
-		file = tmp->files;
-		while (file)
-		{
-			if (file->name)
-				printf("Name: %s & token: %c,  ", file->name, file->token);
-			if (file->delimeter)
-				printf("Delimeter: %s & token: %c,  ", file->delimeter, file->token);
-			file = file->next;
-		}
-		tmp = tmp->next;
-	}
-	printf("\n\n\n");
-}
 
 int	run_minishell(t_minishell *mini, char *input)
 {
@@ -53,12 +19,8 @@ int	run_minishell(t_minishell *mini, char *input)
 	mini->cmd = NULL;
 	if (ft_lookup_input(mini, input))
 		return (1);
-	else
-	{
-		print_commands(mini);
-		printf("EXIT_CODE = %d\n", execute_commands(mini));
-		return (0);
-	}
+	execute_commands(mini);
+	return (0);
 }
 
 void	handle_shlvl(t_minishell *mini, int flag)

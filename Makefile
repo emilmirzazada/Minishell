@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
+#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/18 22:15:35 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/19 17:31:09 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,8 +49,8 @@ SRC_DIR = src/
 LIBFT = ./libft
 READLINE_PATH = ${PWD}/readline
 RM = rm -rf
-CC = gcc
-CFLAGS = -g -Wall -Wextra -fsanitize=address
+CC = cc
+CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address
 
 SRCS = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))

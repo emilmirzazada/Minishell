@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/18 21:36:37 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:25:50 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int	count_commands(t_minishell *mini)
 		cmd_count++;
 		tmp = tmp->next;
 	}
-	printf("COMMAND COUNT = %d", cmd_count);
 	return (cmd_count);
 }
 
@@ -76,7 +75,6 @@ int	execute_commands(t_minishell *mini)
 		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	if (command_count == 1 && is_builtin(mini->cmd->name))
 	{
-		printf("IS BUILTIN\n");
 		save_stdio(mini->std_io);
 		configure_pipes(mini, pipe_fds, 0);
 		if (clean_pipes(pipe_fds, command_count * 2) == -1)
@@ -85,11 +83,9 @@ int	execute_commands(t_minishell *mini)
 		load_stdio(mini->std_io);
 		return (status);
 	}
-	printf("CREATED PIPES\n");
 	j = 0;
 	while (mini->cmd)
 	{
-		printf("MAKING FORKS\n");
 		pid = fork();
 		if (pid == 0)
 		{
@@ -111,6 +107,5 @@ int	execute_commands(t_minishell *mini)
 	j = 0;
 	while (j++ < command_count + 1)
 		wait(&status);
-	printf("Finished Execution\n");
 	return (getexitstatus(status));
 }

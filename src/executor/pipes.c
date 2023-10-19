@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/18 21:32:58 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:29:30 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 {
 	while (current_file)
 	{
-		printf("FILES = %s\n", current_file->name);
-		printf("TOKEN = %u\n", current_file->token);
-		printf("TOKEN OUT = %d\n", TOK_OUT);
 		if (current_file->token == TOK_IN)
 		{
 			if (*in_fds != 0)
@@ -61,16 +58,16 @@ static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 			if (*out_fds != 1)
 				close(*out_fds);
 			*out_fds = open(current_file->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			printf("OUTFDS = %d\n", *out_fds);
 		}
 		if (current_file->token == TOK_APPEND)
 		{
 			if (*out_fds != 1)
 				close(*out_fds);
 			*out_fds = open(current_file->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
-			printf("OUTFDS = %d\n", *out_fds);
 		}
 		current_file = current_file->next;
+		if (*in_fds == -1 || *out_fds == -1)
+			return (-1);
 	}
 	return (1);
 }
@@ -83,9 +80,9 @@ int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 
 	current_file = mini->cmd->files;
 	in_fds = 0;
-	printf("SEARCHING FOR FILE\n");
 	out_fds = 1;
-	loop_files(current_file, &in_fds, &out_fds);
+	if (loop_files(current_file, &in_fds, &out_fds) == -1)
+		return (-1);
 	if (out_fds != 1)
 	{
 		if (dup2(out_fds, 1) < 0)
@@ -97,13 +94,13 @@ int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 
 	if (in_fds != 0)
 	{
-		printf("IN FDS = %d\n", in_fds);
 		if (dup2(in_fds, 0) < 0)
 			exit(EXIT_FAILURE);
 	}
 	else if (j != 0)
 		if (dup2(pipe_fds[j - 2], in_fds) < 0)
 			exit(EXIT_FAILURE);
+	return (1);
 }
 
 int	clean_pipes(int *pipes, int size)

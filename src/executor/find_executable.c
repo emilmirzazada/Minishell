@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:05:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 15:05:18 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:47:40 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*search_paths(char **paths, char *cmd)
 		tmp = ft_strjoin(slash, cmd);
 		file_name = ft_strjoin(*paths, tmp);
 		free(tmp);
-		if (access(file_name, F_OK) == 0)
+		if (access(file_name, X_OK) == 0)
 			return (file_name);
 		free(file_name);
 		paths++;
@@ -43,14 +43,16 @@ void	free_paths(char **paths)
 	free(paths);
 }
 
-char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env)
+char	*get_executable_path(t_cmd cmd, const char	*path_env)
 {
 	char	**paths;
 	char	*file_name;
 	char	*dot_slash;
 
 	dot_slash = "./";
-	if (cmd.name && access(cmd.name, F_OK) == 0)
+	if (cmd.name
+		&& ft_strncmp(dot_slash, cmd.name, 2) == 0
+		&& access(cmd.name, X_OK) == 0)
 		return (cmd.name);
 	paths = ft_split(path_env, ':');
 	file_name = search_paths(paths, cmd.name);
