@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 13:43:56 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:50:51 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		input = readline("Minishell: ");
-		if (!input || ft_strcmp(input, "exit") == 0)
-			free_mini(&mini);
+		if (!input)
+			clean_exit(&mini, 0);
 		if (ft_strlen(input) > 0 && input[0] != '\0')
 		{
 			add_history(input);

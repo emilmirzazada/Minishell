@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 13:38:41 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:49:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int		ft_exit(t_minishell *mini, t_cmd *cmd);
 // cleaner
 void	perror_exit(char *str, t_minishell *mini, int exit_code);
 void	free_mini(t_minishell *mini);
+void	clean_exit(t_minishell *mini, int exit_code);
 
 // executor
 int		execute_commands(t_minishell *mini);
