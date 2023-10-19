@@ -6,10 +6,9 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 17:25:50 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:35:00 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -39,7 +38,7 @@ static int	getexitstatus(int waitstatus)
 	return (exitstatus);
 }
 
-static int	execute_command(t_minishell *mini)
+int	execute_command(t_minishell *mini)
 {
 	if (is_builtin(mini->cmd->name))
 		exit(execute_builtin(mini));
@@ -47,7 +46,7 @@ static int	execute_command(t_minishell *mini)
 		return (execute_program(mini));
 }
 
-static void	free_command(t_cmd *cmd)
+void	free_command(t_cmd *cmd)
 {
 	int	i;
 
@@ -62,50 +61,25 @@ static void	free_command(t_cmd *cmd)
 int	execute_commands(t_minishell *mini)
 {
 	int		command_count;
-	t_cmd	*tmp;
 	int		status;
-	int		pid;
 	int		*pipe_fds;
-	int		j;
+	int		i;
 
+	printf("files name: %s\n", mini->cmd->files->name);
 	command_count = count_commands(mini);
 	pipe_fds = create_pipes(command_count);
 	create_heredocs(mini);
+	printf("files name3: %s\n", mini->cmd->files->name);
 	if (pipe_fds == NULL)
 		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	if (command_count == 1 && is_builtin(mini->cmd->name))
-	{
-		save_stdio(mini->std_io);
-		configure_pipes(mini, pipe_fds, 0);
-		if (clean_pipes(pipe_fds, command_count * 2) == -1)
-			perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
-		status = execute_builtin(mini);
-		load_stdio(mini->std_io);
-		return (status);
-	}
-	j = 0;
-	while (mini->cmd)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			configure_pipes(mini, pipe_fds, j);
-			if (clean_pipes(pipe_fds, command_count * 2) == -1)
-				perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
-			init_non_interactive_signals();
-			execute_command(mini);
-		}
-		else if (pid < 0)
-			perror_exit("Couldn't fork", mini, EXIT_FAILURE);
-		tmp = mini->cmd;
-		mini->cmd = mini->cmd->next;
-		free_command(tmp);
-		j += 2;
-	}
+		return (execute_single_builtin(mini, pipe_fds, command_count));
+	printf("files name2: %s\n", mini->cmd->files->name);
+	loop_commands(mini, pipe_fds, command_count);
 	if (clean_pipes(pipe_fds, command_count * 2) == -1)
 		perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
-	j = 0;
-	while (j++ < command_count + 1)
+	i = 0;
+	while (i++ < command_count + 1)
 		wait(&status);
 	return (getexitstatus(status));
 }

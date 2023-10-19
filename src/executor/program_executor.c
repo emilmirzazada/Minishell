@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 17:43:38 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:32:27 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,38 @@ int	execute_program(t_minishell *mini)
 		free_mini(mini);
 		exit(127);
 	}
-	printf("PATH = %s", mini->cmd->path);
 	if (!mini->cmd->name)
 		exit(0);
 	execve(mini->cmd->path, mini->cmd->args, mini->env_arr);
 	perror_exit(mini->cmd->path, mini, 127);
 	return (-1);
+}
+
+int	loop_commands(t_minishell *mini, int *pipe_fds, int command_count)
+{
+	int		j;
+	int		pid;
+	t_cmd	*tmp;
+
+	j = 0;
+	printf("files name: %s\n", mini->cmd->files->name);
+	while (mini->cmd)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			configure_pipes(mini, pipe_fds, j);
+			if (clean_pipes(pipe_fds, command_count * 2) == -1)
+				perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
+			init_non_interactive_signals();
+			execute_command(mini);
+		}
+		else if (pid < 0)
+			perror_exit("Couldn't fork", mini, EXIT_FAILURE);
+		tmp = mini->cmd;
+		mini->cmd = mini->cmd->next;
+		free_command(tmp);
+		j += 2;
+	}
+	return (0);
 }

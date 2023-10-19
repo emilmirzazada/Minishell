@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 17:30:37 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:14:48 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,15 @@ int		*create_pipes(int pipe_count);
 int		clean_pipes(int *pipes, int size);
 char	*get_executable_path(t_cmd cmd, const char	*path_env);
 int		execute_builtin(t_minishell *mini);
+int		loop_commands(t_minishell *mini, int *pipe_fds, int command_count);
 int		execute_program(t_minishell *mini);
 int		is_builtin(char *name);
+int		execute_command(t_minishell *mini);
+void	free_command(t_cmd *cmd);
+int		execute_single_builtin(
+			t_minishell *mini,
+			int *pipe_fds,
+			int command_count);
 void	create_heredocs(t_minishell *mini);
 void	save_stdio(t_stdio std_io);
 void	load_stdio(t_stdio std_io);

@@ -6,12 +6,11 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:05:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 17:47:40 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:16:37 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static char	*search_paths(char **paths, char *cmd)
 {

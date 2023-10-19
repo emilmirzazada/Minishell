@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:10:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 15:59:33 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:57:56 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ int	is_builtin(char *name)
 	if (ft_strcmp(name, "exit") == 0)
 		return (1);
 	return (0);
+}
+
+int	execute_single_builtin(t_minishell *mini, int *pipe_fds, int command_count)
+{
+	int	status;
+
+	save_stdio(mini->std_io);
+	configure_pipes(mini, pipe_fds, 0);
+	if (clean_pipes(pipe_fds, command_count * 2) == -1)
+		perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
+	status = execute_builtin(mini);
+	load_stdio(mini->std_io);
+	return (status);
 }
