@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_executor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:10:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/17 22:12:03 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:36:30 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	execute_builtin(t_minishell *mini)
 		return (ft_export(mini, mini->cmd));
 	if (ft_strcmp(name, "unset") == 0)
 		return (ft_unset(mini, mini->cmd));
+	return (0);
 }
 
 int	is_builtin(char *name)
