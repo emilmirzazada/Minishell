@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/17 13:13:28 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/18 21:32:58 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,7 @@ static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 		{
 			if (*in_fds != 0)
 				close(*in_fds);
-			*in_fds = here_doc(current_file->delimeter);
-			if (*in_fds == -1)
-			{
-				perror(current_file->name);
-				exit(EXIT_FAILURE);
-			}
+			*in_fds = current_file->fds;
 		}
 		if (current_file->token == TOK_OUT)
 		{

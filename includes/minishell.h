@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 13:05:03 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:49:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 # define READLINE_LIBRARY
 
 # include <stdbool.h>
-#include <errno.h>
-#include <termios.h>
+# include <errno.h>
+# include <termios.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
@@ -32,8 +31,6 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
-
-# define HEREDOC_FILE "/tmp/minishell_heredoc"
 
 int		g_exit_code;
 
@@ -105,16 +102,25 @@ char	*expand_dollar_special(char c, int *i);
 
 // builtins
 int		ft_echo (t_cmd *cmd);
-void	ft_env_init(t_minishell *mini, char **env);
+t_env	*ft_env_init( char **env);
+t_env	*ft_set_raw_env(char *env_str);
+t_env	*ft_setenv(char *key, char *value);
 int		ft_env(t_minishell *mini);
 char	*find_env(t_env *lst, char *key);
 void	set_env_array(t_minishell *mini);
+void	ft_envadd_back(t_env **lst, t_env *new);
 int		ft_cd(t_minishell *mini, t_cmd *cmd);
 int		ft_pwd(void);
+int		ft_export(t_minishell *mini, t_cmd *cmd);
+void	export_echo_sorted(t_minishell *mini);
+bool	validate_arg(char *str);
+int		ft_unset(t_minishell *mini, t_cmd *cmd);
+int		ft_exit(t_minishell *mini, t_cmd *cmd);
 
 // cleaner
 void	perror_exit(char *str, t_minishell *mini, int exit_code);
 void	free_mini(t_minishell *mini);
+void	clean_exit(t_minishell *mini, int exit_code);
 
 // executor
 int		execute_commands(t_minishell *mini);
@@ -124,10 +130,11 @@ char	*get_executable_path(t_cmd cmd, const char *pwd, const char	*path_env);
 int		execute_builtin(t_minishell *mini);
 int		execute_program(t_minishell *mini);
 int		is_builtin(char *name);
+void	create_heredocs(t_minishell *mini);
 void	save_stdio(t_stdio std_io);
 void	load_stdio(t_stdio std_io);
 int		configure_pipes(t_minishell *mini, int *pipe_fds, int j);
-int		here_doc(char *delimiter);
+int		here_doc(char *delimiter, char *name);
 
 
 // parser
@@ -138,7 +145,7 @@ t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc);
 void	create_file(t_cmd *cmd, t_token token, char *name);
 
 // signals
-void	init_interactive_signals();
+void	init_interactive_signals(void);
 void	init_non_interactive_signals(void);
 void	override_ctrl_echo(void);
 void	exit_minishell(char *input);
