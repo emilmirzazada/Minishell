@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:52:00 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:36:07 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:08:21 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,5 @@ char	*handle_redir_symbols(char *s)
 	new_input = (char *)malloc((ft_strlen(s) + cnt_needed_sp(s) + 2)
 			* sizeof(char));
 	s = add_space_after_redir(s, new_input);
-	//TODO: any memory leaks here?
 	return (s);
 }

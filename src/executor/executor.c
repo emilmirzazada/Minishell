@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 18:35:00 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:15:28 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,13 @@ int	execute_commands(t_minishell *mini)
 	int		*pipe_fds;
 	int		i;
 
-	printf("files name: %s\n", mini->cmd->files->name);
 	command_count = count_commands(mini);
 	pipe_fds = create_pipes(command_count);
 	create_heredocs(mini);
-	printf("files name3: %s\n", mini->cmd->files->name);
 	if (pipe_fds == NULL)
 		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	if (command_count == 1 && is_builtin(mini->cmd->name))
 		return (execute_single_builtin(mini, pipe_fds, command_count));
-	printf("files name2: %s\n", mini->cmd->files->name);
 	loop_commands(mini, pipe_fds, command_count);
 	if (clean_pipes(pipe_fds, command_count * 2) == -1)
 		perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 18:32:27 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:15:46 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	loop_commands(t_minishell *mini, int *pipe_fds, int command_count)
 	t_cmd	*tmp;
 
 	j = 0;
-	printf("files name: %s\n", mini->cmd->files->name);
 	while (mini->cmd)
 	{
 		pid = fork();

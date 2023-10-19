@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 18:29:01 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:14:40 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,35 @@ int	*create_pipes(int pipe_count)
 
 static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 {
-	printf("loop_files\n");
 	while (current_file)
 	{
-		printf("current_file->token: %d\n", current_file->token);
-		if (current_file->token == TOK_IN)
-		{
-			close(*in_fds);
+		if (current_file->token == TOK_IN && close(*in_fds) == 0)
 			*in_fds = open(current_file->name, O_RDONLY);
-			if (*in_fds == -1)
-			{
-				perror(current_file->name);
-				exit(EXIT_FAILURE);
-			}
-		}
-		if (current_file->token == TOK_HERE_DOC)
-		{
-			close(*in_fds);
+		if (current_file->token == TOK_HERE_DOC && close(*in_fds) == 0)
 			*in_fds = current_file->fds;
-		}
 		if (current_file->token == TOK_OUT)
 		{
-			printf("current_file->name: %s\n", current_file->name);
 			close(*out_fds);
-			*out_fds = open(current_file->name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			*out_fds = open(current_file->name,
+					O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		}
 		if (current_file->token == TOK_APPEND)
 		{
 			close(*out_fds);
-			*out_fds = open(current_file->name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			*out_fds = open(current_file->name,
+					O_CREAT | O_WRONLY | O_APPEND, 0644);
 		}
 		current_file = current_file->next;
 		if (*in_fds == -1 || *out_fds == -1)
 			return (-1);
 	}
 	return (1);
+}
+
+static void	dup2_exit(int new, int old)
+{
+	if (dup2(new, old) < 0)
+		exit(EXIT_FAILURE);
 }
 
 int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
@@ -78,21 +72,14 @@ int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 	int		out_fds;
 
 	current_file = mini->cmd->files;
-	printf("current_file->name: %s\n", current_file->name);
 	in_fds = 0;
 	out_fds = 1;
 	if (loop_files(current_file, &in_fds, &out_fds) == -1)
 		return (-1);
-	printf("in_fds: %d\n", in_fds);
 	if (out_fds != 1)
-	{
-		if (dup2(out_fds, 1) < 0)
-			exit(EXIT_FAILURE);
-	}
+		dup2_exit(out_fds, 1);
 	else if (mini->cmd->next)
-		if (dup2(pipe_fds[j + 1], out_fds) < 0)
-			exit(EXIT_FAILURE);
-
+		dup2_exit(pipe_fds[j + 1], out_fds);
 	if (in_fds != 0)
 	{
 		if (dup2(in_fds, 0) < 0)
