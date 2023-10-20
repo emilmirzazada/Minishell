@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 19:14:40 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:12:59 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,26 @@ static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 {
 	while (current_file)
 	{
-		if (current_file->token == TOK_IN && close(*in_fds) == 0)
+		if (current_file->token == TOK_IN
+			|| current_file->token == TOK_HERE_DOC)
+			close(*in_fds);
+		if (current_file->token == TOK_IN)
 			*in_fds = open(current_file->name, O_RDONLY);
-		if (current_file->token == TOK_HERE_DOC && close(*in_fds) == 0)
+		if (current_file->token == TOK_HERE_DOC)
 			*in_fds = current_file->fds;
-		if (current_file->token == TOK_OUT)
-		{
+
+		if (current_file->token == TOK_OUT
+			|| current_file->token == TOK_APPEND)
 			close(*out_fds);
+		if (current_file->token == TOK_OUT)
 			*out_fds = open(current_file->name,
 					O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		}
 		if (current_file->token == TOK_APPEND)
-		{
-			close(*out_fds);
 			*out_fds = open(current_file->name,
 					O_CREAT | O_WRONLY | O_APPEND, 0644);
-		}
-		current_file = current_file->next;
 		if (*in_fds == -1 || *out_fds == -1)
 			return (-1);
+		current_file = current_file->next;
 	}
 	return (1);
 }
