@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:10:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 17:57:56 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:36:58 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,54 @@ int	is_builtin(char *name)
 	return (0);
 }
 
-int	execute_single_builtin(t_minishell *mini, int *pipe_fds, int command_count)
+static void	dup2_exit(int new, int old)
+{
+	if (dup2(new, old) < 0)
+		exit(EXIT_FAILURE);
+}
+
+static int	loop_files_builtin(
+			t_file *current_file,
+			int *in_fds,
+			int *out_fds)
+{
+	while (current_file)
+	{
+		if (current_file->token == TOK_IN
+			|| current_file->token == TOK_HERE_DOC)
+			close(*in_fds);
+		if (current_file->token == TOK_IN)
+			*in_fds = open(current_file->name, O_RDONLY);
+		if (current_file->token == TOK_HERE_DOC)
+			*in_fds = current_file->fds;
+		if (current_file->token == TOK_OUT
+			|| current_file->token == TOK_APPEND)
+			close(*out_fds);
+		if (current_file->token == TOK_OUT)
+			*out_fds = open(current_file->name,
+					O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (current_file->token == TOK_APPEND)
+			*out_fds = open(current_file->name,
+					O_CREAT | O_WRONLY | O_APPEND, 0644);
+		if (*in_fds == -1 || *out_fds == -1)
+			return (-1);
+		current_file = current_file->next;
+	}
+	return (1);
+}
+
+int	execute_single_builtin(t_minishell *mini)
 {
 	int	status;
+	int	in_fds;
+	int	out_fds;
 
 	save_stdio(mini->std_io);
-	configure_pipes(mini, pipe_fds, 0);
-	if (clean_pipes(pipe_fds, command_count * 2) == -1)
-		perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
+	in_fds = 0;
+	out_fds = 1;
+	loop_files_builtin(mini->cmd->files, &in_fds, &out_fds);
+	dup2_exit(out_fds, 1);
+	dup2_exit(in_fds, 0);
 	status = execute_builtin(mini);
 	load_stdio(mini->std_io);
 	return (status);

@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/20 16:02:49 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:37:21 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,7 @@ int		execute_program(t_minishell *mini);
 int		is_builtin(char *name);
 int		execute_command(t_minishell *mini);
 void	free_command(t_cmd *cmd);
-int		execute_single_builtin(
-			t_minishell *mini,
-			int *pipe_fds,
-			int command_count);
+int		execute_single_builtin(t_minishell *mini);
 void	create_heredocs(t_minishell *mini);
 void	save_stdio(t_stdio std_io);
 void	load_stdio(t_stdio std_io);
