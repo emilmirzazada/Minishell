@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/20 13:12:59 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:15:43 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 			*in_fds = open(current_file->name, O_RDONLY);
 		if (current_file->token == TOK_HERE_DOC)
 			*in_fds = current_file->fds;
-
 		if (current_file->token == TOK_OUT
 			|| current_file->token == TOK_APPEND)
 			close(*out_fds);
