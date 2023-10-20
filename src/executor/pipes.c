@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/20 13:15:43 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:14:31 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ int	*create_pipes(int pipe_count)
 	return (pipe_fds);
 }
 
-static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
+static int	loop_files(
+			t_minishell *mini,
+			t_file *current_file,
+			int *in_fds,
+			int *out_fds)
 {
 	while (current_file)
 	{
@@ -53,7 +57,7 @@ static int	loop_files(t_file *current_file, int *in_fds, int *out_fds)
 			*out_fds = open(current_file->name,
 					O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (*in_fds == -1 || *out_fds == -1)
-			return (-1);
+			perror_exit(current_file->name, mini, 1);
 		current_file = current_file->next;
 	}
 	return (1);
@@ -74,7 +78,7 @@ int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 	current_file = mini->cmd->files;
 	in_fds = 0;
 	out_fds = 1;
-	if (loop_files(current_file, &in_fds, &out_fds) == -1)
+	if (loop_files(mini, current_file, &in_fds, &out_fds) == -1)
 		return (-1);
 	if (out_fds != 1)
 		dup2_exit(out_fds, 1);

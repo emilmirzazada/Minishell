@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/19 19:15:46 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:03:15 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	execute_program(t_minishell *mini)
 		perror_exit(mini->cmd->name, mini, 126);
 	}
 	if (path != NULL)
-		mini->cmd->path = get_executable_path(*mini->cmd, path);
+		mini->cmd->path = get_executable_path(mini, *mini->cmd, path);
 	if (!mini->cmd->path && mini->cmd->name)
 	{
 		ft_putstr_fd("minishell: ", 2);

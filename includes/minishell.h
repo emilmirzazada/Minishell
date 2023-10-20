@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 18:14:48 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:02:49 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,10 @@ void	clean_exit(t_minishell *mini, int exit_code);
 int		execute_commands(t_minishell *mini);
 int		*create_pipes(int pipe_count);
 int		clean_pipes(int *pipes, int size);
-char	*get_executable_path(t_cmd cmd, const char	*path_env);
+char	*get_executable_path(
+			t_minishell *mini,
+			t_cmd cmd,
+			const char	*path_env);
 int		execute_builtin(t_minishell *mini);
 int		loop_commands(t_minishell *mini, int *pipe_fds, int command_count);
 int		execute_program(t_minishell *mini);
