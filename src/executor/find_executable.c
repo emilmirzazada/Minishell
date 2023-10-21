@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:05:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/20 16:10:44 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:19:30 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ void	free_paths(char **paths)
 	free(paths);
 }
 
+static void	file_path_error(char *name, t_minishell *mini)
+{
+	if (errno == EACCES)
+		perror_exit(name, mini, 126);
+	else
+		perror_exit(name, mini, 127);
+}
+
 char	*get_executable_path(
 		t_minishell *mini,
 		t_cmd cmd,
@@ -55,12 +63,7 @@ char	*get_executable_path(
 	if (cmd.name && cmd.name[0] == '/' && access(cmd.name, X_OK) == 0)
 		return (cmd.name);
 	if (cmd.name && cmd.name[0] == '/' && access(cmd.name, X_OK) == -1)
-	{
-		if (errno == EACCES)
-			perror_exit(cmd.name, mini, 126);
-		else
-			perror_exit(cmd.name, mini, 127);
-	}
+		file_path_error(cmd.name, mini);
 	if (cmd.name
 		&& ft_strncmp(dot_slash, cmd.name, 2) == 0
 		&& access(cmd.name, X_OK) == 0)
@@ -68,12 +71,7 @@ char	*get_executable_path(
 	if (cmd.name
 		&& ft_strncmp(dot_slash, cmd.name, 2) == 0
 		&& access(cmd.name, X_OK) == -1)
-	{
-		if (errno == EACCES)
-			perror_exit(cmd.name, mini, 126);
-		else
-			perror_exit(cmd.name, mini, 127);
-	}
+		file_path_error(cmd.name, mini);
 	paths = ft_split(path_env, ':');
 	file_name = search_paths(paths, cmd.name);
 	free_paths(paths);
