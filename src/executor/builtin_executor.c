@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:10:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/20 17:36:58 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/21 19:05:05 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ int	is_builtin(char *name)
 	return (0);
 }
 
-static void	dup2_exit(int new, int old)
+static int	print_file_error(char *file_name)
 {
-	if (dup2(new, old) < 0)
-		exit(EXIT_FAILURE);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(file_name, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(strerror(errno), 2);
+	return (-1);
 }
 
 static int	loop_files_builtin(
@@ -68,8 +71,9 @@ static int	loop_files_builtin(
 {
 	while (current_file)
 	{
-		if (current_file->token == TOK_IN
-			|| current_file->token == TOK_HERE_DOC)
+		if ((current_file->token == TOK_IN
+				|| current_file->token == TOK_HERE_DOC)
+			&& *in_fds != 0)
 			close(*in_fds);
 		if (current_file->token == TOK_IN)
 			*in_fds = open(current_file->name, O_RDONLY);
@@ -85,7 +89,7 @@ static int	loop_files_builtin(
 			*out_fds = open(current_file->name,
 					O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (*in_fds == -1 || *out_fds == -1)
-			return (-1);
+			return (print_file_error(current_file->name));
 		current_file = current_file->next;
 	}
 	return (1);
@@ -97,12 +101,12 @@ int	execute_single_builtin(t_minishell *mini)
 	int	in_fds;
 	int	out_fds;
 
-	save_stdio(mini->std_io);
 	in_fds = 0;
 	out_fds = 1;
-	loop_files_builtin(mini->cmd->files, &in_fds, &out_fds);
-	dup2_exit(out_fds, 1);
-	dup2_exit(in_fds, 0);
+	if (loop_files_builtin(mini->cmd->files, &in_fds, &out_fds) == -1)
+		return (1);
+	save_stdio(mini->std_io);
+	dup2(out_fds, 1);
 	status = execute_builtin(mini);
 	load_stdio(mini->std_io);
 	return (status);
