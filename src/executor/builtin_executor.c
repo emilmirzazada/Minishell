@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:10:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/21 19:05:05 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/21 19:29:47 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,15 @@ int	execute_single_builtin(t_minishell *mini)
 	int	status;
 	int	in_fds;
 	int	out_fds;
+	int	stdout_copy;
 
 	in_fds = 0;
 	out_fds = 1;
 	if (loop_files_builtin(mini->cmd->files, &in_fds, &out_fds) == -1)
 		return (1);
-	save_stdio(mini->std_io);
+	stdout_copy = dup(1);
 	dup2(out_fds, 1);
 	status = execute_builtin(mini);
-	load_stdio(mini->std_io);
+	dup2(stdout_copy, 1);
 	return (status);
 }
