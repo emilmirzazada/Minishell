@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/20 16:03:15 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/21 19:21:45 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	execute_program(t_minishell *mini)
 	char	*path;
 
 	path = find_env(mini->env, "PATH");
+	mini->cmd->path = NULL;
 	if (is_directory(mini->cmd->name))
 	{
 		errno = EISDIR;
