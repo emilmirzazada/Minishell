@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/21 19:21:45 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/22 11:30:38 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_directory(char *path)
 {
-	struct stat	path_stat;
+	static struct stat	path_stat;
 
 	stat(path, &path_stat);
 	return (S_ISDIR(path_stat.st_mode));
