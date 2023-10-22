@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/20 16:14:31 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/22 10:52:08 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ int	clean_pipes(int *pipes, int size)
 		return_value = close(pipes[i]);
 		i++;
 	}
+	free(pipes);
 	return (0);
 }
