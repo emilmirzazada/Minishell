@@ -40,3 +40,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+.vscode/launch.json
+.vscode/tasks.json

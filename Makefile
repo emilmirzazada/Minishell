@@ -3,18 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
+#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/12 12:40:43 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/19 17:31:09 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 SRC =	main \
 		signals/signals \
+		cleaner/free_mini \
 		executor/executor \
 		executor/find_executable \
+		executor/heredoc \
 		executor/pipes \
 		executor/program_executor \
 		executor/builtin_executor \
@@ -22,8 +24,12 @@ SRC =	main \
 		builtins/env \
 		builtins/env_tools \
 		builtins/cd \
+		builtins/unset \
 		builtins/pwd \
 		builtins/echo \
+		builtins/export \
+		builtins/export_echo \
+		builtins/exit \
 		tokenizer/tokenizer \
 		tokenizer/expansion \
 		tokenizer/expansion_utils \
@@ -31,6 +37,7 @@ SRC =	main \
 		splitter/split_quotes \
 		splitter/split_tools \
 		splitter/split_redirects \
+		splitter/split_utils \
 		parser/parse_tokens \
 		parser/parse_redir_tokens \
 		parser/parse_cmd_tokens 
@@ -42,8 +49,8 @@ SRC_DIR = src/
 LIBFT = ./libft
 READLINE_PATH = ${PWD}/readline
 RM = rm -rf
-CC = gcc
-CFLAGS = -g -Wall -Wextra -fsanitize=address
+CC = cc
+CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address
 
 SRCS = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))

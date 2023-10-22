@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:07:21 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/09 13:54:05 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/18 21:44:12 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,22 @@ void	set_env_array(t_minishell *mini)
 		temp = temp->next;
 	}
 	mini->env_arr = create_env_array(mini->env, length);
+}
+
+t_env	*ft_setenv(char *key, char *value)
+{
+	t_env	*env;
+
+	env = (t_env *)ft_calloc(sizeof(t_env), 1);
+	if (!env)
+		return (NULL);
+	env->key = ft_strdup(key);
+	if (!value)
+		env->value = ft_strdup("");
+	else
+		env->value = ft_strdup(value);
+	free(key);
+	free(value);
+	env->next = NULL;
+	return (env);
 }

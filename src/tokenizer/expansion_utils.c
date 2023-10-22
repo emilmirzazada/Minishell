@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/05 19:41:25 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:32:03 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ char	*place_value(char *temp, char *value, char *s)
 // single quotes and continues copying characters one by one afterward.
 void	place_rest_of_string(char *s, char *temp, int *i, int *t)
 {
-	if (s[*i] == '\'')
+	if (s[*i] && s[*i] == '\'')
 	{
 		temp[*t] = s[*i];
 		(*t)++;
 		(*i)++;
-		while (s[*i] != '\'')
+		while (s[*i] && s[*i] != '\'')
 		{
 			temp[*t] = s[*i];
 			(*t)++;
@@ -67,8 +67,11 @@ void	place_rest_of_string(char *s, char *temp, int *i, int *t)
 		}
 	}
 	temp[*t] = s[*i];
-	(*t)++;
-	(*i)++;
+	if (s[*i])
+	{
+		(*i)++;
+		(*t)++;
+	}
 }
 
 char	*get_name(char *s, int i)
@@ -89,29 +92,25 @@ char	*get_name(char *s, int i)
 	return (name);
 }
 
-char	*last_command_exit_code(char c, int *i)
+char	*expand_dollar_special(char c, int *i)
 {
 	char	*value;
 
 	value = NULL;
-	if (c == '?')
+	if (c == '?' || c == '$')
 	{
-		value = ft_itoa(g_exit_code);
+		if (c == '?')
+			value = ft_itoa(g_exit_code);
+		else
+			value = ft_itoa(65717);
 		*i = *i + 1;
 	}
 	else if (c == ' ')
 	{
-		value = malloc(3 * sizeof(char));
-		value[0] = '$';
-		value[1] = ' ';
-		value[2] = '\0';
+		value = ft_strdup("$ ");
 		*i = *i + 1;
 	}
 	else if (c == '\0')
-	{
-		value = malloc(2 * sizeof(char));
-		value[0] = '$';
-		value[1] = '\0';
-	}
+		value = ft_strdup("$");
 	return (value);
 }

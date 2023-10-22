@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:55:02 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/12 13:16:35 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:57:15 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,26 @@ static void	interactive_signal_handler(int sign)
 	}
 }
 
-void	non_interactive_signal_handler(int sign)
+static void	non_interactive_signal_handler(int sign)
 {
 	if (sign == SIGINT)
 	{
-		g_exit_code = 128 + sign;
-		write(1, "\n", 1);
+		g_exit_code = sign;
 		rl_replace_line("", 0);
 	}
 	else if (sign == SIGQUIT)
 	{
-		g_exit_code = 128 + sign;
-		ft_putstr_fd("Quit\n", 1);
+		g_exit_code = sign;
+		ft_putstr_fd("Quit: ", STDERR_FILENO);
+		ft_putnbr_fd(sign, STDERR_FILENO);
+		write(STDIN_FILENO, "\n", 1);
+		rl_replace_line("", 0);
 	}
 }
 
-void	init_interactive_signals()
+void	init_interactive_signals(void)
 {
+	override_ctrl_echo();
 	signal(SIGINT, interactive_signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
@@ -49,14 +52,6 @@ void	init_non_interactive_signals(void)
 {
 	signal(SIGINT, &non_interactive_signal_handler);
 	signal(SIGQUIT, &non_interactive_signal_handler);
-}
-
-void	exit_minishell(char *input)
-{
-	printf("Exitingg\n");
-	if (input)
-		free(input);
-	exit(1);
 }
 
 void	override_ctrl_echo(void)
@@ -82,4 +77,3 @@ void	override_ctrl_echo(void)
 		tcsetattr(STDERR_FILENO, TCSANOW, &term);
 	}
 }
- 

@@ -3,53 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/13 13:28:56 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:27:19 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_commands(t_minishell *mini)
+int	run_minishell(t_minishell *mini, char *input)
 {
-	t_cmd	*tmp;
-	char	**tmp_args;
-
-	tmp = mini->cmd;
-	while (tmp)
-	{
-		tmp_args = tmp->args;
-		while (*tmp_args)
-		{
-			ft_putstr_fd(*tmp_args, 2);
-			ft_putstr_fd("\n", 2);
-			tmp_args++;
-		}
-		printf("%s\n", tmp->name);
-		ft_putstr_fd("\nfiles \n", 2);
-		// while (tmp->files)
-		// {
-		// 	if (tmp->files->name)
-		// 		ft_putstr_fd(tmp->files->name, 2);
-		// 	if (tmp->files->delimeter)
-		// 		ft_putstr_fd(tmp->files->delimeter, 2);
-		// 	ft_putstr_fd("\n", 2);
-		// 	tmp->files = tmp->files->next;
-		// }
-		ft_putstr_fd("\nNew\n", 2);
-		tmp = tmp->next;
-	}
-}
-
-void	run_minishell(t_minishell *mini, char *input)
-{
+	add_history(input);
 	mini->lex = NULL;
 	mini->cmd = NULL;
-	ft_lookup_input(mini, input);
-	print_commands(mini);
-	printf("EXIT_CODE = %d\n", execute_commands(mini));
+	if (ft_lookup_input(mini, input))
+		return (1);
+	g_exit_code = execute_commands(mini);
+	return (0);
+}
+
+void	handle_shlvl(t_minishell *mini)
+{
+	t_env	*env;
+	char	*env_val;
+	long	shlvl;
+
+	env_val = find_env(mini->env, "SHLVL");
+	if (!env_val || !ft_atoi(env_val, &shlvl))
+		shlvl = 0;
+	shlvl++;
+	env = ft_setenv(ft_strdup("SHLVL"), ft_itoa(shlvl));
+	ft_envadd_back(&mini->env, env);
+	set_env_array(mini);
 }
 
 int	main(int ac, char **av, char **env)
@@ -60,17 +46,17 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	ft_memset(&mini, 0, sizeof(mini));
-	ft_env_init(&mini, env);
-	override_ctrl_echo();
+	mini.env = ft_env_init(env);
+	set_env_array(&mini);
+	handle_shlvl(&mini);
+	init_interactive_signals();
 	while (1)
 	{
-		input = readline("\e[32m💀💀💀Minishell :\e[0m");
-		init_interactive_signals();
-		if (ft_strlen(input) > 0)
-			add_history(input);
+		input = readline("Minishell: ");
 		if (!input)
-			exit_minishell(input);
-		run_minishell(&mini, input);
+			clean_exit(&mini, 0);
+		if (ft_strlen(input) > 0 && input[0] != '\0')
+			run_minishell(&mini, input);
 	}
 	return (0);
 }
@@ -82,3 +68,28 @@ int	main(int ac, char **av, char **env)
 // > $NAME
 // afl++
 // < input grep Hello | cat -e > out
+// echo ''
+// > >> out
+//echo"hello"
+//echo "hello">>>out
+//echo "hello">>out
+//handle pipes
+//operator token in invalid combiantions (<<< , >>> , || , ...)
+// echo "hello" <in | echo "hello world" >output | echo <infdkjgdkfgd
+// refactor signals
+
+// bash-3.2$ echo hello"world"
+// helloworld
+// bash-3.2$ echo hello"world$PWD"'"$PWD"'
+// helloworld/Users/emirzaza/Desktop/42/CoreCurriculum/Projects"$PWD"
+// bash-3.2$ echo hello"'world$PWD'"'"$PWD"'
+// hello'world/Users/emirzaza/Desktop/42/CoreCurriculum/Projects'"$PWD"
+// bash-3.2$ echo >|< hello
+// bash: syntax error near unexpected token `<'
+// bash-3.2$ echo >< hello
+// bash: syntax error near unexpected token `<'
+// bash-3.2$ 
+
+//env > out | export
+// ./minishell inside minishell gives command not found
+// AND TEST INCREASE SHLVL AFTER FIXING THE ABOVE ONE

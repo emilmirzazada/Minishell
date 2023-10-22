@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:52:00 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/13 14:12:17 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/19 19:08:21 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ char	*add_space_before_redir(char *old_str, char *new_str)
 	i = -1;
 	while (old_str[++i])
 	{
+		i = skip_quotes(old_str, i);
 		if (old_str[i] == '<' || old_str[i] == '>')
 		{
-			if (i > 0 && old_str[i - 1] != ' ')
+			if (i > 0 && old_str[i - 1] != ' ' && (old_str[i - 1] != '<'
+					&& old_str[i - 1] != '>'))
 			{
 				temp = old_str;
 				old_str = add_char_to_string(temp, new_str, ' ', i);
@@ -72,9 +74,11 @@ char	*add_space_after_redir(char *old_str, char *new_str)
 	i = -1;
 	while (old_str[++i])
 	{
+		i = skip_quotes(old_str, i);
 		if (old_str[i] == '<' || old_str[i] == '>')
 		{
-			if (old_str[i + 1] != ' ')
+			if (old_str[i + 1] != ' ' && (old_str[i + 1] != '<'
+					&& old_str[i + 1] != '>'))
 			{
 				temp = old_str;
 				old_str = add_char_to_string(temp, new_str, ' ', i + 1);
@@ -97,6 +101,5 @@ char	*handle_redir_symbols(char *s)
 	new_input = (char *)malloc((ft_strlen(s) + cnt_needed_sp(s) + 2)
 			* sizeof(char));
 	s = add_space_after_redir(s, new_input);
-	//TODO: any memory leaks here?
 	return (s);
 }
