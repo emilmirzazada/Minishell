@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:29:26 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 16:56:44 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/22 23:10:15 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,28 +59,28 @@ int	create_arg_token(char *split)
 	return (0);
 }
 
-bool	create_lex(t_minishell *mini, char **split)
+bool	create_lex(t_minishell *mini, t_split *split)
 {
 	t_lex		*new_lex;
 
 	new_lex = (t_lex *)malloc(sizeof(t_lex));
-	if (!(ft_strncmp(*split, "|", ft_strlen(*split))))
+	if (!(ft_strncmp(split->arg, "|", ft_strlen(split->arg))))
 		new_lex->token = TOK_PIPE;
-	else if (!(ft_strncmp(*split, "<", ft_strlen(*split))))
+	else if (!(ft_strncmp(split->arg, "<", ft_strlen(split->arg))))
 		new_lex->token = TOK_IN;
-	else if (!(ft_strncmp(*split, ">", ft_strlen(*split))))
+	else if (!(ft_strncmp(split->arg, ">", ft_strlen(split->arg))))
 		new_lex->token = TOK_OUT;
-	else if (!(ft_strncmp(*split, "<<", ft_strlen(*split))))
+	else if (!(ft_strncmp(split->arg, "<<", ft_strlen(split->arg))))
 		new_lex->token = TOK_HERE_DOC;
-	else if (!(ft_strncmp(*split, ">>", ft_strlen(*split))))
+	else if (!(ft_strncmp(split->arg, ">>", ft_strlen(split->arg))))
 		new_lex->token = TOK_APPEND;
 	else
 	{
-		if (create_arg_token(*split))
+		if (!split->is_text && create_arg_token(split->arg))
 			return (false);
 		new_lex->token = TOK_ARG;
 	}
-	new_lex->value = ft_strdup(*split);
+	new_lex->value = ft_strdup(split->arg);
 	new_lex->next = NULL;
 	ft_lex_addback(&(mini->lex), new_lex);
 	return (true);
@@ -89,16 +89,17 @@ bool	create_lex(t_minishell *mini, char **split)
 int	ft_lookup_input(t_minishell *mini, char *input)
 {
 	char	*expanded;
-	char	**split;
+	t_split	*split;
 
 	expanded = expand(mini, input);
-	split = ft_input_split(expanded);
-	if (!split)
+	mini->split = NULL;
+	if (ft_input_split(mini, expanded) == false)
 		return (1);
-	while (*split)
+	split = mini->split;
+	while (split)
 	{
 		if (create_lex(mini, split))
-			split++;
+			split = split->next;
 		else
 			return (1);
 	}

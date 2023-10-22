@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
+#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/19 17:31:09 by wrottger         ###   ########.fr        #
+#    Updated: 2023/10/22 20:18:33 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ SRC =	main \
 		splitter/split_quotes \
 		splitter/split_tools \
 		splitter/split_redirects \
-		splitter/split_utils \
 		parser/parse_tokens \
 		parser/parse_redir_tokens \
 		parser/parse_cmd_tokens 
