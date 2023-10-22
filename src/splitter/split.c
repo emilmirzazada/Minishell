@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/22 23:18:04 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/22 23:42:20 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ bool	ft_input_split(t_minishell *mini, char *s)
 	i = 0;
 	l_arg = NULL;
 	l_char = ' ';
-	len = ft_strlen(s);
 	if (check_quotes(s) == -1)
 		return (printf("Minishell: Unclosed quote\n"), false);
 	s = handle_redir_symbols(s);
+	len = ft_strlen(s);
 	while (i <= len && s[i] != '\0')
 	{
 		arg = split_arg(s, &i, len);
