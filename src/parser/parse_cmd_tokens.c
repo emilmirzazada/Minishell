@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd_tokens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:22:58 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/22 11:19:59 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ t_cmd	*ft_create_command(t_minishell *mini)
 	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);
-	new_cmd->files = NULL;
-	new_cmd->next = NULL;
+	*new_cmd = (t_cmd){0};
 	ft_command_addback(&(mini->cmd), new_cmd);
 	return (new_cmd);
 }
@@ -65,7 +64,6 @@ t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc)
 	if (!new_cmd)
 		return (NULL);
 	tmp_lex = lex;
-	ft_bzero(new_cmd, sizeof(new_cmd));
 	if (ft_cmd_args_malloc(new_cmd, tmp_lex))
 		return (NULL);
 	*cmd_argc = 0;
