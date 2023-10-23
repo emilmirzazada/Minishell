@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/22 23:42:20 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/23 20:56:20 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*split_arg(char *s, int *i, int len)
 	return (arg);
 }
 
-char	*substring_arg(t_minishell *mini, char *arg, char *l_arg, char l_char)
+char	*substring_arg(t_minishell *mini, char *arg, char *l_arg, char l_char, bool is_text)
 {
 	t_split	*split;
 	char	*last_arg;
@@ -47,20 +47,23 @@ char	*substring_arg(t_minishell *mini, char *arg, char *l_arg, char l_char)
 
 	last_arg = arg;
 	split = NULL;
-	if (arg[0] != ' ')
+	if (l_char != ' ' && l_arg[0] != '|')
 	{
-		if (l_char != ' ')
+		new_arg = ft_strjoin(l_arg, arg);
+		if (new_arg)
 		{
-			new_arg = ft_strjoin(l_arg, arg);
-			if (new_arg)
-			{
-				split = ft_create_split(mini, arg);
-				split->arg = new_arg;
-				remove_split(&mini->split, l_arg);
-			}
-		}
-		else
 			split = ft_create_split(mini, arg);
+			split->arg = new_arg;
+			if (is_text)
+				split->is_text = true;
+			remove_split(&mini->split, l_arg);
+		}
+	}
+	else
+	{
+		split = ft_create_split(mini, arg);
+		if (is_text)
+			split->is_text = true;
 	}
 	if (split)
 		last_arg = split->arg;
@@ -74,6 +77,7 @@ bool	ft_input_split(t_minishell *mini, char *s)
 	int		len;
 	char	l_char;
 	char	*l_arg;
+	bool	is_text;
 
 	i = 0;
 	l_arg = NULL;
@@ -85,9 +89,11 @@ bool	ft_input_split(t_minishell *mini, char *s)
 	while (i <= len && s[i] != '\0')
 	{
 		arg = split_arg(s, &i, len);
+		if (s[i] == '"' || s[i] == '\'')
+			is_text = true;
 		if (i <= len && arg && arg[0] != '\0')
 		{
-			l_arg = substring_arg(mini, arg, l_arg, l_char);
+			l_arg = substring_arg(mini, arg, l_arg, l_char, is_text);
 			l_char = s[i];
 		}
 	}
