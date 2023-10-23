@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 13:24:34 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:58:30 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,11 @@ int	parse_tokens(t_minishell *mini)
 		parse_cmd_args(new_cmd, &iter1, &cmd_argc);
 		if (iter1 && (iter1)->token == TOK_PIPE)
 			*iter2 = iter1->next;
+		if (iter1 && (iter1->token == TOK_PIPE) && iter1->next && iter1->next->token == TOK_PIPE)
+			return (1);
 		new_cmd = finalize_cmd(mini, new_cmd, &iter1, &cmd_argc);
 		if (new_cmd == NULL)
-			return (1);
+			return (0);
 	}
 	return (0);
 }

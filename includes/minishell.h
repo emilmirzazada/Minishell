@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/22 22:57:58 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:27:06 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ typedef struct s_env
 
 typedef struct s_split
 {
-	char 			*input;
 	char			*arg;
-    char			*l_arg;
-	char			l_char;
 	bool			is_text;
 	struct s_split	*next;
 }				t_split;
