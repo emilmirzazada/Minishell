@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/13 17:16:35 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:24:34 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_cmd	*finalize_cmd(t_minishell *mini, t_cmd *cmd, t_lex **lex, int *cmd_argc)
 		cmd->name = cmd->args[0];
 		cmd->args[*cmd_argc] = 0;
 		cmd = init_new_command(mini, *lex, cmd_argc);
+		if (!cmd)
+			return (NULL);
 	}
 	if (*lex)
 	{
@@ -84,8 +86,12 @@ int	parse_tokens(t_minishell *mini)
 	new_cmd = NULL;
 	while (iter1)
 	{
-		if (new_cmd == NULL)
+		if (!new_cmd)
+		{
 			new_cmd = init_new_command(mini, iter1, &cmd_argc);
+			if (new_cmd == NULL)
+				return (1);
+		}
 		if (parse_cmd_files(new_cmd, iter2))
 			return (1);
 		parse_cmd_args(new_cmd, &iter1, &cmd_argc);
@@ -93,7 +99,7 @@ int	parse_tokens(t_minishell *mini)
 			*iter2 = iter1->next;
 		new_cmd = finalize_cmd(mini, new_cmd, &iter1, &cmd_argc);
 		if (new_cmd == NULL)
-			return (0);
+			return (1);
 	}
 	return (0);
 }

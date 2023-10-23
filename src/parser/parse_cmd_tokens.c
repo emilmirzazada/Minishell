@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd_tokens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/22 11:19:59 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:24:59 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,17 @@ t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc)
 	t_cmd	*new_cmd;
 	t_lex	*tmp_lex;
 
-	new_cmd = ft_create_command(mini);
-	if (!new_cmd)
-		return (NULL);
-	tmp_lex = lex;
-	if (ft_cmd_args_malloc(new_cmd, tmp_lex))
-		return (NULL);
-	*cmd_argc = 0;
+	if ((lex)->next && (lex)->next->token != TOK_PIPE)
+	{
+		new_cmd = ft_create_command(mini);
+		if (!new_cmd)
+			return (NULL);
+		tmp_lex = lex;
+		if (ft_cmd_args_malloc(new_cmd, tmp_lex))
+			return (NULL);
+		*cmd_argc = 0;
+	}
+	else
+		return (printf("Minishell: syntax error near unexpected token `|'\n"), NULL);
 	return (new_cmd);
 }
