@@ -6,129 +6,102 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 20:30:40 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/23 20:56:20 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_spec_chr_comb(char **s, char *m1,
-				bool (*f)(char *, char *, int), bool *is_end)
+t_split	*ft_create_split(t_minishell *mini, char *arg)
 {
-	char	previous_chr;
-	char	current_chr;
-	char	next_chr;
-	char	*m2;
-	int		cnt;
+	t_split		*new_split;
 
-	cnt = ft_mode_diff(m1, "sp", 2);
-	previous_chr = '\0';
-	while (!*is_end)
-	{
-		if (!iterate_string(s, is_end))
-			break ;
-		current_chr = **s;
-		if (current_chr == '\0')
-			next_chr = '\0';
-		else
-			next_chr = *((*s) + 1);
-		m2 = ft_check_special_chr(current_chr, next_chr, previous_chr);
-		if (f(m1, m2, strlen(m2)))
-			break ;
-		previous_chr = current_chr;
-	}
-	return (cnt);
+	new_split = (t_split *)malloc(sizeof(t_split));
+	if (!new_split)
+		return (NULL);
+	*new_split = (t_split){0};
+	new_split->arg = arg;
+	ft_split_addback(&(mini->split), new_split);
+	return (new_split);
 }
 
-static size_t	ft_wordlen(char *s)
+char	*split_arg(char *s, int *i, int len)
 {
-	size_t	cnt;
-	char	*mode;
-	bool	is_end;
+	char	*arg;
 
-	is_end = false;
-	cnt = 0;
-	while (*s && ft_isspace(*s))
-		++s;
-	if (*s && ++cnt)
-		while (*s && !ft_isspace(*s))
-			++s;
-	while (!is_end && *s)
-	{
-		mode = ft_check_special_chr(*s, *(s + 1), *(s - 1));
-		ft_shift_special_chr(&s, mode);
-		if (ft_mode_equal(mode, "sp", 2) || ft_mode_equal(mode, "nan", 3))
-			cnt += ft_spec_chr_comb((char **)&s, mode, ft_mode_diff, &is_end);
-		else if (ft_mode_equal(mode, "sq", 2) || ft_mode_equal(mode, "dq", 2))
-			cnt += ft_spec_chr_comb((char **)&s, mode, ft_mode_equal, &is_end);
-		else if (ft_mode_equal(mode, "esq", 3) || ft_mode_equal(mode, "edq", 3))
-			cnt += ft_spec_chr_comb((char **)&s, mode, ft_mode_equal, &is_end);
-		ft_shift_special_chr(&s, mode);
-	}
-	return (cnt);
+	arg = NULL;
+	if (s[*i] == '\'' || s[*i] == '"')
+		arg = split_quotes(&s[*i], i, s[*i]);
+	else if (*i <= len && (s[*i] == '|' || s[*i] == ' '))
+		arg = split_pipe(&s[*i], i, s[*i]);
+	else if (*i <= len)
+		arg = split_word(s, i);
+	return (arg);
 }
 
-static char	**ft_wordfree(char **s, int i)
+char	*substring_arg(t_minishell *mini, char *arg, char *l_arg, char l_char, bool is_text)
 {
-	while (--i >= 0 && s[i])
-		free_set_null((void **)(&(s[i])));
-	free_set_null((void **)(&s));
-	return (NULL);
-}
+	t_split	*split;
+	char	*last_arg;
+	char	*new_arg;
 
-char	**ft_wordout(char *s, char **buf, int i)
-{
-	char	*start;
-	char	*mode;
-	bool	is_end;
-
-	is_end = false;
-	while (!is_end && *s)
+	last_arg = arg;
+	split = NULL;
+	if (l_char != ' ' && l_arg[0] != '|')
 	{
-		mode = ft_check_special_chr(*s, *(s + 1), *(s - 1));
-		start = ft_shift_special_chr(&s, mode);
-		if (ft_mode_equal(mode, "sp", 2) || ft_mode_equal(mode, "nan", 3))
-			ft_spec_chr_comb((char **)&s, mode, ft_mode_diff, &is_end);
-		else if (ft_mode_equal(mode, "sq", 2) || ft_mode_equal(mode, "dq", 2))
-			ft_spec_chr_comb((char **)&s, mode, ft_mode_equal, &is_end);
-		else if (ft_mode_equal(mode, "esq", 3) || ft_mode_equal(mode, "edq", 3))
-			ft_spec_chr_comb((char **)&s, mode, ft_mode_equal, &is_end);
-		if (ft_mode_diff(mode, "sp", 2))
+		new_arg = ft_strjoin(l_arg, arg);
+		if (new_arg)
 		{
-			buf[i] = substring_argument(s, start, false);
-			if (!buf[i++])
-				return (ft_wordfree(buf, i));
+			split = ft_create_split(mini, arg);
+			split->arg = new_arg;
+			if (is_text)
+				split->is_text = true;
+			remove_split(&mini->split, l_arg);
 		}
-		ft_shift_special_chr(&s, mode);
 	}
-	return (buf[i] = NULL, buf);
+	else
+	{
+		split = ft_create_split(mini, arg);
+		if (is_text)
+			split->is_text = true;
+	}
+	if (split)
+		last_arg = split->arg;
+	return (last_arg);
 }
 
-char	**ft_input_split(char *s)
+bool	ft_input_split(t_minishell *mini, char *s)
 {
 	int		i;
-	char	*start;
-	char	**buf;
+	char	*arg;
+	int		len;
+	char	l_char;
+	char	*l_arg;
+	bool	is_text;
 
-	if (check_quotes(s) == -1)
-	{
-		printf("Minishell: Unclosed quote\n");
-		return (NULL);
-	}
-	s = handle_redir_symbols(s);
 	i = 0;
-	if (!s || !ft_pcalloc((void **)(&buf), ft_wordlen(s) + 1, sizeof(char *)))
-		return (NULL);
-	while (*s && ft_isspace(*s))
-		++s;
-	if (*s)
+	l_arg = NULL;
+	l_char = ' ';
+	if (check_quotes(s) == -1)
+		return (printf("Minishell: Unclosed quote\n"), false);
+	s = handle_redir_symbols(s);
+	len = ft_strlen(s);
+	while (i <= len && s[i] != '\0')
 	{
-		start = (char *)s;
-		while (*s && !ft_isspace(*s))
-			++s;
-		buf[i] = substring_argument(s, start, true);
-		if (!buf[i++])
-			return (ft_wordfree(buf, i));
+		arg = split_arg(s, &i, len);
+		if (s[i] == '"' || s[i] == '\'')
+			is_text = true;
+		if (i <= len && arg && arg[0] != '\0')
+		{
+			l_arg = substring_arg(mini, arg, l_arg, l_char, is_text);
+			l_char = s[i];
+		}
 	}
-	return (ft_wordout(s, buf, i));
+	return (true);
 }
+
+//printf("|%s| --- |%c| \n", arg, s[i]);
+// echo "'$HOME'"
+// ctrl+C and ctrl+D should work in heredoc
+// handle | | |
+//printf("|%s| --- |%c| \n", arg, s[i]);

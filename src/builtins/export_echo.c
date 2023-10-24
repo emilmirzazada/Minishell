@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:27:34 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 15:56:54 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/22 23:27:29 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	export_echo_sorted(t_minishell *mini)
 		if (temp->key[0] && temp->key[0] != '_')
 		{
 			printf("declare -x %s", temp->key);
-			if (temp->value[0] != '\0')
+			if (temp->value && temp->value[0] != '&')
 				printf("=\"%s\"", temp->value);
 			printf("\n");
 		}

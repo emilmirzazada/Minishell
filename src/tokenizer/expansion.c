@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 17:19:12 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:51:17 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	search_variable(t_minishell *mini, char *s, char **value)
 
 	i = 1;
 	name = NULL;
-	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0' || s[i] == '$')
+	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0' || s[i] == '$' || s[i] == '"')
 		*value = expand_dollar_special(s[i], &i);
 	else
 	{
@@ -75,8 +75,11 @@ char	*expand(t_minishell *mini, char *s)
 		{
 			temp[t] = '\0';
 			i += search_variable(mini, &s[i], &value);
-			t += ft_strlen(value);
-			temp = place_value(temp, value, s);
+			if (value && value[0] != '\0')
+			{
+				t += ft_strlen(value);
+				temp = place_value(temp, value, s);
+			}
 		}
 		else
 			place_rest_of_string(s, temp, &i, &t);

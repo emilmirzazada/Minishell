@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/20 17:37:21 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:27:06 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_split
+{
+	char			*arg;
+	bool			is_text;
+	struct s_split	*next;
+}				t_split;
+
 typedef struct s_minishell
 {
 	t_env			*env;
@@ -90,6 +97,7 @@ typedef struct s_minishell
 	t_stdio			std_io;
 	t_cmd			*cmd;
 	t_lex			*lex;
+	t_split			*split;
 }				t_minishell;
 
 //expansion
@@ -158,19 +166,17 @@ void	override_ctrl_echo(void);
 void	exit_minishell(char *input);
 
 // splitter
-char	**ft_input_split(char *s);
+bool	ft_input_split(t_minishell *mini, char *s);
 char	*handle_redir_symbols(char *s);
 bool	ft_isspace(int c);
-bool	ft_mode_equal(char *m1, char *m2, int len);
-bool	ft_mode_diff(char *m1, char *m2, int len);
-char	*ft_shift_special_chr(char **s, char *mode);
-char	*ft_check_special_chr(int c1, int c2, int c0);
-char	*ft_removechr(char	*str, char chr);
-void	free_set_null(void **ptr);
 int		skip_quotes(char *s, int i);
 int		check_quotes(char *s);
-bool	iterate_string(char **s, bool *is_end);
-char	*substring_argument(char *s, char *start, bool is_first);
+char	*split_quotes(char *s, int *i, char q);
+char	*split_pipe(char *s, int *i, char c);
+char	*split_word(char *s, int *i);
+int		skip_spaces(char *s);
+void	ft_split_addback(t_split **lst, t_split *new);
+void	remove_split(t_split **lst, char *key);
 
 // tokenizer
 int	ft_lookup_input(t_minishell *mini, char *input);

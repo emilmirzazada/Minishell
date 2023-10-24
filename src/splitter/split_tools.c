@@ -6,45 +6,85 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 11:56:50 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/09/12 14:19:01 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/22 23:23:05 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_set_null(void **ptr)
+//splits pipe and skips spaces
+char	*split_pipe(char *s, int *i, char c)
 {
-	if (!(ptr && *ptr))
-		return ;
-	free(*ptr);
-	*ptr = NULL;
+	char	*arg;
+
+	arg = NULL;
+	if (c == ' ')
+		*i += skip_spaces(s);
+	else
+	{
+		*i = *i + 1;
+		arg = ft_strdup("|");
+	}
+	return (arg);
 }
 
-char	*ft_removechr(char	*str, char chr)
+int	check_ending(char *s, char *check)
 {
-	char	*res;
-	int		i;
-	int		j;
-	int		k;
-	int		count;
+	int	i;
+	int	j;
 
-	i = -1;
-	count = 0;
-	while (str[++i])
-	{
-		if (str[i] == chr)
-			count++;
-	}
-	res = malloc(sizeof(char) * (ft_strlen(str) - count + 1));
+	i = 0;
 	j = 0;
-	k = 0;
-	while (i-- > 0)
+	while (s[i] != '\0')
 	{
-		if (str[k] != chr)
-			res[j++] = str[k];
-		k++;
+		j = 0;
+		while (check[j] != '\0')
+		{
+			if (s[i] == check[j])
+				return (i);
+			j++;
+		}
+		i++;
 	}
-	res[j] = 0;
-	free(str);
-	return (res);
+	return (i);
+}
+
+char	*split_word(char *s, int *i)
+{
+	char	*arg;
+	int		len;
+
+	len = check_ending(&s[*i], " '\"|");
+	arg = ft_substr(s, *i, len);
+	*i += len;
+	return (arg);
+}
+
+void	ft_split_addback(t_split **lst, t_split *new)
+{
+	t_split	**ptr;
+
+	ptr = lst;
+	while (*ptr)
+		ptr = &(*ptr)->next;
+	*ptr = new;
+}
+
+void	remove_split(t_split **head, char *key)
+{
+	t_split	**current;
+	t_split	*temp;
+
+	current = head;
+	while (*current != NULL)
+	{
+		if (ft_strncmp((*current)->arg, key, ft_strlen(key) + 1) == 0)
+		{
+			temp = *current;
+			*current = (*current)->next;
+			free(temp);
+			return ;
+		}
+		current = &(*current)->next;
+	}
 }

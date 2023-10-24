@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:23:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:40:11 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:18:43 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	echo_no_args(t_cmd *cmd)
 	if (!cmd->args[1])
 	{
 		printf("\n");
-		return (1);
+		return (0);
 	}
 	else if (ft_strcmp(cmd->args[1], "-n") == 0
 		&& !cmd->args[2])

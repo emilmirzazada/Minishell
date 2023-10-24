@@ -6,11 +6,23 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:04:24 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:19:34 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/22 21:49:27 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*split_quotes(char *s, int *i, char q)
+{
+	size_t		len;
+
+	len = 1;
+	while (len < ft_strlen(s) && s[len] != q)
+		len++;
+	len++;
+	*i += len;
+	return (ft_substr(s, 1, len - 2));
+}
 
 bool	ft_isspace(int c)
 {
@@ -18,37 +30,52 @@ bool	ft_isspace(int c)
 		|| c == '\v' || c == '\f' || c == '\t');
 }
 
-bool	ft_mode_equal(char *m1, char *m2, int len)
+int	skip_spaces(char *s)
 {
-	return (!ft_strncmp(m1, m2, len));
+	int	i;
+
+	i = 0;
+	while (s[i] == ' ')
+		i++;
+	return (i);
 }
 
-bool	ft_mode_diff(char *m1, char *m2, int len)
+int	skip_quotes(char *s, int i)
 {
-	return (ft_strncmp(m1, m2, len));
+	char	quote;
+
+	if (s[i] == '\'' || s[i] == '\"')
+	{
+		quote = s[i++];
+		while (s[i] && s[i] != quote)
+			i++;
+	}
+	return (i);
 }
 
-char	*ft_shift_special_chr(char **s, char *mode)
+int	check_quotes(char *s)
 {
-	if (ft_mode_equal(mode, "sq", 2) || ft_mode_equal(mode, "dq", 2))
-		++(*s);
-	if (ft_mode_equal(mode, "esq", 3) || ft_mode_equal(mode, "edq", 3))
-		*s += 2;
-	return (*s);
-}
+	bool	double_quote;
+	bool	single_quote;
+	int		i;
 
-char	*ft_check_special_chr(int c1, int c2, int c0)
-{
-	if (ft_isspace(c1))
-		return ("sp");
-	else if (c1 == '\'' && c0 != '\\')
-		return ("sq");
-	else if (c1 == '\"' && c0 != '\\')
-		return ("dq");
-	else if (c1 == '\\' && c2 == '\'')
-		return ("esq");
-	else if (c1 == '\\' && c2 == '\"')
-		return ("edq");
-	else
-		return ("nan");
+	i = -1;
+	double_quote = 0;
+	single_quote = 0;
+	while (s[++i] != '\0')
+	{
+		if (s[i] == '\'' && !double_quote && !single_quote)
+			single_quote = 1;
+		else if (s[i] == '\'' && !double_quote && single_quote)
+			single_quote = false;
+		else if (s[i] == '"' && !double_quote && !single_quote)
+			double_quote = 1;
+		else if (s[i] == '"' && double_quote && !single_quote)
+			double_quote = false;
+	}
+	if (double_quote)
+		return (-1);
+	if (single_quote)
+		return (-1);
+	return (0);
 }
