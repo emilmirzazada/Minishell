@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 17:58:07 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:07:27 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_split
 
 typedef struct s_minishell
 {
+	char			*input;
 	t_env			*env;
 	char			**env_arr;
 	t_stdio			std_io;
@@ -108,7 +109,7 @@ typedef struct s_minishell
 }				t_minishell;
 
 //expansion
-char	*expand(t_minishell *mini, char *s);
+char	*expand(t_minishell *mini);
 int		expansion_end_check(char *s, char *check);
 char	*place_value(char *temp, char *value, char *s, int *t);
 void	place_rest_of_string(char *s, char *temp, int *i, int *t);
@@ -186,6 +187,6 @@ void	ft_split_addback(t_split **lst, t_split *new);
 void	remove_split(t_split **lst, char *key);
 
 // tokenizer
-int	ft_lookup_input(t_minishell *mini, char *input);
+int	ft_lookup_input(t_minishell *mini);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:29:26 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 16:13:08 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:06:34 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ bool	create_lex(t_minishell *mini, t_split *split)
 	return (true);
 }
 
-int	ft_lookup_input(t_minishell *mini, char *input)
+int	ft_lookup_input(t_minishell *mini)
 {
 	char	*expanded;
 	t_split	*split;
 
-	expanded = expand(mini, input);
+	expanded = expand(mini);
 	mini->split = NULL;
 	if (ft_input_split(mini, expanded) == false)
 		return (1);

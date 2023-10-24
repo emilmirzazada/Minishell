@@ -6,18 +6,18 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 18:03:15 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:06:22 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	run_minishell(t_minishell *mini, char *input)
+int	run_minishell(t_minishell *mini)
 {
-	add_history(input);
+	add_history(mini->input);
 	mini->lex = NULL;
 	mini->cmd = NULL;
-	if (ft_lookup_input(mini, input))
+	if (ft_lookup_input(mini))
 		return (1);
 	g_exit_code = execute_commands(mini);
 	return (0);
@@ -40,7 +40,6 @@ void	handle_shlvl(t_minishell *mini)
 
 int	main(int ac, char **av, char **env)
 {
-	char				*input;
 	t_minishell			mini;
 
 	(void)ac;
@@ -52,14 +51,14 @@ int	main(int ac, char **av, char **env)
 	init_interactive_signals();
 	while (1)
 	{
-		input = readline("Minishell: ");
-		if (!input)
+		mini.input = readline("Minishell: ");
+		if (!mini.input)
 		{
 			printf("exit\n");
 			clean_exit(&mini, 0);
 		}
-		if (ft_strlen(input) > 0 && input[0] != '\0')
-			run_minishell(&mini, input);
+		if (ft_strlen(mini.input) > 0 && mini.input[0] != '\0')
+			run_minishell(&mini);
 	}
 	return (0);
 }

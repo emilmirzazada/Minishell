@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 15:40:59 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:06:57 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	search_variable(t_minishell *mini, char *s, char **value)
 	return (i);
 }
 
-char	*expand(t_minishell *mini, char *s)
+char	*expand(t_minishell *mini)
 {
 	char	*temp;
 	char	*value;
@@ -90,19 +90,19 @@ char	*expand(t_minishell *mini, char *s)
 	i = 0;
 	t = 0;
 	value = NULL;
-	temp = malloc(ft_strlen(s) * sizeof(char) + 1);
+	temp = malloc(ft_strlen(mini->input) * sizeof(char) + 1);
 	if (!temp)
 		return (NULL);
-	while (s[i] != '\0')
+	while (mini->input[i] != '\0')
 	{
-		if (s[i] == '$')
+		if (mini->input[i] == '$')
 		{
 			temp[t] = '\0';
-			i += search_variable(mini, &s[i], &value);
-			temp = place_value(temp, value, s, &t);
+			i += search_variable(mini, &mini->input[i], &value);
+			temp = place_value(temp, value, mini->input, &t);
 		}
 		else
-			place_rest_of_string(s, temp, &i, &t);
+			place_rest_of_string(mini->input, temp, &i, &t);
 	}
 	return (temp[t] = '\0', temp);
 }
