@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/22 11:30:38 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:09:31 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ int	execute_program(t_minishell *mini)
 {
 	char	*path;
 
+	if (!mini->cmd->name)
+		exit(0);
 	path = find_env(mini->env, "PATH");
 	mini->cmd->path = NULL;
-	if (is_directory(mini->cmd->name))
+	if (is_directory(mini->cmd->name) && ft_strlen(mini->cmd->name) >= 1
+		&& (mini->cmd->name[0] == '.' || mini->cmd->name[0] == '/'))
 	{
 		errno = EISDIR;
 		perror_exit(mini->cmd->name, mini, 126);
@@ -41,8 +44,6 @@ int	execute_program(t_minishell *mini)
 		free_mini(mini);
 		exit(127);
 	}
-	if (!mini->cmd->name)
-		exit(0);
 	execve(mini->cmd->path, mini->cmd->args, mini->env_arr);
 	perror_exit(mini->cmd->path, mini, 127);
 	return (-1);
@@ -73,5 +74,5 @@ int	loop_commands(t_minishell *mini, int *pipe_fds, int command_count)
 		free_command(tmp);
 		j += 2;
 	}
-	return (0);
+	return (pid);
 }
