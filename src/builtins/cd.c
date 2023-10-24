@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:14:43 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:25:51 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 14:01:13 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ int	ft_cd(t_minishell *mini, t_cmd *cmd)
 			return (1);
 		}
 	}
-	return (1);
+	return (0);
 }

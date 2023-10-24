@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 20:56:20 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 14:17:08 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*substring_arg(t_minishell *mini, char *arg, char *l_arg, char l_char, bool
 
 	last_arg = arg;
 	split = NULL;
-	if (l_char != ' ' && l_arg[0] != '|')
+	if ((l_char != ' ' && l_arg[0] != '|') && l_char != '|')
 	{
 		new_arg = ft_strjoin(l_arg, arg);
 		if (new_arg)
