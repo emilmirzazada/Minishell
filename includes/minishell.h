@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 18:07:27 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:38:04 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	create_heredocs(t_minishell *mini);
 void	save_stdio(t_stdio std_io);
 void	load_stdio(t_stdio std_io);
 int		configure_pipes(t_minishell *mini, int *pipe_fds, int j);
-int		here_doc(char *delimiter, char *name);
+int		here_doc(t_minishell *mini, char *delimiter, char *name);
 
 
 // parser
