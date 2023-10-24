@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 18:39:38 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:33:22 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,21 @@
 int	run_minishell(t_minishell *mini)
 {
 	add_history(mini->input);
+	if (mini->lex)
+	{
+		free(mini->lex);
+		mini->lex = NULL;
+	}
+	if (mini->cmd)
+	{
+		free(mini->cmd);
+		mini->cmd = NULL;
+	}
+	if (mini->split)
+	{
+		free(mini->split);
+		mini->split = NULL;
+	}
 	if (ft_lookup_input(mini))
 		return (1);
 	g_exit_code = execute_commands(mini);
