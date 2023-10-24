@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/22 10:46:07 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:04:06 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	execute_commands(t_minishell *mini)
 	int		status;
 	int		*pipe_fds;
 	int		i;
+	int		pid;
 
 	command_count = count_commands(mini);
 	pipe_fds = create_pipes(command_count);
@@ -73,11 +74,12 @@ int	execute_commands(t_minishell *mini)
 		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	if (command_count == 1 && is_builtin(mini->cmd->name))
 		return (execute_single_builtin(mini));
-	loop_commands(mini, pipe_fds, command_count);
+	pid = loop_commands(mini, pipe_fds, command_count);
 	if (clean_pipes(pipe_fds, command_count * 2) == -1)
 		perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
 	i = 0;
-	while (i++ < command_count + 1)
+	while (++i < command_count)
 		wait(&status);
+	waitpid(pid, &status, 0);
 	return (getexitstatus(status));
 }
