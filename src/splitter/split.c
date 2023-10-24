@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 17:57:53 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:22:43 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,3 @@ bool	ft_input_split(t_minishell *mini, char *s)
 	}
 	return (true);
 }
-
-//printf("|%s| --- |%c| \n", arg, s[i]);
-// echo "'$HOME'"
-// ctrl+C and ctrl+D should work in heredoc
-// handle | | |
-//printf("|%s| --- |%c| \n", arg, s[i]);

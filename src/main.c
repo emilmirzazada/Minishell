@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 18:06:22 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:23:09 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int	run_minishell(t_minishell *mini)
 {
 	add_history(mini->input);
-	mini->lex = NULL;
-	mini->cmd = NULL;
 	if (ft_lookup_input(mini))
 		return (1);
 	g_exit_code = execute_commands(mini);
@@ -44,7 +42,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	ft_memset(&mini, 0, sizeof(mini));
+	ft_bzero(&mini, sizeof(t_minishell));
 	mini.env = ft_env_init(env);
 	set_env_array(&mini);
 	handle_shlvl(&mini);
@@ -62,36 +60,3 @@ int	main(int ac, char **av, char **env)
 	}
 	return (0);
 }
-
-// < input grep Hello | wc -l > out
-// < input grep Hello | awk '{count++} END {print count}' > output
-// ls > asd | grep input
-// shllevel
-// > $NAME
-// afl++
-// < input grep Hello | cat -e > out
-// echo ''
-// > >> out
-//echo"hello"
-//echo "hello">>>out
-//echo "hello">>out
-//handle pipes
-//operator token in invalid combiantions (<<< , >>> , || , ...)
-// echo "hello" <in | echo "hello world" >output | echo <infdkjgdkfgd
-// refactor signals
-
-// bash-3.2$ echo hello"world"
-// helloworld
-// bash-3.2$ echo hello"world$PWD"'"$PWD"'
-// helloworld/Users/emirzaza/Desktop/42/CoreCurriculum/Projects"$PWD"
-// bash-3.2$ echo hello"'world$PWD'"'"$PWD"'
-// hello'world/Users/emirzaza/Desktop/42/CoreCurriculum/Projects'"$PWD"
-// bash-3.2$ echo >|< hello
-// bash: syntax error near unexpected token `<'
-// bash-3.2$ echo >< hello
-// bash: syntax error near unexpected token `<'
-// bash-3.2$ 
-
-//env > out | export
-// ./minishell inside minishell gives command not found
-// AND TEST INCREASE SHLVL AFTER FIXING THE ABOVE ONE
