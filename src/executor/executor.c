@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/24 16:04:06 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:26:35 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	execute_commands(t_minishell *mini)
 	int		i;
 	int		pid;
 
+	if (mini->cmd == NULL)
+		return (0);
 	command_count = count_commands(mini);
 	pipe_fds = create_pipes(command_count);
 	if (mini->cmd)
