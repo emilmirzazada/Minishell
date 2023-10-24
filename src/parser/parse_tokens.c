@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 13:58:30 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:13:49 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,33 @@ int	parse_cmd_files(t_cmd *cmd, t_lex **temp)
 	return (0);
 }
 
+void	set_cmd_name(t_cmd *cmd, int *cmd_argc)
+{
+	cmd->name = cmd->args[0];
+	cmd->args[*cmd_argc] = 0;
+}
+
 t_cmd	*finalize_cmd(t_minishell *mini, t_cmd *cmd, t_lex **lex, int *cmd_argc)
 {
 	cmd->name = NULL;
 	if (*lex && ((*lex)->token == TOK_PIPE))
 	{
-		cmd->name = cmd->args[0];
-		cmd->args[*cmd_argc] = 0;
-		cmd = init_new_command(mini, *lex, cmd_argc);
-		if (!cmd)
+		set_cmd_name(cmd, cmd_argc);
+		if (init_new_command(mini, &cmd, *lex, cmd_argc) == false)
 			return (NULL);
 	}
 	if (*lex)
 	{
 		if (!((*lex)->next))
 		{
-			cmd->name = cmd->args[0];
-			cmd->args[*cmd_argc] = 0;
+			set_cmd_name(cmd, cmd_argc);
 			return (NULL);
 		}
 		else
 			*lex = (*lex)->next;
 	}
 	else
-	{
-		cmd->name = cmd->args[0];
-		cmd->args[*cmd_argc] = 0;
-	}
+		set_cmd_name(cmd, cmd_argc);
 	return (cmd);
 }
 
@@ -86,18 +86,15 @@ int	parse_tokens(t_minishell *mini)
 	new_cmd = NULL;
 	while (iter1)
 	{
-		if (!new_cmd)
-		{
-			new_cmd = init_new_command(mini, iter1, &cmd_argc);
-			if (new_cmd == NULL)
-				return (1);
-		}
+		if (!new_cmd && !init_new_command(mini, &new_cmd, iter1, &cmd_argc))
+			return (1);
 		if (parse_cmd_files(new_cmd, iter2))
 			return (1);
 		parse_cmd_args(new_cmd, &iter1, &cmd_argc);
 		if (iter1 && (iter1)->token == TOK_PIPE)
 			*iter2 = iter1->next;
-		if (iter1 && (iter1->token == TOK_PIPE) && iter1->next && iter1->next->token == TOK_PIPE)
+		if (iter1 && (iter1->token == TOK_PIPE) && iter1->next
+			&& iter1->next->token == TOK_PIPE)
 			return (1);
 		new_cmd = finalize_cmd(mini, new_cmd, &iter1, &cmd_argc);
 		if (new_cmd == NULL)

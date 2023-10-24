@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 13:27:06 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:58:07 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_sdata
+{
+	char		l_char;
+	char		*l_arg;
+	bool		is_text;
+}				t_sdata;
+
 typedef struct s_split
 {
 	char			*arg;
@@ -103,7 +110,7 @@ typedef struct s_minishell
 //expansion
 char	*expand(t_minishell *mini, char *s);
 int		expansion_end_check(char *s, char *check);
-char	*place_value(char *temp, char *value, char *s);
+char	*place_value(char *temp, char *value, char *s, int *t);
 void	place_rest_of_string(char *s, char *temp, int *i, int *t);
 char	*get_name(char *s, int i);
 char	*expand_dollar_special(char c, int *i);
@@ -156,7 +163,7 @@ int		here_doc(char *delimiter, char *name);
 int		parse_tokens(t_minishell *mini);
 int		handle_redir_tokens(t_cmd *cmd, t_lex **lex);
 int		handle_heredoc_token(t_cmd *cmd, t_lex **temp);
-t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc);
+bool	init_new_command(t_minishell *mini, t_cmd **newcmd, t_lex *lex, int *cmd_argc);
 void	create_file(t_cmd *cmd, t_token token, char *name);
 
 // signals

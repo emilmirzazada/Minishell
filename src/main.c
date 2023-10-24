@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 19:27:19 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:03:15 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	main(int ac, char **av, char **env)
 	{
 		input = readline("Minishell: ");
 		if (!input)
+		{
+			printf("exit\n");
 			clean_exit(&mini, 0);
+		}
 		if (ft_strlen(input) > 0 && input[0] != '\0')
 			run_minishell(&mini, input);
 	}

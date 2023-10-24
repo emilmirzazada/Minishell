@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 19:50:23 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:40:40 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,36 @@ int	expansion_end_check(char *s, char *check)
 	return (i);
 }
 
-char	*place_value(char *temp, char *value, char *s)
+char	*place_value(char *temp, char *value, char *s, int *t)
 {
 	char	*new_temp;
 
-	new_temp = ft_strjoin(temp, value);
-	if (!new_temp)
-		return (new_temp);
-	free(temp);
-	temp = malloc((ft_strlen(s) + ft_strlen(value) + 1) * sizeof(char));
-	if (!temp)
-		return (NULL);
-	free(value);
-	ft_strlcpy(temp, new_temp, ft_strlen(temp));
-	free(new_temp);
+	if (value && value[0] != '\0')
+	{
+		*t += ft_strlen(value);
+		new_temp = ft_strjoin(temp, value);
+		if (!new_temp)
+			return (new_temp);
+		free(temp);
+		temp = malloc((ft_strlen(s) + ft_strlen(value) + 1) * sizeof(char));
+		if (!temp)
+			return (NULL);
+		free(value);
+		ft_strlcpy(temp, new_temp, ft_strlen(temp));
+		free(new_temp);
+	}
 	return (temp);
+}
+
+void	copy_quotted_part(char *temp, char *s, int *i, int *t)
+{
+	while (s[*i] && s[*i] != '\'')
+	{
+		temp[*t] = s[*i];
+		if (*t <= (int)ft_strlen(temp))
+			(*t)++;
+		(*i)++;
+	}
 }
 
 // When encounters a single quote, copies all characters between the two 
@@ -65,13 +80,7 @@ void	place_rest_of_string(char *s, char *temp, int *i, int *t)
 		if (*t <= tlen)
 			(*t)++;
 		(*i)++;
-		while (s[*i] && s[*i] != '\'')
-		{
-			temp[*t] = s[*i];
-			if (*t <= tlen)
-				(*t)++;
-			(*i)++;
-		}
+		copy_quotted_part(temp, s, i, t);
 	}
 	if (*t <= tlen && *i <= slen)
 		temp[*t] = s[*i];
@@ -99,27 +108,4 @@ char	*get_name(char *s, int i)
 	}
 	name[j] = '\0';
 	return (name);
-}
-
-char	*expand_dollar_special(char c, int *i)
-{
-	char	*value;
-
-	value = NULL;
-	if (c == '?' || c == '$')
-	{
-		if (c == '?')
-			value = ft_itoa(g_exit_code);
-		else
-			value = ft_itoa(65717);
-		*i = *i + 1;
-	}
-	else if (c == ' ')
-	{
-		value = ft_strdup("$ ");
-		*i = *i + 1;
-	}
-	else if (c == '\0' || c == '"')
-		value = ft_strdup("$");
-	return (value);
 }

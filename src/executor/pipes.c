@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/24 15:23:32 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:45:57 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	loop_files(
 	while (current_file)
 	{
 		if ((current_file->token == TOK_IN
-			|| current_file->token == TOK_HERE_DOC)
+				|| current_file->token == TOK_HERE_DOC)
 			&& *in_fds != 0)
 			close(*in_fds);
 		if (current_file->token == TOK_IN)
@@ -49,7 +49,7 @@ static int	loop_files(
 		if (current_file->token == TOK_HERE_DOC)
 			*in_fds = current_file->fds;
 		if ((current_file->token == TOK_OUT
-			|| current_file->token == TOK_APPEND)
+				|| current_file->token == TOK_APPEND)
 			&& *out_fds != 1)
 			close(*out_fds);
 		if (current_file->token == TOK_OUT)

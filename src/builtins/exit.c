@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 22:09:23 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 14:44:47 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:00:05 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ int	ft_exit(t_minishell *mini, t_cmd *cmd)
 	if (value != 0)
 		g_exit_code = value % 256;
 	free_mini(mini);
-	exit(g_exit_code);
-	return (g_exit_code);
+	return (exit(g_exit_code), g_exit_code);
 }

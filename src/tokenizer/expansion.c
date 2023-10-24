@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 19:51:17 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:40:59 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,29 @@ char	*ft_getenv(t_env *lst, char *key)
 	return (value);
 }
 
+char	*expand_dollar_special(char c, int *i)
+{
+	char	*value;
+
+	value = NULL;
+	if (c == '?' || c == '$')
+	{
+		if (c == '?')
+			value = ft_itoa(g_exit_code);
+		else
+			value = ft_itoa(65717);
+		*i = *i + 1;
+	}
+	else if (c == ' ')
+	{
+		value = ft_strdup("$ ");
+		*i = *i + 1;
+	}
+	else if (c == '\0' || c == '"')
+		value = ft_strdup("$");
+	return (value);
+}
+
 int	search_variable(t_minishell *mini, char *s, char **value)
 {
 	int		i;
@@ -42,7 +65,8 @@ int	search_variable(t_minishell *mini, char *s, char **value)
 
 	i = 1;
 	name = NULL;
-	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0' || s[i] == '$' || s[i] == '"')
+	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0'
+		|| s[i] == '$' || s[i] == '"')
 		*value = expand_dollar_special(s[i], &i);
 	else
 	{
@@ -75,15 +99,10 @@ char	*expand(t_minishell *mini, char *s)
 		{
 			temp[t] = '\0';
 			i += search_variable(mini, &s[i], &value);
-			if (value && value[0] != '\0')
-			{
-				t += ft_strlen(value);
-				temp = place_value(temp, value, s);
-			}
+			temp = place_value(temp, value, s, &t);
 		}
 		else
 			place_rest_of_string(s, temp, &i, &t);
 	}
-	temp[t] = '\0';
-	return (temp);
+	return (temp[t] = '\0', temp);
 }
