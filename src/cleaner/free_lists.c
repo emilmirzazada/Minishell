@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_lists.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 11:41:13 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/25 11:45:11 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:51:23 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	free_double_char(char **arr)
 		arr[size] = NULL;
 		size++;
 	}
+	free (arr[size]);
 	free(arr);
 }
 
