@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/24 16:09:31 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:32:11 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	loop_commands(t_minishell *mini, int *pipe_fds, int command_count)
 		}
 		else if (pid < 0)
 			perror_exit("Couldn't fork", mini, EXIT_FAILURE);
+		mini->pids[j / 2] = pid;
 		tmp = mini->cmd;
 		mini->cmd = mini->cmd->next;
 		free_command(tmp);
