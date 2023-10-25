@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 18:22:43 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:52:37 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ bool	ft_input_split(t_minishell *mini, char *s)
 	t_sdata	sdata;
 
 	i = 0;
+	ft_bzero(&sdata, sizeof(sdata));
 	sdata.l_arg = NULL;
 	sdata.l_char = ' ';
 	if (check_quotes(s) == -1)
