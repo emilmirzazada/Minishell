@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 15:40:40 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:08:40 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	*place_value(char *temp, char *value, char *s, int *t)
 		if (!temp)
 			return (NULL);
 		free(value);
-		ft_strlcpy(temp, new_temp, ft_strlen(temp));
+		ft_strlcpy(temp, new_temp,
+			(ft_strlen(s) + ft_strlen(value) + 1) * sizeof(char));
 		free(new_temp);
 	}
 	return (temp);
