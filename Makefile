@@ -6,7 +6,7 @@
 #    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/22 20:18:33 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/25 11:41:00 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 SRC =	main \
 		signals/signals \
 		cleaner/free_mini \
+		cleaner/free_lists \
 		executor/executor \
 		executor/find_executable \
 		executor/heredoc \
@@ -49,7 +50,7 @@ LIBFT = ./libft
 READLINE_PATH = ${PWD}/readline
 RM = rm -rf
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -g -Wall -Wextra -Werror
 
 SRCS = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
