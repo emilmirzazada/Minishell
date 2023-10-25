@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/25 11:44:10 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:46:13 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_minishell
 	t_cmd			*cmd;
 	t_lex			*lex;
 	t_split			*split;
+	int				*pids;
 }				t_minishell;
 
 //expansion

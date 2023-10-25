@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/24 17:26:35 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:32:01 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ int	execute_commands(t_minishell *mini)
 	int		status;
 	int		*pipe_fds;
 	int		i;
-	int		pid;
 
 	if (mini->cmd == NULL)
 		return (0);
 	command_count = count_commands(mini);
+	mini->pids = (int *) ft_calloc(command_count, sizeof(mini->pids));
 	pipe_fds = create_pipes(command_count);
 	if (mini->cmd)
 		create_heredocs(mini);
@@ -76,12 +76,12 @@ int	execute_commands(t_minishell *mini)
 		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	if (command_count == 1 && is_builtin(mini->cmd->name))
 		return (execute_single_builtin(mini));
-	pid = loop_commands(mini, pipe_fds, command_count);
+	loop_commands(mini, pipe_fds, command_count);
 	if (clean_pipes(pipe_fds, command_count * 2) == -1)
 		perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
 	i = 0;
-	while (++i < command_count)
-		wait(&status);
-	waitpid(pid, &status, 0);
+	while (i++ < command_count)
+		waitpid(mini->pids[i - 1], &status, 0);
+	free(mini->pids);
 	return (getexitstatus(status));
 }
