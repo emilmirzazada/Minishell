@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 18:06:57 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:50:44 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*expand(t_minishell *mini)
 	i = 0;
 	t = 0;
 	value = NULL;
-	temp = malloc(ft_strlen(mini->input) * sizeof(char) + 1);
+	temp = ft_calloc(ft_strlen(mini->input), sizeof(char) + 1);
 	if (!temp)
 		return (NULL);
 	while (mini->input[i] != '\0')
