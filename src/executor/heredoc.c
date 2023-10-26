@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:31:35 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/24 18:38:22 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:23:06 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	create_heredocs(t_minishell *mini)
 				cmd_count_str = ft_itoa(++cmd_count);
 				f_name = ft_strjoin("/tmp/minishell_heredoc", cmd_count_str);
 				free(cmd_count_str);
-				tmp_file->fds = here_doc(mini, tmp_file->delimeter,
-						f_name);
+				tmp_file->fds = here_doc(mini, tmp_file->delimeter, f_name);
+				free(f_name);
 			}
 			tmp_file = tmp_file->next;
 		}
