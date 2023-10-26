@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:07:21 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/18 21:44:12 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:13:07 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	set_env_array(t_minishell *mini)
 		length++;
 		temp = temp->next;
 	}
+	free_double_char(mini->env_arr);
 	mini->env_arr = create_env_array(mini->env, length);
 }
 
