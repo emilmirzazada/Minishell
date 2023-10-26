@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/26 18:53:45 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:01:35 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,28 @@ void	set_cmd_name(t_cmd *cmd, int *cmd_argc)
 	cmd->args[*cmd_argc] = 0;
 }
 
-t_cmd	*finalize_cmd(t_minishell *mini, t_cmd *cmd, t_lex **lex, int *cmd_argc)
+t_cmd	*finalize_cmd(t_minishell *mini, t_cmd **cmd, t_lex **lex, int *argc)
 {
-	cmd->name = NULL;
+	(*cmd)->name = NULL;
 	if (*lex && ((*lex)->token == TOK_PIPE))
 	{
-		set_cmd_name(cmd, cmd_argc);
-		if (init_new_command(mini, &cmd, *lex, cmd_argc) == false)
+		set_cmd_name(*cmd, argc);
+		if (init_new_command(mini, cmd, *lex, argc) == false)
 			return (NULL);
 	}
 	if (*lex)
 	{
 		if (!((*lex)->next))
 		{
-			set_cmd_name(cmd, cmd_argc);
+			set_cmd_name(*cmd, argc);
 			return (NULL);
 		}
 		else
 			*lex = (*lex)->next;
 	}
 	else
-		set_cmd_name(cmd, cmd_argc);
-	return (cmd);
+		set_cmd_name(*cmd, argc);
+	return (*cmd);
 }
 
 void	parse_cmd_args(t_cmd *new_cmd, t_lex **lex, int *cmd_argc)
@@ -88,9 +88,8 @@ int	parse_tokens(t_minishell *mini)
 	new_cmd = NULL;
 	while (iter1)
 	{
-		if (!new_cmd && !init_new_command(mini, &new_cmd, iter1, &cmd_argc))
-			return (1);
-		if (parse_cmd_files(new_cmd, iter2))
+		if ((!new_cmd && !init_new_command(mini, &new_cmd, iter1, &cmd_argc))
+			|| parse_cmd_files(new_cmd, iter2))
 			return (1);
 		parse_cmd_args(new_cmd, &iter1, &cmd_argc);
 		if (iter1 && (iter1)->token == TOK_PIPE)
@@ -98,12 +97,8 @@ int	parse_tokens(t_minishell *mini)
 		if (iter1 && (iter1->token == TOK_PIPE) && iter1->next
 			&& iter1->next->token == TOK_PIPE)
 			return (1);
-		new_cmd = finalize_cmd(mini, new_cmd, &iter1, &cmd_argc);
-		if (new_cmd == NULL)
-		{
-			mini->lex = start;
-			return (0);
-		}
+		if (finalize_cmd(mini, &new_cmd, &iter1, &cmd_argc) == NULL)
+			return (mini->lex = start, 0);
 	}
 	return (0);
 }
