@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/25 14:08:40 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:53:52 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ char	*place_value(char *temp, char *value, char *s, int *t)
 		if (!new_temp)
 			return (new_temp);
 		free(temp);
-		temp = malloc((ft_strlen(s) + ft_strlen(value) + 1) * sizeof(char));
+		temp = ft_calloc((ft_strlen(s) + ft_strlen(value) + 1), sizeof(char));
 		if (!temp)
 			return (NULL);
 		free(value);
-		ft_strlcpy(temp, new_temp,
-			(ft_strlen(s) + ft_strlen(value) + 1) * sizeof(char));
+		ft_strlcpy(temp, new_temp, (ft_strlen(s)
+				+ ft_strlen(value) + 1) * sizeof(char) + 1);
 		free(new_temp);
 	}
 	return (temp);
@@ -78,18 +78,15 @@ void	place_rest_of_string(char *s, char *temp, int *i, int *t)
 	if (s[*i] && s[*i] == '\'')
 	{
 		temp[*t] = s[*i];
-		if (*t <= tlen)
-			(*t)++;
+		(*t)++;
 		(*i)++;
 		copy_quotted_part(temp, s, i, t);
 	}
-	if (*t <= tlen && *i <= slen)
-		temp[*t] = s[*i];
+	temp[*t] = s[*i];
 	if (s[*i])
 	{
 		(*i)++;
-		if (*t <= tlen)
-			(*t)++;
+		(*t)++;
 	}
 }
 

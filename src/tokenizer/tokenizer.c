@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:29:26 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 18:19:26 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/26 13:22:39 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	ft_lookup_input(t_minishell *mini)
 	t_split	*split;
 
 	expanded = expand(mini);
+	mini->split = NULL;
 	if (ft_input_split(mini, expanded) == false)
 		return (1);
 	split = mini->split;

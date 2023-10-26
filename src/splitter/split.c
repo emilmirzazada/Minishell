@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/25 11:52:37 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:13:42 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ char	*split_arg(char *s, int *i, int len)
 	else if (*i <= len && (s[*i] == '|' || s[*i] == ' '))
 		arg = split_pipe(&s[*i], i, s[*i]);
 	else if (*i <= len)
+	{
 		arg = split_word(s, i);
+	}
 	return (arg);
 }
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
+#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 18:36:17 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/05 17:23:51 by wrottger         ###   ########.fr        #
+#    Updated: 2023/10/26 14:39:50 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SOURCES = 			$(D_CHR)ft_isalpha.c \
 					$(D_MEM)ft_calloc.c \
 					$(D_MEM)ft_pcalloc.c \
 					$(D_STR)ft_strlcpy.c \
+					$(D_STR)ft_strncpy.c \
 					$(D_STR)ft_strlcat.c \
 					$(D_STR)ft_strchr.c \
 					$(D_STR)ft_strrchr.c \
