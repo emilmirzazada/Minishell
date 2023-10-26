@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/24 17:13:49 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:53:45 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ int	parse_tokens(t_minishell *mini)
 	t_cmd	*new_cmd;
 	t_lex	*iter1;
 	t_lex	**iter2;
+	t_lex	*start;
 
+	start = mini->lex;
 	iter1 = mini->lex;
 	iter2 = &mini->lex;
 	new_cmd = NULL;
@@ -98,7 +100,10 @@ int	parse_tokens(t_minishell *mini)
 			return (1);
 		new_cmd = finalize_cmd(mini, new_cmd, &iter1, &cmd_argc);
 		if (new_cmd == NULL)
+		{
+			mini->lex = start;
 			return (0);
+		}
 	}
 	return (0);
 }
