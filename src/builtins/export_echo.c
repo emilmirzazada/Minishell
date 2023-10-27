@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:27:34 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/22 23:27:29 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:52:29 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ static void	sort_env_arr(t_minishell *mini)
 void	export_echo_sorted(t_minishell *mini)
 {
 	t_env	*temp;
+	t_env	*start;
 
 	sort_env_arr(mini);
 	temp = ft_env_init(mini->env_arr);
+	start = temp;
 	while (temp)
 	{
 		if (temp->key[0] && temp->key[0] != '_')
@@ -81,4 +83,5 @@ void	export_echo_sorted(t_minishell *mini)
 		}
 		temp = temp->next;
 	}
+	free_env(start);
 }
