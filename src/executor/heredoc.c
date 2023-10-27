@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:31:35 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/27 13:51:03 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:01:55 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	get_all_lines(t_minishell *mini, char *delimiter, int fd)
 	char	*temp;
 
 	free(mini->input);
+	mini->input = NULL;
 	while (true)
 	{
 		temp = readline("heredoc>");
@@ -26,9 +27,15 @@ static void	get_all_lines(t_minishell *mini, char *delimiter, int fd)
 			break ;
 		mini->input = temp;
 		temp = expand(mini);
+		if (mini->input)
+		{
+			free(mini->input);
+			mini->input = NULL;
+		}
 		write(fd, temp, ft_strlen(temp));
 		write(fd, "\n", 1);
 		free(temp);
+		temp = NULL;
 	}
 	free(temp);
 }
