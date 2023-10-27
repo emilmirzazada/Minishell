@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/26 17:13:42 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:39:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ bool	ft_input_split(t_minishell *mini, char *s)
 			sdata.l_char = s[i];
 		}
 	}
-	return (true);
+	return (free(s), true);
 }

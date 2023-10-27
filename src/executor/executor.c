@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/25 11:32:01 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:39:17 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,22 @@ int	execute_command(t_minishell *mini)
 
 void	free_command(t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	t_file	*tmp;
 
 	i = 0;
 	while (cmd->args[i])
 		free(cmd->args[i++]);
+	tmp = cmd->files;
+	while (tmp)
+	{
+		if (tmp->delimeter)
+			free(tmp->delimeter);
+		if (tmp->name)
+			free(tmp->name);
+		tmp = tmp->next;
+	}
+	free(cmd->path);
 	free(cmd->args);
 	free(cmd);
 	cmd = NULL;

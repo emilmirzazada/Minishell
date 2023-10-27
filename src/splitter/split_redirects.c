@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:52:00 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/26 17:13:00 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:40:46 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*add_char_to_string(char *old_str, char c, int index)
 	char	*new_str;
 
 	len = ft_strlen(old_str);
-	new_str = (char *)malloc(len + 2);
+	new_str = (char *)ft_calloc(len + 2, sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
 	ft_strncpy(new_str, old_str, index);
@@ -104,7 +104,12 @@ char	*add_space_after_redir(char *old_str)
 
 char	*handle_redir_symbols(char *s)
 {
-	s = add_space_before_redir(s);
-	s = add_space_after_redir(s);
-	return (s);
+	char	*temp1;
+	char	*temp2;
+
+	temp1 = add_space_before_redir(s);
+	free(s);
+	temp2 = add_space_after_redir(temp1);
+	free(temp1);
+	return (temp2);
 }
