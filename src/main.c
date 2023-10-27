@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/26 17:14:03 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:43:20 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ int	main(int ac, char **av, char **env)
 	init_interactive_signals();
 	while (1)
 	{
+		if (mini.input)
+			free(mini.input);
+		mini.input = NULL;
 		mini.input = readline("Minishell: ");
 		if (!mini.input)
 		{
