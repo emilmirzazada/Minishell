@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/25 11:46:13 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/27 19:44:33 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define STDOUT 1
 # define STDERR 2
 
-int		g_exit_code;
+int		g_signal_num;
 
 typedef struct s_stdio
 {
@@ -107,6 +107,7 @@ typedef struct s_minishell
 	t_lex			*lex;
 	t_split			*split;
 	int				*pids;
+	int				exit_code;
 }				t_minishell;
 
 //expansion
@@ -115,10 +116,10 @@ int		expansion_end_check(char *s, char *check);
 char	*place_value(char *temp, char *value, char *s, int *t);
 void	place_rest_of_string(char *s, char *temp, int *i, int *t);
 char	*get_name(char *s, int i);
-char	*expand_dollar_special(char c, int *i);
+char	*expand_dollar_special(t_minishell *mini, char c, int *i);
 
 // builtins
-int		ft_echo (t_cmd *cmd);
+int		ft_echo(t_cmd *cmd);
 t_env	*ft_env_init( char **env);
 t_env	*ft_set_raw_env(char *env_str);
 t_env	*ft_setenv(char *key, char *value);
@@ -142,7 +143,7 @@ void	free_commands(t_cmd *list);
 void	free_splits(t_split *list);
 void	free_lex(t_lex *list);
 void	free_env(t_env *list);
-void free_double_char(char** arr);
+void 	free_double_char(char** arr);
 
 // executor
 int		execute_commands(t_minishell *mini);
@@ -170,7 +171,8 @@ int		here_doc(t_minishell *mini, char *delimiter, char *name);
 int		parse_tokens(t_minishell *mini);
 int		handle_redir_tokens(t_cmd *cmd, t_lex **lex);
 int		handle_heredoc_token(t_cmd *cmd, t_lex **temp);
-bool	init_new_command(t_minishell *mini, t_cmd **newcmd, t_lex *lex, int *cmd_argc);
+bool	init_new_command(t_minishell *mini, t_cmd **newcmd,
+			t_lex *lex, int *cmd_argc);
 void	create_file(t_cmd *cmd, t_token token, char *name);
 
 // signals
@@ -193,6 +195,6 @@ void	ft_split_addback(t_split **lst, t_split *new);
 void	remove_split(t_split **lst, char *key);
 
 // tokenizer
-int	ft_lookup_input(t_minishell *mini);
+int		ft_lookup_input(t_minishell *mini);
 
 #endif

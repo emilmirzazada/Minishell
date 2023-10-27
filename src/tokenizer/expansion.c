@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/26 12:53:28 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/27 19:43:51 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_getenv(t_env *lst, char *key)
 	return (value);
 }
 
-char	*expand_dollar_special(char c, int *i)
+char	*expand_dollar_special(t_minishell *mini, char c, int *i)
 {
 	char	*value;
 
@@ -43,7 +43,7 @@ char	*expand_dollar_special(char c, int *i)
 	if (c == '?' || c == '$')
 	{
 		if (c == '?')
-			value = ft_itoa(g_exit_code);
+			value = ft_itoa(mini->exit_code);
 		else
 			value = ft_itoa(65717);
 		*i = *i + 1;
@@ -67,7 +67,7 @@ int	search_variable(t_minishell *mini, char *s, char **value)
 	name = NULL;
 	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0'
 		|| s[i] == '$' || s[i] == '"')
-		*value = expand_dollar_special(s[i], &i);
+		*value = expand_dollar_special(mini, s[i], &i);
 	else
 	{
 		i += expansion_end_check(&s[i], " <>|\"'$[]{}()");

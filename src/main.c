@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/27 13:43:20 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/27 19:40:02 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	run_minishell(t_minishell *mini)
 	mini->cmd = NULL;
 	if (ft_lookup_input(mini))
 		return (1);
-	g_exit_code = execute_commands(mini);
+	mini->exit_code = execute_commands(mini);
 	return (0);
 }
 
@@ -54,6 +54,11 @@ int	main(int ac, char **av, char **env)
 		if (mini.input)
 			free(mini.input);
 		mini.input = NULL;
+		if (g_signal_num != 0)
+		{
+			mini.exit_code = g_signal_num;
+			g_signal_num = 0;
+		}
 		mini.input = readline("Minishell: ");
 		if (!mini.input)
 		{
@@ -63,5 +68,5 @@ int	main(int ac, char **av, char **env)
 		if (ft_strlen(mini.input) > 0 && mini.input[0] != '\0')
 			run_minishell(&mini);
 	}
-	return (0);
+	return (mini.exit_code);
 }
