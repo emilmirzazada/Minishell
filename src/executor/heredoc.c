@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:31:35 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/26 18:23:06 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:51:03 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	here_doc(t_minishell *mini, char *delimiter, char *name)
 
 	fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
-		exit(-500);
+		perror_exit(name, mini, -1);
 	get_all_lines(mini, delimiter, fd);
 	fd = open(name, O_RDONLY);
 	if (fd == -1)
-		exit(-500);
+		perror_exit(name, mini, -1);
 	return (fd);
 }
 
