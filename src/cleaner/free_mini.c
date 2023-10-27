@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:18:38 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/27 14:30:48 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:02:40 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	free_mini(t_minishell *mini)
 		free_double_char(mini->env_arr);
 	if (mini->input)
 		free(mini->input);
+	rl_clear_history();
 }
 
 void	clean_exit(t_minishell *mini, int exit_code)
