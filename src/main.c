@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/27 19:46:05 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/27 21:23:46 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	main(int ac, char **av, char **env)
 	mini.env = ft_env_init(env);
 	set_env_array(&mini);
 	handle_shlvl(&mini);
-	init_interactive_signals();
 	while (1)
 	{
+		init_interactive_signals();
 		if (mini.input)
 			free(mini.input);
 		mini.input = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_executor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/25 11:32:11 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/27 21:22:12 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ int	loop_commands(t_minishell *mini, int *pipe_fds, int command_count)
 	j = 0;
 	while (mini->cmd)
 	{
+		init_non_interactive_signals();
 		pid = fork();
 		if (pid == 0)
 		{
 			configure_pipes(mini, pipe_fds, j);
 			if (clean_pipes(pipe_fds, command_count * 2) == -1)
 				perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
-			init_non_interactive_signals();
 			execute_command(mini);
 		}
 		else if (pid < 0)
