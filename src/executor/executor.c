@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/27 13:39:17 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:47:08 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ int	execute_commands(t_minishell *mini)
 		return (0);
 	command_count = count_commands(mini);
 	mini->pids = (int *) ft_calloc(command_count, sizeof(mini->pids));
-	pipe_fds = create_pipes(command_count);
 	if (mini->cmd)
 		create_heredocs(mini);
-	if (pipe_fds == NULL)
-		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	if (command_count == 1 && is_builtin(mini->cmd->name))
 		return (execute_single_builtin(mini));
+	pipe_fds = create_pipes(command_count);
+	if (pipe_fds == NULL)
+		perror_exit("Couldn't create pipes", mini, EXIT_FAILURE);
 	loop_commands(mini, pipe_fds, command_count);
 	if (clean_pipes(pipe_fds, command_count * 2) == -1)
 		perror_exit("Couldn't close pipes", mini, EXIT_FAILURE);
