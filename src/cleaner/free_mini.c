@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_mini.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:18:38 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/25 11:41:11 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:30:48 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	free_mini(t_minishell *mini)
 {
+	if (mini->pids)
+		free(mini->pids);
 	if (mini->cmd)
 		free_commands(mini->cmd);
 	if (mini->split)

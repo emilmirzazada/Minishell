@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/27 14:23:16 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:30:12 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ int	execute_commands(t_minishell *mini)
 	while (i++ < command_count)
 		waitpid(mini->pids[i - 1], &status, 0);
 	free(mini->pids);
+	mini->pids = NULL;
 	return (getexitstatus(status));
 }
