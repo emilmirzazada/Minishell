@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/27 13:43:20 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/27 19:19:57 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 int	run_minishell(t_minishell *mini)
 {
 	add_history(mini->input);
-	mini->lex = NULL;
-	mini->cmd = NULL;
 	if (ft_lookup_input(mini))
 		return (1);
 	g_exit_code = execute_commands(mini);
+	if (mini->cmd)
+		free_command(mini->cmd);
+	if (mini->lex)
+		free_lex(mini->lex);
+	if (mini->split)
+		free_splits(mini->split);
+	mini->lex = NULL;
+	mini->cmd = NULL;
+	mini->split = NULL;
 	return (0);
 }
 
