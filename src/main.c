@@ -6,18 +6,14 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/27 21:23:46 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:57:30 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	run_minishell(t_minishell *mini)
+void	reset_cmd(t_minishell *mini)
 {
-	add_history(mini->input);
-	if (ft_lookup_input(mini))
-		return (1);
-	mini->exit_code = execute_commands(mini);
 	if (mini->cmd)
 		free_command(mini->cmd);
 	if (mini->lex)
@@ -27,6 +23,15 @@ int	run_minishell(t_minishell *mini)
 	mini->lex = NULL;
 	mini->cmd = NULL;
 	mini->split = NULL;
+}
+
+int	run_minishell(t_minishell *mini)
+{
+	add_history(mini->input);
+	if (ft_lookup_input(mini))
+		return (reset_cmd(mini), 1);
+	mini->exit_code = execute_commands(mini);
+	reset_cmd(mini);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/27 14:30:12 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:58:41 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	free_command(t_cmd *cmd)
 {
 	int		i;
 	t_file	*tmp;
+	t_file	*tmp2;
 
 	i = 0;
 	while (cmd->args[i])
@@ -61,7 +62,9 @@ void	free_command(t_cmd *cmd)
 			free(tmp->delimeter);
 		if (tmp->name)
 			free(tmp->name);
+		tmp2 = tmp;
 		tmp = tmp->next;
+		free(tmp2);
 	}
 	free(cmd->path);
 	free(cmd->args);
