@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/28 11:57:30 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:59:40 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,7 @@ int	main(int ac, char **av, char **env)
 		if (mini.input)
 			free(mini.input);
 		mini.input = NULL;
-		if (g_signal_num != 0)
-		{
-			mini.exit_code = g_signal_num;
-			g_signal_num = 0;
-		}
+		reset_signals(&mini);
 		mini.input = readline("Minishell: ");
 		if (!mini.input)
 		{

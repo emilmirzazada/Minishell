@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
+#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/28 11:39:29 by wrottger         ###   ########.fr        #
+#    Updated: 2023/10/28 12:37:40 by emirzaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 SRC =	main \
 		signals/signals \
+		signals/signal_reset \
 		cleaner/free_mini \
 		cleaner/free_lists \
 		executor/executor \
