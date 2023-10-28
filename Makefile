@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
+#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/26 13:14:59 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/28 11:39:29 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,11 +46,13 @@ SRC =	main \
 OBJ_DIR = obj/
 SRC_DIR = src/
 
-LIBFT = ./libft
+LIBFT = libft.a
+LIBFT_DIR = ./libft
+LIBFT_LIB = $(LIBFT_DIR)/$(LIBFT)
 READLINE_PATH = ${PWD}/readline
 RM = rm -rf
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 SRCS = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
@@ -64,15 +66,14 @@ else ifeq ($(UNAME),Darwin)
 endif
 
 
-all: ${LIBFT} ${NAME}
+all: ${LIBFT_LIB} ${NAME}
 
-${NAME}: ${OBJS} ${LIBFT}
-	@$(CC) ${CFLAGS} $(OBJS) -o $(NAME) libft.a $(LIBREADLINE_FLAGS)
+${NAME}: ${OBJS} $(LIBFT_LIB)
+	@$(CC) ${CFLAGS} $(OBJS) -o $(NAME) $(LIBFT_LIB) $(LIBREADLINE_FLAGS)
 	@echo "${NAME} compiled"
 
-${LIBFT}:
-	@make -q -C libft || make -C libft
-	@cp ${LIBFT}/libft.a .
+${LIBFT_LIB}:
+	@make -C libft
 	@echo "libft compiled\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c 
