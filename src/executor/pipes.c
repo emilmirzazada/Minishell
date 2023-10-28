@@ -100,12 +100,11 @@ int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 int	clean_pipes(int *pipes, int size)
 {
 	int	i;
-	int	return_value;
 
 	i = 0;
 	while (i < size)
 	{
-		return_value = close(pipes[i]);
+		close(pipes[i]);
 		i++;
 	}
 	free(pipes);
