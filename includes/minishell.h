@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/27 19:44:33 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/28 12:00:11 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void	init_interactive_signals(void);
 void	init_non_interactive_signals(void);
 void	override_ctrl_echo(void);
 void	exit_minishell(char *input);
+void	reset_signals(t_minishell *mini);
 
 // splitter
 bool	ft_input_split(t_minishell *mini, char *s);
