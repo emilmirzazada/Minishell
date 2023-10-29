@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/27 19:43:51 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/29 14:46:52 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*expand(t_minishell *mini)
 		{
 			temp[t] = '\0';
 			i += search_variable(mini, &mini->input[i], &value);
-			temp = place_value(temp, value, mini->input, &t);
+			temp = place_value(temp, value, &t);
 		}
 		else
 			place_rest_of_string(mini->input, temp, &i, &t);

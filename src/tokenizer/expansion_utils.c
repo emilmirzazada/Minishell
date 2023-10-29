@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/27 13:58:12 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 14:49:15 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,30 @@ int	expansion_end_check(char *s, char *check)
 	return (i);
 }
 
-char	*place_value(char *temp, char *value, char *s, int *t)
+char	*place_value(char *temp, char *value, int *t)
 {
+	size_t	temp_len;
+	size_t	value_len;
 	char	*new_temp;
 
 	if (value && value[0] != '\0')
 	{
-		*t += ft_strlen(value);
-		new_temp = ft_strjoin(temp, value);
+		temp_len = ft_strlen(temp);
+		value_len = ft_strlen(value);
+		new_temp = malloc((temp_len + value_len + 1) * sizeof(char));
 		if (!new_temp)
-			return (new_temp);
-		free(temp);
-		temp = ft_calloc((ft_strlen(s) + ft_strlen(value) + 1), sizeof(char));
-		if (!temp)
 			return (NULL);
-		ft_strlcpy(temp, new_temp, (ft_strlen(s)
-				+ ft_strlen(value) + 1) * sizeof(char) + 1);
-		free(value);
+		ft_strlcpy(new_temp, temp, temp_len + value_len + 1);
+		ft_strlcat(new_temp, value, temp_len + value_len + 1);
+		*t += value_len;
+		free(temp);
+		temp = malloc((temp_len + value_len + 1) * sizeof(char));
+		if (!temp)
+		{
+			free(new_temp);
+			return (NULL);
+		}
+		ft_strlcpy(temp, new_temp, temp_len + value_len + 1);
 		free(new_temp);
 	}
 	return (temp);
