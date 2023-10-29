@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/29 17:14:57 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 23:34:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*substring_arg(t_minishell *mini, char *arg, t_sdata *data)
 		if (new_arg)
 		{
 			split = ft_create_split(mini, new_arg);
-			split->arg = new_arg;
 			remove_split(&mini->split, data->l_arg);
 		}
 	}
@@ -80,7 +79,6 @@ bool	ft_input_split(t_minishell *mini, char *s)
 
 	i = 0;
 	ft_bzero(&sdata, sizeof(sdata));
-	sdata.l_arg = NULL;
 	sdata.l_char = ' ';
 	if (check_quotes(s) == -1)
 		return (printf("Minishell: Unclosed quote\n"), false);
@@ -93,9 +91,10 @@ bool	ft_input_split(t_minishell *mini, char *s)
 			sdata.is_text = true;
 		if (i <= len && arg && arg[0] != '\0')
 		{
-			sdata.l_arg = substring_arg(mini, arg, &sdata);
+			sdata.l_arg = substring_arg(mini, ft_strdup(arg), &sdata);
 			sdata.l_char = s[i];
 		}
+		free(arg);
 	}
 	return (free(s), true);
 }
