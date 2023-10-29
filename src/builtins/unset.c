@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:26:26 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/17 21:58:10 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 15:28:49 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	ft_unset(t_minishell *mini, t_cmd *cmd)
 	while (cmd->args[++i])
 	{
 		if (!validate_arg(cmd->args[i]))
-			perror_exit("Invalid identifier for unset\n", mini, 1);
+		{
+			ft_putstr_fd(" not a valid identifier\n", 2);
+			clean_exit(mini, 1);
+		}
 		else
 		{
 			unset_env_arg(&mini->env, cmd->args[i]);

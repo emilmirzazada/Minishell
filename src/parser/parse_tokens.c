@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:12:41 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/26 19:01:35 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 15:24:46 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	parse_tokens(t_minishell *mini)
 			*iter2 = iter1->next;
 		if (iter1 && (iter1->token == TOK_PIPE) && iter1->next
 			&& iter1->next->token == TOK_PIPE)
-			return (1);
+			return (printf("Mini:syntax error near unexpected token `|'\n"), 1);
 		if (finalize_cmd(mini, &new_cmd, &iter1, &cmd_argc) == NULL)
 			return (mini->lex = start, 0);
 	}
