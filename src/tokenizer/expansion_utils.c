@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/29 18:37:54 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 19:26:32 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	expansion_end_check(char *s, char *check)
 
 char	*place_value(char *temp, char *value, int *t)
 {
-	size_t	temp_len;
-	size_t	value_len;
+	int		temp_len;
+	int		value_len;
 	char	*new_temp;
 
 	if (value && value[0] != '\0')
@@ -51,7 +51,7 @@ char	*place_value(char *temp, char *value, int *t)
 		free(value);
 		*t += value_len;
 		free(temp);
-		temp = malloc((temp_len + value_len + 1) * sizeof(char));
+		temp = malloc((temp_len + *t) * sizeof(char));
 		if (!temp)
 		{
 			free(new_temp);
