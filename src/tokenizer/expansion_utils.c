@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/29 18:31:38 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 18:37:54 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*place_value(char *temp, char *value, int *t)
 			return (NULL);
 		ft_strlcpy(new_temp, temp, temp_len + value_len + 1);
 		ft_strlcat(new_temp, value, temp_len + value_len + 1);
+		free(value);
 		*t += value_len;
 		free(temp);
 		temp = malloc((temp_len + value_len + 1) * sizeof(char));
