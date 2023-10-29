@@ -6,11 +6,37 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/29 17:25:52 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 23:39:25 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*place_value(char *temp, char *value, int *t)
+{
+	int		temp_len;
+	int		value_len;
+	char	*new_temp;
+
+	if (value && value[0] != '\0')
+	{
+		value = embrace_value(value);
+		temp_len = ft_strlen(temp);
+		value_len = ft_strlen(value);
+		*t += value_len;
+		new_temp = ft_calloc((temp_len + *t + 1), sizeof(char));
+		if (!new_temp)
+			return (NULL);
+		ft_strlcpy(new_temp, temp, temp_len + value_len + 1);
+		ft_strlcat(new_temp, value, temp_len + value_len + 1);
+		free(value);
+		free(temp);
+		return (new_temp);
+	}
+	free(value);
+	free(temp);
+	return (ft_strdup("\0"));
+}
 
 //returns null terminated string in case no match found
 char	*ft_getenv(t_env *lst, char *key)
@@ -97,12 +123,12 @@ char	*expand(t_minishell *mini)
 	{
 		if (mini->input[i] == '$')
 		{
-			temp[t] = '\0';
+			temp[t] = 0;
 			i += search_variable(mini, &mini->input[i], &value);
 			temp = place_value(temp, value, &t);
 		}
 		else
 			place_rest_of_string(mini->input, temp, &i, &t);
 	}
-	return (temp[t] = '\0', temp);
+	return (temp);
 }

@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/29 19:26:32 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 23:28:28 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,34 +33,19 @@ int	expansion_end_check(char *s, char *check)
 	return (i);
 }
 
-char	*place_value(char *temp, char *value, int *t)
+char	*embrace_value(char *value)
 {
-	int		temp_len;
-	int		value_len;
-	char	*new_temp;
+	char	*formatted_value;
+	char	*temp_val;
 
-	if (value && value[0] != '\0')
-	{
-		temp_len = ft_strlen(temp);
-		value_len = ft_strlen(value);
-		new_temp = malloc((temp_len + value_len + 1) * sizeof(char));
-		if (!new_temp)
-			return (NULL);
-		ft_strlcpy(new_temp, temp, temp_len + value_len + 1);
-		ft_strlcat(new_temp, value, temp_len + value_len + 1);
-		free(value);
-		*t += value_len;
-		free(temp);
-		temp = malloc((temp_len + *t) * sizeof(char));
-		if (!temp)
-		{
-			free(new_temp);
-			return (NULL);
-		}
-		ft_strlcpy(temp, new_temp, temp_len + value_len + 1);
-		free(new_temp);
-	}
-	return (temp);
+	formatted_value = ft_calloc(ft_strlen(value) + 3, sizeof(char));
+	formatted_value[0] = '\"';
+	ft_strlcat(formatted_value, value, ft_strlen(value) + 2);
+	formatted_value[ft_strlen(value) + 1] = '\"';
+	temp_val = value;
+	value = formatted_value;
+	free(temp_val);
+	return (value);
 }
 
 void	copy_quotted_part(char *temp, char *s, int *i, int *t)
@@ -85,7 +70,8 @@ void	place_rest_of_string(char *s, char *temp, int *i, int *t)
 		(*i)++;
 		copy_quotted_part(temp, s, i, t);
 	}
-	temp[*t] = s[*i];
+	if (*t <= (int)ft_strlen(temp))
+		temp[*t] = s[*i];
 	if (s[*i])
 	{
 		(*i)++;
