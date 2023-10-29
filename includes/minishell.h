@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/28 12:00:11 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 14:47:00 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_minishell
 //expansion
 char	*expand(t_minishell *mini);
 int		expansion_end_check(char *s, char *check);
-char	*place_value(char *temp, char *value, char *s, int *t);
+char	*place_value(char *temp, char *value, int *t);
 void	place_rest_of_string(char *s, char *temp, int *i, int *t);
 char	*get_name(char *s, int i);
 char	*expand_dollar_special(t_minishell *mini, char c, int *i);
