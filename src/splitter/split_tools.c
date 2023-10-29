@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 11:56:50 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/22 23:23:05 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 17:18:36 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	remove_split(t_split **head, char *key)
 		{
 			temp = *current;
 			*current = (*current)->next;
+			free(temp->arg);
 			free(temp);
 			return ;
 		}

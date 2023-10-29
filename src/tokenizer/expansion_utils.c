@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/29 14:49:15 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 18:31:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,6 @@ void	copy_quotted_part(char *temp, char *s, int *i, int *t)
 // single quotes and continues copying characters one by one afterward.
 void	place_rest_of_string(char *s, char *temp, int *i, int *t)
 {
-	int	slen;
-	int	tlen;
-
-	slen = ft_strlen(s);
-	tlen = ft_strlen(temp);
 	if (s[*i] && s[*i] == '\'')
 	{
 		temp[*t] = s[*i];
