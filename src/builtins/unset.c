@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:26:26 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/29 15:28:49 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 20:09:57 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_unset(t_minishell *mini, t_cmd *cmd)
 		if (!validate_arg(cmd->args[i]))
 		{
 			ft_putstr_fd(" not a valid identifier\n", 2);
-			clean_exit(mini, 1);
+			return (1);
 		}
 		else
 		{
