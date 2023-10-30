@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:39:25 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/22 10:52:08 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:45:57 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,17 @@ static int	loop_files(
 {
 	while (current_file)
 	{
-		if (current_file->token == TOK_IN
-			|| current_file->token == TOK_HERE_DOC)
+		if ((current_file->token == TOK_IN
+				|| current_file->token == TOK_HERE_DOC)
+			&& *in_fds != 0)
 			close(*in_fds);
 		if (current_file->token == TOK_IN)
 			*in_fds = open(current_file->name, O_RDONLY);
 		if (current_file->token == TOK_HERE_DOC)
 			*in_fds = current_file->fds;
-		if (current_file->token == TOK_OUT
-			|| current_file->token == TOK_APPEND)
+		if ((current_file->token == TOK_OUT
+				|| current_file->token == TOK_APPEND)
+			&& *out_fds != 1)
 			close(*out_fds);
 		if (current_file->token == TOK_OUT)
 			*out_fds = open(current_file->name,
@@ -98,12 +100,11 @@ int	configure_pipes(t_minishell *mini, int *pipe_fds, int j)
 int	clean_pipes(int *pipes, int size)
 {
 	int	i;
-	int	return_value;
 
 	i = 0;
 	while (i < size)
 	{
-		return_value = close(pipes[i]);
+		close(pipes[i]);
 		i++;
 	}
 	free(pipes);

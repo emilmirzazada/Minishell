@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 22:03:04 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 20:56:20 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 23:34:38 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ char	*split_arg(char *s, int *i, int len)
 	else if (*i <= len && (s[*i] == '|' || s[*i] == ' '))
 		arg = split_pipe(&s[*i], i, s[*i]);
 	else if (*i <= len)
+	{
 		arg = split_word(s, i);
+	}
 	return (arg);
 }
 
-char	*substring_arg(t_minishell *mini, char *arg, char *l_arg, char l_char, bool is_text)
+char	*substring_arg(t_minishell *mini, char *arg, t_sdata *data)
 {
 	t_split	*split;
 	char	*last_arg;
@@ -47,26 +49,24 @@ char	*substring_arg(t_minishell *mini, char *arg, char *l_arg, char l_char, bool
 
 	last_arg = arg;
 	split = NULL;
-	if (l_char != ' ' && l_arg[0] != '|')
+	if ((data->l_char != ' ' && data->l_arg[0] != '|') && data->l_char != '|')
 	{
-		new_arg = ft_strjoin(l_arg, arg);
+		new_arg = ft_strjoin(data->l_arg, arg);
+		free(arg);
 		if (new_arg)
 		{
-			split = ft_create_split(mini, arg);
-			split->arg = new_arg;
-			if (is_text)
-				split->is_text = true;
-			remove_split(&mini->split, l_arg);
+			split = ft_create_split(mini, new_arg);
+			remove_split(&mini->split, data->l_arg);
 		}
 	}
 	else
-	{
 		split = ft_create_split(mini, arg);
-		if (is_text)
+	if (split)
+	{
+		last_arg = split->arg;
+		if (data->is_text)
 			split->is_text = true;
 	}
-	if (split)
-		last_arg = split->arg;
 	return (last_arg);
 }
 
@@ -75,13 +75,11 @@ bool	ft_input_split(t_minishell *mini, char *s)
 	int		i;
 	char	*arg;
 	int		len;
-	char	l_char;
-	char	*l_arg;
-	bool	is_text;
+	t_sdata	sdata;
 
 	i = 0;
-	l_arg = NULL;
-	l_char = ' ';
+	ft_bzero(&sdata, sizeof(sdata));
+	sdata.l_char = ' ';
 	if (check_quotes(s) == -1)
 		return (printf("Minishell: Unclosed quote\n"), false);
 	s = handle_redir_symbols(s);
@@ -90,18 +88,13 @@ bool	ft_input_split(t_minishell *mini, char *s)
 	{
 		arg = split_arg(s, &i, len);
 		if (s[i] == '"' || s[i] == '\'')
-			is_text = true;
+			sdata.is_text = true;
 		if (i <= len && arg && arg[0] != '\0')
 		{
-			l_arg = substring_arg(mini, arg, l_arg, l_char, is_text);
-			l_char = s[i];
+			sdata.l_arg = substring_arg(mini, ft_strdup(arg), &sdata);
+			sdata.l_char = s[i];
 		}
+		free(arg);
 	}
-	return (true);
+	return (free(s), true);
 }
-
-//printf("|%s| --- |%c| \n", arg, s[i]);
-// echo "'$HOME'"
-// ctrl+C and ctrl+D should work in heredoc
-// handle | | |
-//printf("|%s| --- |%c| \n", arg, s[i]);

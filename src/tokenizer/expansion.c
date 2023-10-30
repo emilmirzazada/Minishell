@@ -6,11 +6,37 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 19:51:17 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/30 10:36:24 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*place_value(char *temp, char *value, int *t)
+{
+	int		temp_len;
+	int		value_len;
+	char	*new_temp;
+
+	if (value && value[0] != '\0')
+	{
+		value = embrace_value(value);
+		temp_len = ft_strlen(temp);
+		value_len = ft_strlen(value);
+		*t += value_len;
+		new_temp = ft_calloc((temp_len + *t + value_len), sizeof(char));
+		if (!new_temp)
+			return (NULL);
+		ft_strlcpy(new_temp, temp, temp_len + value_len + 1);
+		ft_strlcat(new_temp, value, temp_len + value_len + 1);
+		free(value);
+		free(temp);
+		return (new_temp);
+	}
+	free(value);
+	free(temp);
+	return (ft_strdup("\0"));
+}
 
 //returns null terminated string in case no match found
 char	*ft_getenv(t_env *lst, char *key)
@@ -35,6 +61,29 @@ char	*ft_getenv(t_env *lst, char *key)
 	return (value);
 }
 
+char	*expand_dollar_special(t_minishell *mini, char c, int *i)
+{
+	char	*value;
+
+	value = NULL;
+	if (c == '?' || c == '$')
+	{
+		if (c == '?')
+			value = ft_itoa(mini->exit_code);
+		else
+			value = ft_itoa(65717);
+		*i = *i + 1;
+	}
+	else if (c == ' ')
+	{
+		value = ft_strdup("$ ");
+		*i = *i + 1;
+	}
+	else if (c == '\0' || c == '"')
+		value = ft_strdup("$");
+	return (value);
+}
+
 int	search_variable(t_minishell *mini, char *s, char **value)
 {
 	int		i;
@@ -42,8 +91,9 @@ int	search_variable(t_minishell *mini, char *s, char **value)
 
 	i = 1;
 	name = NULL;
-	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0' || s[i] == '$' || s[i] == '"')
-		*value = expand_dollar_special(s[i], &i);
+	if (s[i] == '?' || s[i] == ' ' || s[i] == '\0'
+		|| s[i] == '$' || s[i] == '"')
+		*value = expand_dollar_special(mini, s[i], &i);
 	else
 	{
 		i += expansion_end_check(&s[i], " <>|\"'$[]{}()");
@@ -56,7 +106,7 @@ int	search_variable(t_minishell *mini, char *s, char **value)
 	return (i);
 }
 
-char	*expand(t_minishell *mini, char *s)
+char	*expand(t_minishell *mini)
 {
 	char	*temp;
 	char	*value;
@@ -66,24 +116,19 @@ char	*expand(t_minishell *mini, char *s)
 	i = 0;
 	t = 0;
 	value = NULL;
-	temp = malloc(ft_strlen(s) * sizeof(char) + 1);
+	temp = ft_calloc(ft_strlen(mini->input) + 1, sizeof(char));
 	if (!temp)
 		return (NULL);
-	while (s[i] != '\0')
+	while (mini->input[i] != '\0')
 	{
-		if (s[i] == '$')
+		if (mini->input[i] == '$')
 		{
-			temp[t] = '\0';
-			i += search_variable(mini, &s[i], &value);
-			if (value && value[0] != '\0')
-			{
-				t += ft_strlen(value);
-				temp = place_value(temp, value, s);
-			}
+			temp[t] = 0;
+			i += search_variable(mini, &mini->input[i], &value);
+			temp = place_value(temp, value, &t);
 		}
 		else
-			place_rest_of_string(s, temp, &i, &t);
+			place_rest_of_string(mini->input, temp, &i, &t);
 	}
-	temp[t] = '\0';
 	return (temp);
 }

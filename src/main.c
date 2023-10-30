@@ -3,23 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:37:32 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/19 19:27:19 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:59:40 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	run_minishell(t_minishell *mini, char *input)
+void	reset_cmd(t_minishell *mini)
 {
-	add_history(input);
+	if (mini->cmd)
+		free_command(mini->cmd);
+	if (mini->lex)
+		free_lex(mini->lex);
+	if (mini->split)
+		free_splits(mini->split);
 	mini->lex = NULL;
 	mini->cmd = NULL;
-	if (ft_lookup_input(mini, input))
-		return (1);
-	g_exit_code = execute_commands(mini);
+	mini->split = NULL;
+}
+
+int	run_minishell(t_minishell *mini)
+{
+	add_history(mini->input);
+	if (ft_lookup_input(mini))
+		return (reset_cmd(mini), 1);
+	mini->exit_code = execute_commands(mini);
+	reset_cmd(mini);
 	return (0);
 }
 
@@ -40,56 +52,29 @@ void	handle_shlvl(t_minishell *mini)
 
 int	main(int ac, char **av, char **env)
 {
-	char				*input;
 	t_minishell			mini;
 
 	(void)ac;
 	(void)av;
-	ft_memset(&mini, 0, sizeof(mini));
+	ft_bzero(&mini, sizeof(t_minishell));
 	mini.env = ft_env_init(env);
 	set_env_array(&mini);
 	handle_shlvl(&mini);
-	init_interactive_signals();
 	while (1)
 	{
-		input = readline("Minishell: ");
-		if (!input)
+		init_interactive_signals();
+		if (mini.input)
+			free(mini.input);
+		mini.input = NULL;
+		reset_signals(&mini);
+		mini.input = readline("Minishell: ");
+		if (!mini.input)
+		{
+			printf("exit\n");
 			clean_exit(&mini, 0);
-		if (ft_strlen(input) > 0 && input[0] != '\0')
-			run_minishell(&mini, input);
+		}
+		if (ft_strlen(mini.input) > 0 && mini.input[0] != '\0')
+			run_minishell(&mini);
 	}
-	return (0);
+	return (mini.exit_code);
 }
-
-// < input grep Hello | wc -l > out
-// < input grep Hello | awk '{count++} END {print count}' > output
-// ls > asd | grep input
-// shllevel
-// > $NAME
-// afl++
-// < input grep Hello | cat -e > out
-// echo ''
-// > >> out
-//echo"hello"
-//echo "hello">>>out
-//echo "hello">>out
-//handle pipes
-//operator token in invalid combiantions (<<< , >>> , || , ...)
-// echo "hello" <in | echo "hello world" >output | echo <infdkjgdkfgd
-// refactor signals
-
-// bash-3.2$ echo hello"world"
-// helloworld
-// bash-3.2$ echo hello"world$PWD"'"$PWD"'
-// helloworld/Users/emirzaza/Desktop/42/CoreCurriculum/Projects"$PWD"
-// bash-3.2$ echo hello"'world$PWD'"'"$PWD"'
-// hello'world/Users/emirzaza/Desktop/42/CoreCurriculum/Projects'"$PWD"
-// bash-3.2$ echo >|< hello
-// bash: syntax error near unexpected token `<'
-// bash-3.2$ echo >< hello
-// bash: syntax error near unexpected token `<'
-// bash-3.2$ 
-
-//env > out | export
-// ./minishell inside minishell gives command not found
-// AND TEST INCREASE SHLVL AFTER FIXING THE ABOVE ONE

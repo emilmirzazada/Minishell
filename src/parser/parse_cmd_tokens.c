@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 12:39:48 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 17:16:06 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:14:40 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,20 @@ int	ft_cmd_args_malloc(t_cmd *cmd, t_lex *lex)
 	return (0);
 }
 
-t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc)
+bool	init_new_command(t_minishell *mini, t_cmd **cmd, t_lex *lex, int *argc)
 {
-	t_cmd	*new_cmd;
 	t_lex	*tmp_lex;
 
-	if ((lex)->next && (lex)->next->token == TOK_PIPE)
-		return (printf("Minishell: syntax error near unexpected token `|'\n"), NULL);
-	new_cmd = ft_create_command(mini);
-	if (!new_cmd)
-		return (NULL);
+	if (lex && lex->token == TOK_PIPE && lex->next
+		&& lex->next->token == TOK_PIPE)
+		return (\
+		printf("Minishell: syntax error near unexpected token `|'\n"), false);
+	*cmd = ft_create_command(mini);
+	if (!cmd)
+		return (false);
 	tmp_lex = lex;
-	if (ft_cmd_args_malloc(new_cmd, tmp_lex))
-		return (NULL);
-	*cmd_argc = 0;
-	return (new_cmd);
+	if (ft_cmd_args_malloc(*cmd, tmp_lex))
+		return (false);
+	*argc = 0;
+	return (true);
 }

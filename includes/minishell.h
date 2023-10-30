@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 13:27:06 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 21:30:08 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define STDOUT 1
 # define STDERR 2
 
-int		g_exit_code;
+int		g_signal_num;
 
 typedef struct s_stdio
 {
@@ -83,6 +83,13 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_sdata
+{
+	char		l_char;
+	char		*l_arg;
+	bool		is_text;
+}				t_sdata;
+
 typedef struct s_split
 {
 	char			*arg;
@@ -92,24 +99,28 @@ typedef struct s_split
 
 typedef struct s_minishell
 {
+	char			*input;
 	t_env			*env;
 	char			**env_arr;
 	t_stdio			std_io;
 	t_cmd			*cmd;
 	t_lex			*lex;
 	t_split			*split;
+	int				*pids;
+	int				exit_code;
 }				t_minishell;
 
 //expansion
-char	*expand(t_minishell *mini, char *s);
+char	*expand(t_minishell *mini);
 int		expansion_end_check(char *s, char *check);
-char	*place_value(char *temp, char *value, char *s);
+char	*place_value(char *temp, char *value, int *t);
 void	place_rest_of_string(char *s, char *temp, int *i, int *t);
 char	*get_name(char *s, int i);
-char	*expand_dollar_special(char c, int *i);
+char	*expand_dollar_special(t_minishell *mini, char c, int *i);
+char	*embrace_value(char *value);
 
 // builtins
-int		ft_echo (t_cmd *cmd);
+int		ft_echo(t_cmd *cmd);
 t_env	*ft_env_init( char **env);
 t_env	*ft_set_raw_env(char *env_str);
 t_env	*ft_setenv(char *key, char *value);
@@ -129,6 +140,11 @@ int		ft_exit(t_minishell *mini, t_cmd *cmd);
 void	perror_exit(char *str, t_minishell *mini, int exit_code);
 void	free_mini(t_minishell *mini);
 void	clean_exit(t_minishell *mini, int exit_code);
+void	free_commands(t_cmd *list);
+void	free_splits(t_split *list);
+void	free_lex(t_lex *list);
+void	free_env(t_env *list);
+void 	free_double_char(char** arr);
 
 // executor
 int		execute_commands(t_minishell *mini);
@@ -149,14 +165,15 @@ void	create_heredocs(t_minishell *mini);
 void	save_stdio(t_stdio std_io);
 void	load_stdio(t_stdio std_io);
 int		configure_pipes(t_minishell *mini, int *pipe_fds, int j);
-int		here_doc(char *delimiter, char *name);
+int		here_doc(t_minishell *mini, char *delimiter, char *name);
 
 
 // parser
 int		parse_tokens(t_minishell *mini);
 int		handle_redir_tokens(t_cmd *cmd, t_lex **lex);
 int		handle_heredoc_token(t_cmd *cmd, t_lex **temp);
-t_cmd	*init_new_command(t_minishell *mini, t_lex *lex, int *cmd_argc);
+bool	init_new_command(t_minishell *mini, t_cmd **newcmd,
+			t_lex *lex, int *cmd_argc);
 void	create_file(t_cmd *cmd, t_token token, char *name);
 
 // signals
@@ -164,6 +181,7 @@ void	init_interactive_signals(void);
 void	init_non_interactive_signals(void);
 void	override_ctrl_echo(void);
 void	exit_minishell(char *input);
+void	reset_signals(t_minishell *mini);
 
 // splitter
 bool	ft_input_split(t_minishell *mini, char *s);
@@ -179,6 +197,6 @@ void	ft_split_addback(t_split **lst, t_split *new);
 void	remove_split(t_split **lst, char *key);
 
 // tokenizer
-int	ft_lookup_input(t_minishell *mini, char *input);
+int		ft_lookup_input(t_minishell *mini);
 
 #endif

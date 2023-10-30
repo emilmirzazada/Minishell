@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:34:47 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/23 19:50:23 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/29 23:28:28 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,53 +33,49 @@ int	expansion_end_check(char *s, char *check)
 	return (i);
 }
 
-char	*place_value(char *temp, char *value, char *s)
+char	*embrace_value(char *value)
 {
-	char	*new_temp;
+	char	*formatted_value;
+	char	*temp_val;
 
-	new_temp = ft_strjoin(temp, value);
-	if (!new_temp)
-		return (new_temp);
-	free(temp);
-	temp = malloc((ft_strlen(s) + ft_strlen(value) + 1) * sizeof(char));
-	if (!temp)
-		return (NULL);
-	free(value);
-	ft_strlcpy(temp, new_temp, ft_strlen(temp));
-	free(new_temp);
-	return (temp);
+	formatted_value = ft_calloc(ft_strlen(value) + 3, sizeof(char));
+	formatted_value[0] = '\"';
+	ft_strlcat(formatted_value, value, ft_strlen(value) + 2);
+	formatted_value[ft_strlen(value) + 1] = '\"';
+	temp_val = value;
+	value = formatted_value;
+	free(temp_val);
+	return (value);
+}
+
+void	copy_quotted_part(char *temp, char *s, int *i, int *t)
+{
+	while (s[*i] && s[*i] != '\'')
+	{
+		temp[*t] = s[*i];
+		if (*t <= (int)ft_strlen(temp))
+			(*t)++;
+		(*i)++;
+	}
 }
 
 // When encounters a single quote, copies all characters between the two 
 // single quotes and continues copying characters one by one afterward.
 void	place_rest_of_string(char *s, char *temp, int *i, int *t)
 {
-	int	slen;
-	int	tlen;
-
-	slen = ft_strlen(s);
-	tlen = ft_strlen(temp);
 	if (s[*i] && s[*i] == '\'')
 	{
 		temp[*t] = s[*i];
-		if (*t <= tlen)
-			(*t)++;
+		(*t)++;
 		(*i)++;
-		while (s[*i] && s[*i] != '\'')
-		{
-			temp[*t] = s[*i];
-			if (*t <= tlen)
-				(*t)++;
-			(*i)++;
-		}
+		copy_quotted_part(temp, s, i, t);
 	}
-	if (*t <= tlen && *i <= slen)
+	if (*t <= (int)ft_strlen(temp))
 		temp[*t] = s[*i];
 	if (s[*i])
 	{
 		(*i)++;
-		if (*t <= tlen)
-			(*t)++;
+		(*t)++;
 	}
 }
 
@@ -99,27 +95,4 @@ char	*get_name(char *s, int i)
 	}
 	name[j] = '\0';
 	return (name);
-}
-
-char	*expand_dollar_special(char c, int *i)
-{
-	char	*value;
-
-	value = NULL;
-	if (c == '?' || c == '$')
-	{
-		if (c == '?')
-			value = ft_itoa(g_exit_code);
-		else
-			value = ft_itoa(65717);
-		*i = *i + 1;
-	}
-	else if (c == ' ')
-	{
-		value = ft_strdup("$ ");
-		*i = *i + 1;
-	}
-	else if (c == '\0' || c == '"')
-		value = ft_strdup("$");
-	return (value);
 }

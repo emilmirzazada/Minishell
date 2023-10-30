@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:14:43 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/15 18:25:51 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:50:19 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@ static	void	update_env(t_env *env, char *key, char *value)
 		if (ft_strnstr(tmp->key, key, ft_strlen(key)) != 0)
 		{
 			if (value)
+			{
 				tmp->value = value;
+			}
 			else
+			{
 				tmp->value = ft_strdup("\0");
+			}
 		}
 		tmp = tmp->next;
 	}
@@ -33,11 +37,15 @@ static	void	update_env(t_env *env, char *key, char *value)
 static	void	update_pwd_env(t_minishell *mini)
 {
 	char	*old_pwd;
+	char	*old_old_pwd;
 
 	old_pwd = find_env(mini->env, "PWD");
-	update_env(mini->env, "OLDPWD", old_pwd);
+	old_old_pwd = find_env(mini->env, "OLDPWD");
+	free(old_old_pwd);
+	update_env(mini->env, "OLDPWD", ft_strdup(old_pwd));
 	update_env(mini->env, "PWD", getcwd(NULL, 0));
 	set_env_array(mini);
+	free(old_pwd);
 }
 
 static	bool	ft_cd_home(t_minishell *mini, t_cmd *cmd)
@@ -70,5 +78,5 @@ int	ft_cd(t_minishell *mini, t_cmd *cmd)
 			return (1);
 		}
 	}
-	return (1);
+	return (0);
 }
