@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/29 21:30:08 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:57:19 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	free_commands(t_cmd *list);
 void	free_splits(t_split *list);
 void	free_lex(t_lex *list);
 void	free_env(t_env *list);
-void 	free_double_char(char** arr);
+void	free_double_char(char **arr);
 
 // executor
 int		execute_commands(t_minishell *mini);
@@ -166,7 +166,6 @@ void	save_stdio(t_stdio std_io);
 void	load_stdio(t_stdio std_io);
 int		configure_pipes(t_minishell *mini, int *pipe_fds, int j);
 int		here_doc(t_minishell *mini, char *delimiter, char *name);
-
 
 // parser
 int		parse_tokens(t_minishell *mini);
