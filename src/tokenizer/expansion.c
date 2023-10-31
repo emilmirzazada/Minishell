@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/30 10:36:24 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/31 12:49:33 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ char	*place_value(char *temp, char *value, int *t)
 	if (value && value[0] != '\0')
 	{
 		value = embrace_value(value);
-		temp_len = ft_strlen(temp);
+		if (temp && temp[0] == 0)
+			temp_len = 1;
+		else
+			temp_len = ft_strlen(temp);
 		value_len = ft_strlen(value);
 		*t += value_len;
 		new_temp = ft_calloc((temp_len + *t + value_len), sizeof(char));
@@ -123,7 +126,6 @@ char	*expand(t_minishell *mini)
 	{
 		if (mini->input[i] == '$')
 		{
-			temp[t] = 0;
 			i += search_variable(mini, &mini->input[i], &value);
 			temp = place_value(temp, value, &t);
 		}
