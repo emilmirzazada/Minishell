@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:10:42 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/24 11:01:56 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:56:12 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,17 @@ int	execute_single_builtin(t_minishell *mini)
 	int	out_fds;
 	int	stdout_copy;
 
-	in_fds = 0;
-	out_fds = 1;
+	if (ft_strcmp(mini->cmd->name, "exit") == 0)
+		return (ft_exit(mini, mini->cmd));
+	in_fds = STDIN_FILENO;
+	out_fds = STDOUT_FILENO;
 	if (loop_files_builtin(mini->cmd->files, &in_fds, &out_fds) == -1)
 		return (1);
-	stdout_copy = dup(1);
-	dup2(out_fds, 1);
+	stdout_copy = dup(STDOUT_FILENO);
+	dup2(out_fds, STDOUT_FILENO);
 	status = execute_builtin(mini);
-	dup2(stdout_copy, 1);
+	close(out_fds);
+	dup2(stdout_copy, STDOUT_FILENO);
+	close(stdout_copy);
 	return (status);
 }
