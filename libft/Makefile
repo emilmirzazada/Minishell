@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
+#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 18:36:17 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/26 14:39:50 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/10/31 12:56:07 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 D_CHR 	= 	chr/
 D_STR 	= 	str/
