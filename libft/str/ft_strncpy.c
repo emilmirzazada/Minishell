@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 14:38:29 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/26 14:38:42 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:54:17 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@ void	ft_strncpy(char *dst, char *src, int n)
 	int	i;
 
 	i = 0;
-	while (i++ != n && (*dst++ = *src++));
+	while (i++ != n)
+		*dst++ = *src++;
 }
