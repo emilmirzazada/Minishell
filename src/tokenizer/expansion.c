@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/31 12:49:33 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/11/01 14:32:13 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,12 @@ char	*expand_dollar_special(t_minishell *mini, char c, int *i)
 	value = NULL;
 	if (c == '?' || c == '$')
 	{
-		if (c == '?')
+		if (g_signal_num == 2)
+		{
+			value = ft_itoa(1);
+			g_signal_num = 0;
+		}
+		else if (c == '?')
 			value = ft_itoa(mini->exit_code);
 		else
 			value = ft_itoa(65717);
