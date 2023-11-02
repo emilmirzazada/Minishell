@@ -6,7 +6,7 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/11/02 17:04:39 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/11/02 18:48:54 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ char	*place_value(char *temp, char *value, int *t, bool heredoc)
 		return (new_temp);
 	}
 	free(value);
-	free(temp);
-	return (ft_strdup("\0"));
+	return (free(temp), ft_strdup("\0"));
 }
 
 //returns null terminated string in case no match found
