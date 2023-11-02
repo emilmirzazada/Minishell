@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/11/02 13:51:15 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:05:14 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ typedef struct s_minishell
 }				t_minishell;
 
 //expansion
-char	*expand(t_minishell *mini);
+char	*expand(t_minishell *mini, bool heredoc);
 int		expansion_end_check(char *s, char *check);
-char	*place_value(char *temp, char *value, int *t);
+char	*place_value(char *temp, char *value, int *t, bool heredoc);
 void	place_rest_of_string(char *s, char *temp, int *i, int *t);
 char	*get_name(char *s, int i);
 char	*expand_dollar_special(t_minishell *mini, char c, int *i);
