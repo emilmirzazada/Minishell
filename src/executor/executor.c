@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:44:09 by wrottger          #+#    #+#             */
-/*   Updated: 2023/11/02 13:19:13 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:56:00 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	execute_commands(t_minishell *mini)
 	if (mini->cmd == NULL)
 		return (0);
 	mini->pipe_count = count_commands(mini);
-	if (mini->cmd)
-		create_heredocs(mini);
+	if (create_heredocs(mini) == -1)
+		return (130);
 	if (mini->pipe_count == 1 && is_builtin(mini->cmd->name))
 		return (execute_single_builtin(mini));
 	mini->pids = (int *) ft_calloc(mini->pipe_count, sizeof(mini->pids));

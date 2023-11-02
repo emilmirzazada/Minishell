@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+         #
+#    By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 23:31:04 by emirzaza          #+#    #+#              #
-#    Updated: 2023/10/28 12:37:40 by emirzaza         ###   ########.fr        #
+#    Updated: 2023/11/01 16:36:47 by wrottger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRC =	main \
 		executor/pipes \
 		executor/program_executor \
 		executor/builtin_executor \
-		executor/std_io_utils \
 		builtins/env \
 		builtins/env_tools \
 		builtins/cd \
@@ -53,7 +52,7 @@ LIBFT_LIB = $(LIBFT_DIR)/$(LIBFT)
 READLINE_PATH = ${PWD}/readline
 RM = rm -rf
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 SRCS = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))

@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:18:38 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/27 17:02:40 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:01:43 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	clean_exit(t_minishell *mini, int exit_code)
 
 void	perror_exit(char *str, t_minishell *mini, int exit_code)
 {
-	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd("Minishell: ", 2);
 	perror(str);
 	free_mini(mini);
 	exit(exit_code);
