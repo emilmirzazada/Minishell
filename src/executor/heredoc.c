@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:31:35 by wrottger          #+#    #+#             */
-/*   Updated: 2023/11/02 17:08:43 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/11/02 18:29:16 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	get_all_lines(t_minishell *mini, char *delimiter, char *name)
 
 	free(mini->input);
 	mini->input = NULL;
-	fd = open(name, O_TRUNC, 0644);
+	fd = open(name, O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
 		perror_exit(name, mini, -1);
 	close(fd);
@@ -27,7 +27,7 @@ static void	get_all_lines(t_minishell *mini, char *delimiter, char *name)
 	{
 		temp = readline("> ");
 		if (!temp || ft_strcmp(temp, delimiter) == 0)
-			return ;
+			break ;
 		mini->input = temp;
 		temp = expand(mini, true);
 		free(mini->input);
