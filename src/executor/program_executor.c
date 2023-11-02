@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_executor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:38:10 by wrottger          #+#    #+#             */
-/*   Updated: 2023/10/27 21:22:12 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:33:57 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ static int	is_directory(char *path)
 
 	stat(path, &path_stat);
 	return (S_ISDIR(path_stat.st_mode));
+}
+
+static int	execute_command(t_minishell *mini)
+{
+	if (is_builtin(mini->cmd->name))
+		exit(execute_builtin(mini));
+	else
+		return (execute_program(mini));
 }
 
 int	execute_program(t_minishell *mini)
@@ -38,7 +46,7 @@ int	execute_program(t_minishell *mini)
 		mini->cmd->path = get_executable_path(mini, *mini->cmd, path);
 	if (!mini->cmd->path && mini->cmd->name)
 	{
-		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(mini->cmd->name, 2);
 		ft_putstr_fd(": command not found\n", 2);
 		free_mini(mini);

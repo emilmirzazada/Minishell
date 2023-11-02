@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:32:07 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/10/31 11:57:19 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:18:02 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+
+# define HEREDOC_DIR "/tmp/heredoc"
 
 int		g_signal_num;
 
@@ -107,6 +109,8 @@ typedef struct s_minishell
 	t_lex			*lex;
 	t_split			*split;
 	int				*pids;
+	int				*pipes;
+	int				pipe_count;
 	int				exit_code;
 }				t_minishell;
 
@@ -156,9 +160,8 @@ char	*get_executable_path(
 			const char	*path_env);
 int		execute_builtin(t_minishell *mini);
 int		loop_commands(t_minishell *mini, int *pipe_fds, int command_count);
-int		execute_program(t_minishell *mini);
 int		is_builtin(char *name);
-int		execute_command(t_minishell *mini);
+int		execute_program(t_minishell *mini);
 void	free_command(t_cmd *cmd);
 int		execute_single_builtin(t_minishell *mini);
 void	create_heredocs(t_minishell *mini);
