@@ -3,35 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:31:35 by wrottger          #+#    #+#             */
-/*   Updated: 2023/11/02 17:08:43 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/11/02 18:37:47 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	free_null(char *str)
+{
+	if (str)
+		free(str);
+	str = NULL;
+}
 
 static void	get_all_lines(t_minishell *mini, char *delimiter, char *name)
 {
 	char	*temp;
 	int		fd;
 
-	free(mini->input);
-	mini->input = NULL;
-	fd = open(name, O_TRUNC, 0644);
-	if (fd == -1)
-		perror_exit(name, mini, -1);
-	close(fd);
+	free_null(mini->input);
+	close(open(name, O_TRUNC | O_CREAT, 0644));
 	while (true)
 	{
 		temp = readline("> ");
 		if (!temp || ft_strcmp(temp, delimiter) == 0)
-			return ;
+			break ;
 		mini->input = temp;
 		temp = expand(mini, true);
-		free(mini->input);
-		mini->input = NULL;
+		free_null(mini->input);
 		fd = open(name, O_WRONLY | O_APPEND | O_CREAT, 0644);
 		if (fd == -1)
 			perror_exit(name, mini, -1);
@@ -39,7 +41,6 @@ static void	get_all_lines(t_minishell *mini, char *delimiter, char *name)
 		write(fd, "\n", 1);
 		close(fd);
 		free(temp);
-		temp = NULL;
 	}
 	free(temp);
 }
