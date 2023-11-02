@@ -6,7 +6,7 @@
 /*   By: wrottger <wrottger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:31:35 by wrottger          #+#    #+#             */
-/*   Updated: 2023/11/02 16:42:59 by wrottger         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:03:55 by wrottger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static void	get_all_lines(t_minishell *mini, char *delimiter, char *name)
 
 	free(mini->input);
 	mini->input = NULL;
+	fd = open(name, O_TRUNC, 0644);
+	if (fd == -1)
+		perror_exit(name, mini, -1);
+	close(fd);
 	while (true)
 	{
 		temp = readline("> ");
