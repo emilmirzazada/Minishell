@@ -6,13 +6,13 @@
 /*   By: emirzaza <emirzaza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 19:33:09 by emirzaza          #+#    #+#             */
-/*   Updated: 2023/11/01 14:32:13 by emirzaza         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:04:39 by emirzaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*place_value(char *temp, char *value, int *t)
+char	*place_value(char *temp, char *value, int *t, bool heredoc)
 {
 	int		temp_len;
 	int		value_len;
@@ -20,7 +20,8 @@ char	*place_value(char *temp, char *value, int *t)
 
 	if (value && value[0] != '\0')
 	{
-		value = embrace_value(value);
+		if (!heredoc)
+			value = embrace_value(value);
 		if (temp && temp[0] == 0)
 			temp_len = 1;
 		else
@@ -114,7 +115,7 @@ int	search_variable(t_minishell *mini, char *s, char **value)
 	return (i);
 }
 
-char	*expand(t_minishell *mini)
+char	*expand(t_minishell *mini, bool heredoc)
 {
 	char	*temp;
 	char	*value;
@@ -132,7 +133,7 @@ char	*expand(t_minishell *mini)
 		if (mini->input[i] == '$')
 		{
 			i += search_variable(mini, &mini->input[i], &value);
-			temp = place_value(temp, value, &t);
+			temp = place_value(temp, value, &t, heredoc);
 		}
 		else
 			place_rest_of_string(mini->input, temp, &i, &t);
